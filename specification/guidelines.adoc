@@ -1,0 +1,151 @@
+PUF was originally designed to support *all* information and content as described in the various https://peppol.org/library/[Peppol BIS transactions], but with the added advantage of adding support for segments/elements that are not present or allowed in the https://peppol.org/library/[Peppol BIS transactions].
+
+While PUF aim to fully support various Peppol BIS transactions, it will not necessarily be restricted to the same (somewhat restrictive) business rules provided by OpenPeppol.
+
+PUF will, however, always stay compliant to the https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3] structure.
+
+In areas where support for certain information is available in the existing https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3] structure, PUF implements these elements.
+
+In other areas where there are no suitable elements in the existing https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3] schema, PUF implements `ext:UBLExtensions`.
+
+=== How to get started with PUF
+
+In the following chapters you can see which elements and what type of information that PUF supports. 
+
+In some cases you will also get longer snippets of code and implementation guidelines in order how to properly provide the data. 
+
+There is also a section with <<_examples>> that can be useful when implementing PUF.
+
+If your ERP system already can create/receive documents in https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3] or if your ERP system can create a UBL based format you can easily use this as stepping stone when moving towards PUF.
+
+==== Moving from other UBL formats to PUF
+
+1. Download the PUF <<_xml_schemas>>.
+2. Change namespace/s (see chapter <<_namespaces>>).
+3. Verify that your interpretation of the UBL elements mentioned in this specification are the same.
+4. Change the `cbc:CustomizationID` and `cbc:ProfileID` (see chapter <<_customization_and_profile_id>>)
+5. If elements from extensions are needed see chapter <<_working_with_extensions>> for details on how this is implemented.
+6. Before implementing additional elements available in PUF, validate the document with the XSD schema downloaded in step 1 above.
+
+NOTE: In the XML schemas provided in chapter <<_xml_schemas>> you will see the structure and the occurrences of every element available in PUF. +
+This specification will not include any cardinality from a schema perspective nor from what is required in a specific legal domain since this might differ depending on which specific country, region or business requirements you will have to comply with. +
+In order to know what information is sufficient to provide you should first check what the requirements from a legal and business perspective and then refer to this specification on where to provide this information.
+
+=== Namespaces
+
+*Target root name space - XYZ:* 
+
+- `urn:pagero:PageroUniversalFormat:XYZ:1:0` +
+
+*Example:* +
+_XYZ example for target namespace_
+[source,xml]
+----
+<XYZ xmlns="urn:pagero:PageroUniversalFormat:XYZ:1.0">
+  <!-- Code omitted for clarity -->
+</XYZ>
+----
+
+*CommonAggregateComponents - XYZ:* 
+
+- `urn:pagero:CommonAggregateComponents:1.0`
+
+*Example:* +
+_XYZ example for CommonAggregateComponents namespace_
+[source,xml]
+----
+<XYZ xmlns:cac="urn:pagero:CommonAggregateComponents:1.0">
+  <!-- Code omitted for clarity -->
+</XYZ>
+----
+
+=== Customization and Profile ID
+
+To indicate the correct PUF specification identifer and the profile identifier, the values in below table must be sent in `cbc:CustomizationID` and `cbc:ProfileID`.
+
+[%autowidth.stretch]
+|===
+|Type |Element `cbc:CustomizationID` |Element `cbc:ProfileID`
+
+|*XYZ*
+|XYZ
+|XYZ
+|===
+
+*Example of CustomizationID and ProfileID:*
+[source,xml]
+----
+<cbc:CustomizationID>XYZ</cbc:CustomizationID>
+<cbc:ProfileID>XYZ</cbc:ProfileID>
+----
+
+=== Working with extensions
+
+This chapter provides an overview on how to use extensions.
+
+In order to facilitate the use of PUF specific extensions, a schema for the extensions is provided.
+
+The `PUF-ExtensionComponent.xsd` can be found together with the other schemas in chapter <<_xml_schemas>>. 
+
+To be able to use the `PUF-ExtensionComponent` a namespace must be included in the document file.
+
+*Example* +
+_Example from XYZ_
+[source,xml]
+----
+<XYZ ... xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+  <!-- Code omitted for clarity -->
+</XYZ>
+----
+
+Depending on in which context the `UBLExtensions` are used there are different options of what types of values you are able to provide.
+
+To identify which context the `UBLExtensions` is in the element ExtensionURI is used. 
+
+When using these Pagero extensions, the URI has the same base:
+
+- `urn:pagero:ExtensionComponent:1.0:PageroExtension`
+
+After the URI, the specific resource name is added.
+
+*Example* +
+_UBLExtension used in the Party structure._
+[source,xml]
+----
+<cac:AccountingSupplierParty>
+    <cac:Party>
+        <ext:UBLExtensions>
+            <ext:UBLExtension>
+                <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:PartyExtension</ext:ExtensionURI>
+        <!-- Code omitted for clarity -->
+    </cac:Party>
+</cac:AccountingSupplierParty>
+----
+
+For detailed examples and how to use possible values in each extension please check the chapters where the PUF-specific elements are described.
+
+=== Release management
+
+PUF will be continuously updated to meet new market demands. 
+
+In order to support backward compatibility, the XSD schema is built with the use of "other" elements. 
+
+The "other" elements in the XSD will prevent validation error for customers who do not frequently keep the XSD schema up-to-date.
+
+==== Minor release
+
+A minor release will always be backward compatible and will take place without prior notice and will be implemented whenever needed. 
+
+Minor releases may include bugfixes, new elements, schematron updates and other features. 
+
+These releases can be followed on https://github.com/pagero/puf[GitHub].
+
+==== Major release
+
+A major release may include changes that are not backward compatible. 
+
+Such a release will be notified at least three months prior to date of implementation, to users who registered an account on Pagero validex or on https://github.com/pagero/puf[GitHub].
+
+To register for PUF major release notification you can create a free account on https://pagero.validex.net[Pagero Validex]. 
+
+But we urge all interested parties to follow the project on https://github.com/pagero/puf[GitHub] where all releases will be notified.

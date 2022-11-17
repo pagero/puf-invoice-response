@@ -1,0 +1,64 @@
+Certain elements require the use of PUF specific code list/s. 
+
+Below you will find the lists and where the lists are applicable.
+
+In some of these code lists PUF only points towards an external code list to be used.
+
+Other times the code list to be used are a mix between values defined specifically for PUF and other external list/s.
+
+Lastly, in some cases, *all* the values are defined solely for PUF.
+
+=== Code lists for coded elements
+
+.Table of the code lists used
+[%autowidth.stretch]
+|===
+|Business Term |Path |listID
+
+|Codelist XYZ
+|`XPath`
+|<<_puf_xyz_1>>
+
+|Codelist XYZ
+|`XPath`
+|<<_puf_xyz_2>>
+
+|...
+|...
+|...
+
+|===
+
+==== PUF-XYZ-1
+
+The code list value consist of `country code` + `:` + `type of value`. 
+
+Country code states which country the value is applicable for.
+
+|===
+|Value |Description
+
+|`XYZ:XYZ`
+|XYZ
+
+|...
+|...
+
+|===
+
+==== PUF-XYZ-2
+
+The code list value consist of `country code` + `:` + `type of value`. 
+
+Country code states which country the value is applicable for.
+
+|===
+|Value |Description
+
+|`XYZ:XYZ`
+|XYZ
+
+|...
+|...
+
+|===

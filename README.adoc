@@ -1,0 +1,78 @@
+# PUF specification template
+
+This repo acts as a starter template for developing new Pagero Universal Format (PUF) specifications.
+
+## 1. How to use this template
+
+1. Press the big green "Use this template" button above.
+2. Select "Create new repository" and give it a name, e.g. "puf-clearance-notification".
+3. Clone the newly generated repo via CLI or SmartGit (as usual).
+4. Start writing!
+
+## 2. How to write and build specifications
+
+We use https://asciidoc.org/[AsciiDoc] (language) together with https://asciidoctor.org/[AsciiDoctor] (software) for writing and publishing PUF specifications intended for external use.
+
+Please see https://pagero.atlassian.net/l/cp/8mVAWXfm for more detailed information, pre-requisites, installation etc.
+
+Once you have set up your development environment, build the site by navigating to the root of the project in the terminal and write:
+
+```
+asciidoctor -a stylesheet=css/pagero.css -o index.html index.adoc
+```
+
+Now open the generated `index.html` in your browser and enjoy the result!
+
+## 3. Things to consider
+
+### 3.1. Rewrite README.adoc
+
+Since all PUF repos SHOULD be public, please rewrite the `README.adoc` in the root directory to something that is sensible to share externally.
+
+### 3.2. XYZ placeholder
+
+Everything that MUST be updated has been named "XYZ" or "xyz", to act as a placeholder.
+
+Please search for this within the directory structure and make sure that you replace all these values with the appropriate ones.
+
+### 3.3. Sections to be used as-is
+
+The "Introduction" and "Guidelines" sections have been slimmed down and can most likely be used "as-is" in new PUF specifications.
+
+Any mention of "Invoice", "CreditNote", "EN16931", "Peppol BIS Billing 3.0" etc. has been removed.
+
+### 3.4. XML schemas
+
+The UBL 2.3 *common* schema library is included in this repo.
+
+The UBL maindoc schema has to be added manually.
+
+Any PUF extension schemas will also have to be added manually.
+
+### 3.5. Schematron artefacts
+
+Two empty files are available in this repo, one `.sch` and one `.xslt`.
+
+These act only as placeholders/reminders and needs to be replaced.
+
+## 4. Style guide
+
+### 4.1. Use lowercase for ALL filenames
+
+Use lowercase for all files within the repo, with dashes (-) in between words.
+
+Example A:
+
+- Bad: `rootElementOfAppResp.adoc`
+- Good: `ubl-application-response.adoc`
+
+Example B:
+
+- Bad: `countrySpecfic.adoc`
+- Good: `country-specifics.adoc`
+
+### 4.2. Keep the directory structure flat
+
+Try to keep the directory structure as flat as possible.
+
+Let's try to not do too many `include::` that `include::` `include::` that `include::`.

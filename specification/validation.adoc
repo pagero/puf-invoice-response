@@ -1,0 +1,28 @@
+To validate PUF documents please create a free account on https://pagero.validex.net[Pagero Validex].
+
+The validations available on Validex are:
+
+1. **XML well-formedness**
+2. **XSD schema**
+3. **PUF business (schematron) rules** (see below)
+
+The validation artefacts are also available on https://github.com/pagero/puf[GitHub].
+
+=== PUF business rules
+
+The following rules apply in PUF XYZ.
+
+.Schematron rules in PUF XYZ
+[%autowidth.stretch]
+|===
+|Rule name |Description of rule | Flag
+
+|PUF-XYZ
+|[PUF-XYZ] - Error message/description
+|Fatal/Warning
+
+|...
+|...
+|...
+
+|===

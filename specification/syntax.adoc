@@ -1,0 +1,39 @@
+The chapter describes the `ubl:XYZ` syntax binding and all document content.
+
+[comment]
+--
+-----------------------------------------------------------------------
+NOTE: Document level syntax/content block starts below.
+
+More "levels" can be added if needed, see e.g. ubl:ApplicationResponse.
+-----------------------------------------------------------------------
+--
+
+=== ubl:XYZ (document level)
+
+Information in this section describe the elements available on document level.
+
+==== ext:UBLExtensions
+
+include::syntax/ubl-root-xyz/ubl-extensions.adoc[]
+
+==== cbc:ID
+
+include::syntax/ubl-root-xyz/id.adoc[]
+
+[comment]
+--
+-----------------------------------------------------------------------
+NOTE: Line level syntax/content block starts below.
+
+More "levels" can be added if needed, see e.g. ubl:ApplicationResponse.
+-----------------------------------------------------------------------
+--
+
+=== cac:XYZ (line level)
+
+Information in this section describe the elements available on line level.
+
+==== ext:UBLExtensions
+
+include::syntax/another-ubl-level-xyz/ubl-extensions.adoc[]

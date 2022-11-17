@@ -1,0 +1,9 @@
+=== ubl:XYZ (document level)
+
+Below chapters describe the different extensions added on document level.
+
+include::extensions/ubl-root-xyz/extension-xyz.adoc[]
+
+=== cac:XYZ (line level)
+
+include::extensions/another-ubl-level-xyz/extension-xyz.adoc[]
