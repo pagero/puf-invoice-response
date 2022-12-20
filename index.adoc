@@ -1,4 +1,4 @@
-:doctitle: image:images/puf-logo.png[float="center", width=100%] PUF XYZ specification template 1.0
+:doctitle: image:images/puf-logo.png[float="center", width=100%] PUF Invoice Response 1.0
 :author: Copyright &copy; 2022, Pagero Group
 :email: https://pagero.com
 :copyright: Pagero Group

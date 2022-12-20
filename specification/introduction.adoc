@@ -1,21 +1,60 @@
-Pagero Universal Format, hereafter referred to as "PUF", is a business document specification developed and maintained by https://www.pagero.com[Pagero Group]. 
+Pagero Universal Format, hereafter referred to as "PUF", is a collection of business document specifications developed and maintained by https://www.pagero.com[Pagero Group].
 
-PUF is based on https://docs.oasis-open.org/ubl/UBL-2.3.html[Universal Business Language version 2.3 (UBL 2.3)].
+All response message types within the PUF suite implement the https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3 XML structure]. 
+
+https://pagero.github.io/puf[The PUF landing page] lists all document types supported in the suite and in which directions these are available.
 
 To align with new regulation and business needs throughout the world, the core idea of PUF is to enable its users to send/receive the data required to meet requirements in these markets and jurisdictions.
 
 Based on extensive analysis, PUF has been designed to meet various country-, industry-, format- and/or system-specific requirements.
 
-Another core idea of PUF is to create a flexible, extendable business document specification which can be updated quickly to be able to meet the requirements of the fast-changing global electronic document landscape.
+Another core idea of PUF is to create flexible, extendable business document specifications which can be updated quickly to meet the requirements of the fast-changing global electronic document landscape.
 
-PUF will to a large extent try to follow and align with the work done in https://peppol.org/[OpenPeppol] and other UBL based specifications. 
+PUF will to a large extent try to follow and align with the work done in https://peppol.org/[OpenPeppol] and other UBL based specifications.
 
-If you can create a valid and syntactically correct UBL based format; the threshold for implementing PUF should be negligible.
+=== Response messages in general
 
-=== Version and changelog
+NOTE: This specification concerns the *Clearance Notification* response message type.
+
+When issuing an electronic document (e.g. electronic invoice) there might be a need to inform about the process status of that document duing its lifecycle.
+
+This can include information about the transport of a message, status regarding clearance/reporting or status of an invoice in the buyer's approval or rejection etc.
+
+Depending on which legal domain the document issuer operates in, the need for various response messages might differ.
+
+The response message types available in the PUF suite for use in https://www.pageroonline.com[Pagero Online] are:
+
+- https://a[Technical Acknowledgement]
+- https://b[Clearance Notification]
+- https://c[Invoice Response]
+
+To illustrate the flow of the various response messages:
+
+_Example: Flow of different reponse messages_
+image:images/response-messages-overview.JPG[float="center", width=100%]
+
+==== Technical acknowledgement
+
+This type of response message is mainly used to inform the issuer about the transport of a document from point A to B but in Pagero Online the use of these Technical acknowledgements is applicable in informing the issuer about technical validation such as schematron errors etc.
+
+==== Clearance Notification
+
+The use of Clearance Notification message type is applicable in clearance and CTC markets where documents needs to be cleared or reported to the government or assigned authority.
+
+It will inform the issuer of an invoice regarding clearance/reporting status (i.e. rejected or accepted) but can also contain clearance artefacts such as QR codes or a signed cleared document.
+
+==== Invoice Response
+
+This is often referred to as business level response.
+
+It is a document issued by the recipient/buyer to inform the issuer of an invoice about business decisions.
+
+The delivered invoice may be technically correct and delivered to the recipient/buyer but there might be the need for a buyer to inform the issuer if the invoice is accepted or if there is a reason for a rejection.
+
+=== Clearance Notification. Version and changelog
 
 .Version
 |===
 |Version |Date |Description
-|1.0 |XYZ |First version published
+|1.0 |2022-12-01 |First version published
 |===
