@@ -2,17 +2,17 @@
 |Path |Description
 
 |`cbc:ID`
-|**Invoice number** +
-A unique identifier of the invoice.
+|**Invoice reponse identifer** +
+A unique identifier of the invoice reponse.
 |===
 
 *Example* +
 _cbc:ID with example value_
 [source,xml]
 ----
-<Invoice>
+<ApplicationResponse>
   <!-- Code omitted for clarity -->
   <cbc:ID>51234882</cbc:ID>
   <!-- Code omitted for clarity -->
-</Invoice>
+</ApplicationResponse>
 ----

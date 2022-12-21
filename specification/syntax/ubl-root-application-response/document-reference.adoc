@@ -1,0 +1,39 @@
+.Elements available in cac:DocumentReference
+|===
+|Path |Description
+
+|`cbc:ID`
+|**Invoice identifier** +
+Reference to the invoice (invoice number).
+
+|`cbc:IssueDate`
+|**Invoice issue date** +
+The date on which the referenced invoice was issued. +
+_Format must be "YYYY-MM-DD"._
+
+|`cbc:DocumentTypeCode`
+|**Document type code** +
+Type code of the referenced invoice (e.g. 380=Invoice, 381 Credit note etc.).
+
+|===
+
+*Example* +
+_cac:DocumentReference with example values_
+
+[source,xml]
+----
+<ApplicationResponse>
+  <!-- Code omitted for clarity -->
+  <cac:DocumentResponse>
+    <cac:Response>
+      <!-- Code omitted for clarity -->
+      <cac:DocumentReference>
+            <cbc:ID>INV002</cbc:ID>
+            <cbc:IssueDate>2022-09-07</cbc:IssueDate>
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+      <!-- Code omitted for clarity -->
+    </cac:Response>    
+  <!-- Code omitted for clarity -->
+</ApplicationResponse>
+----

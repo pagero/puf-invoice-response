@@ -1,0 +1,20 @@
+|===
+|Path |Description
+
+|`cbc:Note`
+|**Note** +
+Free text, can be repeated multiple times.
+|===
+
+*Example* +
+_cbc:Note example_
+[source,xml]
+----
+<ApplicationResponse>
+  <!-- Code omitted for clarity -->
+  <cbc:Note>This</cbc:Note>
+  <cbc:Note>is a</cbc:Note>
+  <cbc:Note>free text example</cbc:Note>
+  <!-- Code omitted for clarity -->
+</ApplicationResponse>
+----

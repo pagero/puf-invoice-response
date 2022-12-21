@@ -1,0 +1,19 @@
+|===
+|Path |Description
+
+|`cbc:ProfileID`
+|**Business process type** +
+Identifies the business process. +
+_Must be value 'urn:pagero.com:puf:invoice_response:1.0'._
+|===
+
+*Example* +
+_cbc:ProfileID populated with correct value_
+[source,xml]
+----
+<ApplicationResponse>
+  <!-- Code omitted for clarity -->
+  <cbc:ProfileID>urn:pagero.com:puf:invoice_response:1.0</cbc:ProfileID>
+  <!-- Code omitted for clarity -->
+</ApplicationResponse>
+----

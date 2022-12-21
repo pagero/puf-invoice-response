@@ -1,4 +1,4 @@
-The chapter describes the `ubl:XYZ` syntax binding and all document content.
+The chapter describes the `ApplicationResponse` syntax binding and all available document content.
 
 [comment]
 --
@@ -9,31 +9,48 @@ More "levels" can be added if needed, see e.g. ubl:ApplicationResponse.
 -----------------------------------------------------------------------
 --
 
-=== ubl:XYZ (document level)
+=== ApplictionResponse
 
-Information in this section describe the elements available on document level.
+NOTE: This is the root element in the UBL XML schema.
 
-==== ext:UBLExtensions
+==== cbc:CustomizationID
 
-include::syntax/ubl-root-xyz/ubl-extensions.adoc[]
+include::syntax/ubl-root-application-response/customization-id.adoc[]
+
+==== cbc:ProfileID
+
+include::syntax/ubl-root-application-response/profile-id.adoc[]
 
 ==== cbc:ID
 
-include::syntax/ubl-root-xyz/id.adoc[]
+include::syntax/ubl-root-application-response/id.adoc[]
 
-[comment]
---
------------------------------------------------------------------------
-NOTE: Line level syntax/content block starts below.
+==== cbc:IssueDate
 
-More "levels" can be added if needed, see e.g. ubl:ApplicationResponse.
------------------------------------------------------------------------
---
+include::syntax/ubl-root-application-response/issue-date.adoc[]
 
-=== cac:XYZ (line level)
+==== cbc:IssueTime
 
-Information in this section describe the elements available on line level.
+include::syntax/ubl-root-application-response/issue-time.adoc[]
 
-==== ext:UBLExtensions
+==== cbc:Note
 
-include::syntax/another-ubl-level-xyz/ubl-extensions.adoc[]
+include::syntax/ubl-root-application-response/note.adoc[]
+
+==== cac:SenderParty
+
+include::syntax/ubl-root-application-response/sender-party.adoc[]
+
+==== cac:ReceiverParty 
+
+include::syntax/ubl-root-application-response/receiver-party.adoc[]
+
+=== cac:DocumentResponse
+
+==== cac:Response
+
+include::syntax/ubl-root-application-response/response.adoc[]
+
+==== cac:DocumentReference
+
+include::syntax/ubl-root-application-response/document-reference.adoc[]

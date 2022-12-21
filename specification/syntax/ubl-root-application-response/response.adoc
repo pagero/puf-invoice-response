@@ -1,0 +1,69 @@
+.Elements available in cac:Response
+|===
+|Path |Description
+
+|`ext:UBLExtensions`
+|**Extension Content** +
+Extension is added to provide additional information in the `cac:InvoiceLine` element, added elements in regards to `ext:UBLExtensions` for `cac:InvoiceLine` can be found below: +
+<<_response_extension>>
+
+|`cbc:ResponseCode`
+|**Clearance/reporting response codes** +
+**APPROVED** = Approved by clearance authority +
+**APPROVED_WITH_WARNINGS** = Approved by clearance authority with warnings + 
+**REJECTED** = Rejected by clearance authority
+
+|`cac:Status/cbc:StatusReasonCode`
+|**Status reason code** +
+A code defining a clarification given for the clearance notification status.
+
+|`cac:Status/cbc:StatusReason`
+|**Status reason text** +
+The description of the clarification given for the notification status.
+
+|===
+
+*Example* +
+_cac:Response with example values_
+
+[source,xml]
+----
+<ApplicationResponse>
+  <!-- Code omitted for clarity -->
+  <cac:DocumentResponse>
+    <cac:Response>
+      <ext:UBLExtensions>
+        <ext:UBLExtension>
+          <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+          <ext:ExtensionContent>
+              <puf:PageroExtension>
+                <puf:ReferencedDocumentInterchangeID>
+                  <cbc:ID>123456789</cbc:ID>
+                </puf:ReferencedDocumentInterchangeID>  
+              </puf:PageroExtension>
+              <puf:ClearanceReferenceID>
+                <cbc:ID>4543f3ed-8c20-4eee-a19f-486025fe2773</cbc:ID>
+              </puf:ClearanceReferenceID>
+              <puf:ClearanceQR>
+                <puf:QRString>VGhlIFFSIENvZGU=</puf:QRString>
+              </puf:ClearanceQR>
+              <puf:AdditionalDocumentReference>
+                <cbc:ID>1456123</cbc:ID>
+                <cbc:DocumentTypeCode>M</cbc:DocumentTypeCode>
+                <cbc:DocumentDescription>LCD</cbc:DocumentDescription>
+                <cac:Attachment>
+                  <cbc:EmbeddedDocumentBinaryObject filename="123456789_12345.xml" mimeCode="application/xml">U29tZSBkb2N1bWVudA==</cbc:EmbeddedDocumentBinaryObject>
+                </cac:Attachment>
+              </puf:AdditionalDocumentReference>
+          </ext:ExtensionContent>
+        </ext:UBLExtension>
+      <ext:UBLExtensions>
+      <cbc:ResponseCode>APPROVED</cbc:ResponseCode>
+        <cac:Status>
+            <cbc:StatusReasonCode>XSD_ZATCA_VALID</cbc:StatusReasonCode>
+            <cbc:StatusReason>Complied with UBL 2.1 standards in line with ZATCA specifications</cbc:StatusReason>
+        </cac:Status>
+    </cac:Response>    
+  <!-- Code omitted for clarity -->
+</ApplicationResponse>
+----

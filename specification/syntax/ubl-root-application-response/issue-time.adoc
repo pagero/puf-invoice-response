@@ -1,0 +1,18 @@
+|===
+|Path |Description
+
+|`cbc:IssueTime`
+|**The time at which the transaction instance was issued.** +
+_Format must be "HH:mm:ss"._
+|===
+
+*Example* +
+_cbc:IssueTime with example value_
+[source,xml]
+----
+<ApplicationResponse>
+  <!-- Code omitted for clarity -->
+  <cbc:IssueTime>21:32:52</cbc:IssueTime>
+  <!-- Code omitted for clarity -->
+</ApplicationResponse>
+----

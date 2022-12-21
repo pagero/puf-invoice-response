@@ -14,7 +14,7 @@ PUF will to a large extent try to follow and align with the work done in https:/
 
 === Response messages in general
 
-NOTE: This specification concerns the *Clearance Notification* response message type.
+NOTE: This specification concerns the *Invoice Response* message type.
 
 When issuing an electronic document (e.g. electronic invoice) there might be a need to inform about the process status of that document duing its lifecycle.
 
@@ -51,7 +51,7 @@ It is a document issued by the recipient/buyer to inform the issuer of an invoic
 
 The delivered invoice may be technically correct and delivered to the recipient/buyer but there might be the need for a buyer to inform the issuer if the invoice is accepted or if there is a reason for a rejection.
 
-=== Clearance Notification. Version and changelog
+=== Invoice Response. Version and changelog
 
 .Version
 |===
