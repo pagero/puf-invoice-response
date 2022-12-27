@@ -599,10 +599,13 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <ul class="sectlevel2">
 <li><a href="#_code_lists_for_coded_elements">6.1. Code lists for coded elements</a>
 <ul class="sectlevel3">
-<li><a href="#_puf_xyz_1">6.1.1. PUF-XYZ-1</a></li>
-<li><a href="#_puf_xyz_2">6.1.2. PUF-XYZ-2</a></li>
+<li><a href="#_puf_006_mimecodes">6.1.1. PUF-006-MIMECODES</a></li>
+<li><a href="#_puf_007_endpointscheme">6.1.2. PUF-007-ENDPOINTSCHEME</a></li>
+<li><a href="#_puf_008_identificationscheme">6.1.3. PUF-008-IDENTIFICATIONSCHEME</a></li>
+<li><a href="#_puf_016_invoicestatuscode">6.1.4. PUF-016-INVOICESTATUSCODE</a></li>
 </ul>
 </li>
+<li><a href="#_additional_invoice_status_codes_added_in_puf">6.2. Additional Invoice Status Codes added in PUF</a></li>
 </ul>
 </li>
 <li><a href="#_xml_schemas">7. XML schemas</a></li>
@@ -1194,7 +1197,7 @@ Sender&#8217;s electronic address.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbc:EndpointID/@schemeID</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Electronic Identifier scheme ID</strong><br>
 Scheme identifier of electronic address.<br>
-<em>According to code list <a href="#_puf_007_endpointscheme">[_puf_007_endpointscheme]</a></em></p></td>
+<em>According to code list <a href="#_puf_007_endpointscheme">PUF-007-ENDPOINTSCHEME</a></em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:PartyIdentification/cbc:ID</code></p></td>
@@ -1205,7 +1208,7 @@ Identifier of the sender.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:PartyIdentification/cbc:ID/@schemeID</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Sender party identifier scheme id</strong><br>
 Scheme identifier of sender identifier.<br>
-<em>Value according to code list <a href="#_puf_008_identificationscheme">[_puf_008_identificationscheme]</a>.</em></p></td>
+<em>Value according to code list <a href="#_puf_008_identificationscheme">PUF-008-IDENTIFICATIONSCHEME</a>.</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:PartyLegalEntity/cbc:RegistrationName</code></p></td>
@@ -1257,7 +1260,7 @@ Receiver’s electronic address.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbc:EndpointID/@schemeID</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Electronic Identifier scheme ID</strong><br>
 Scheme identifier of electronic address.<br>
-<em>According to code list <a href="#_puf_007_endpointscheme">[_puf_007_endpointscheme]</a></em></p></td>
+<em>According to code list <a href="#_puf_007_endpointscheme">PUF-007-ENDPOINTSCHEME</a></em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:PartyIdentification/cbc:ID</code></p></td>
@@ -1268,7 +1271,7 @@ Identifier of the receiver.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:PartyIdentification/cbc:ID/@schemeID</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Receiver party identifier scheme id</strong><br>
 Scheme identifier of receiver identifier.<br>
-<em>Value according to code list <a href="#_puf_008_identificationscheme">[_puf_008_identificationscheme]</a>.</em></p></td>
+<em>Value according to code list <a href="#_puf_008_identificationscheme">PUF-008-IDENTIFICATIONSCHEME</a>.</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:PartyLegalEntity/cbc:RegistrationName</code></p></td>
@@ -1317,15 +1320,13 @@ The name of the party receiving the response.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ext:UBLExtensions</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Extension Content</strong><br>
-Extension is added to provide additional information in the <code>cac:InvoiceLine</code> element, added elements in regards to <code>ext:UBLExtensions</code> for <code>cac:InvoiceLine</code> can be found below:<br>
+Extension is added to provide additional information in the <code>cac:Response</code> element, added elements in regards to <code>ext:UBLExtensions</code> for <code>cac:Response</code> can be found below:<br>
 <a href="#_response_extension">[_response_extension]</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbc:ResponseCode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Clearance/reporting response codes</strong><br>
-<strong>APPROVED</strong> = Approved by clearance authority<br>
-<strong>APPROVED_WITH_WARNINGS</strong> = Approved by clearance authority with warnings<br>
-<strong>REJECTED</strong> = Rejected by clearance authority</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Invoice status</strong><br>
+A code stating the status of the invoice in the process.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:Status/cbc:StatusReasonCode</code></p></td>
@@ -1663,16 +1664,13 @@ The "Require ext:UBLExtensions"-column indicates whether or not the use of UBL e
 <h2 id="_code_lists"><a class="anchor" href="#_code_lists"></a><a class="link" href="#_code_lists">6. Code lists</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Certain elements require the use of PUF specific code list/s.</p>
-</div>
-<div class="paragraph">
-<p>Below you will find the lists and where the lists are applicable.</p>
+<p>Certain elements require the use of PUF specific Code list. Below you will find the lists and where the lists are applicable.</p>
 </div>
 <div class="paragraph">
 <p>In some of these code lists PUF only points towards an external code list to be used.</p>
 </div>
 <div class="paragraph">
-<p>Other times the code list to be used are a mix between values defined specifically for PUF and other external list/s.</p>
+<p>Other times the code list to be used is a mix between values defined specifically for PUF and other external list(s).</p>
 </div>
 <div class="paragraph">
 <p>Lastly, in some cases, <strong>all</strong> the values are defined solely for PUF.</p>
@@ -1695,29 +1693,34 @@ The "Require ext:UBLExtensions"-column indicates whether or not the use of UBL e
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Codelist XYZ</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XPath</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_puf_xyz_1">PUF-XYZ-1</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mime code</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:DocumentResponse/cac:Response/ext:UBLExtensions/ext:UBLExtension</code><br>
+<code>[ext:ExtensionURI='urn:pagero:ExtensionComponent:1.0:PageroExtension</code><br>
+<code>:ResponseExtension']/ext:ExtensionContent/puf:PageroExtension/</code><br>
+<code>puf:ResponseExtension/puf:AdditionalDocumentReference/</code><br>
+<code>cac:Attachment/cbc:EmbeddedDocumentBinaryObject/@mimeCode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_puf_006_mimecodes">PUF-006-MIMECODES</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Codelist XYZ</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XPath</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_puf_xyz_2">PUF-XYZ-2</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Electronic address scheme</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:AccountingSupplierParty/cac:Party/cbc:EndpointID/@schemeID</code><br>
+<code>cac:AccountingCustomerParty/cac:Party/cbc:EndpointID/@schemeID</code><br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_puf_007_endpointscheme">PUF-007-ENDPOINTSCHEME</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identification scheme</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:AccountingSupplierParty/cac:Party/cac:PartyIdentification/<br>
+cbc:ID/@schemeID</code><br>
+<code>cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/<br>
+cbc:CompanyID/@schemeID</code><br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_puf_008_identificationscheme">PUF-008-IDENTIFICATIONSCHEME</a></p></td>
 </tr>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="_puf_xyz_1"><a class="anchor" href="#_puf_xyz_1"></a><a class="link" href="#_puf_xyz_1">6.1.1. PUF-XYZ-1</a></h4>
+<h4 id="_puf_006_mimecodes"><a class="anchor" href="#_puf_006_mimecodes"></a><a class="link" href="#_puf_006_mimecodes">6.1.1. PUF-006-MIMECODES</a></h4>
 <div class="paragraph">
-<p>The code list value consist of <code>country code</code> + <code>:</code> + <code>type of value</code>.</p>
-</div>
-<div class="paragraph">
-<p>Country code states which country the value is applicable for.</p>
+<p>List of available MIME codes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1732,24 +1735,48 @@ The "Require ext:UBLExtensions"-column indicates whether or not the use of UBL e
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XYZ:XYZ</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">XYZ</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>text/csv</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comma separated value file</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>application/pdf</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PDF document</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>image/jpeg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JPEG image</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spreadsheet document</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>application/vnd.oasis.opendocument.spreadsheet</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spreadsheet docuement</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_puf_xyz_2"><a class="anchor" href="#_puf_xyz_2"></a><a class="link" href="#_puf_xyz_2">6.1.2. PUF-XYZ-2</a></h4>
+<h4 id="_puf_007_endpointscheme"><a class="anchor" href="#_puf_007_endpointscheme"></a><a class="link" href="#_puf_007_endpointscheme">6.1.2. PUF-007-ENDPOINTSCHEME</a></h4>
 <div class="paragraph">
-<p>The code list value consist of <code>country code</code> + <code>:</code> + <code>type of value</code>.</p>
+<p>For available values see OpenPeppol&#8217;s code list <a href="https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/">Electronic Address Scheme (EAS)</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_puf_008_identificationscheme"><a class="anchor" href="#_puf_008_identificationscheme"></a><a class="link" href="#_puf_008_identificationscheme">6.1.3. PUF-008-IDENTIFICATIONSCHEME</a></h4>
+<div class="paragraph">
+<p>Supported values can be found in OpenPeppol&#8217;s code list <a href="https://docs.peppol.eu/poacc/billing/3.0/codelist/ICD/">ISO 6523 ICD list</a>.</p>
 </div>
 <div class="paragraph">
-<p>Country code states which country the value is applicable for.</p>
+<p>For <code>cac:AccountingSupplierParty/cac:Party/cac:PartyIdentification/cbc:ID/@schemeID</code> and
+<code>cac:PayeeParty/cac:PartyIdentification/cbc:ID/@schemeID</code> an additional code list is also applicable: <a href="https://docs.peppol.eu/poacc/billing/3.0/codelist/SEPA/">SEPA indicator</a>.</p>
 </div>
+<div class="paragraph">
+<p>For additional identification scheme identifier added in PUF see below recommendations.</p>
+</div>
+<div class="sect4">
+<h5 id="_identification_scheme_saudi_arabia"><a class="anchor" href="#_identification_scheme_saudi_arabia"></a><a class="link" href="#_identification_scheme_saudi_arabia">Identification scheme Saudi Arabia</a></h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -1763,16 +1790,116 @@ The "Require ext:UBLExtensions"-column indicates whether or not the use of UBL e
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XYZ:XYZ</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">XYZ</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:HQ</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Group VAT number</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:NAT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">National ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:TIN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tax Identification Number</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:IQA</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Iqama Number</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:PAS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Passport ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:CRN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commercial registration number</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:MOM</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Momra license</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:MLS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MLSD license</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:700</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">700 number</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:SAG</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sagia license</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:GCC</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SA:OTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Other ID</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<div class="sect4">
+<h5 id="_identification_scheme_india"><a class="anchor" href="#_identification_scheme_india"></a><a class="link" href="#_identification_scheme_india">Identification scheme India</a></h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>IN:PAN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PAN is a 10-digit unique identification alpha-numeric number.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>IN:GSTIN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GSTIN is a 15-digit PAN-based unique identification number assigned to every registered person under GST.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>IN:CIN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Corporate Identification Number (CIN) is a 21 digits alpha-numeric unique identification number that is assigned by the Registrar of Companies (ROC).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_puf_016_invoicestatuscode"><a class="anchor" href="#_puf_016_invoicestatuscode"></a><a class="link" href="#_puf_016_invoicestatuscode">6.1.4. PUF-016-INVOICESTATUSCODE</a></h4>
+<div class="paragraph">
+<p>Supported values can be found in <a href="https://peppol.org">OpenPeppol&#8217;s</a> code list <a href="https://docs.peppol.eu/poacc/upgrade-3/codelist/UNCL4343-T111/">Invoice Status Code</a>.</p>
+</div>
+<div class="paragraph">
+<p>For additional identification scheme identifier added in PUF see below recommendations.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_additional_invoice_status_codes_added_in_puf"><a class="anchor" href="#_additional_invoice_status_codes_added_in_puf"></a><a class="link" href="#_additional_invoice_status_codes_added_in_puf">6.2. Additional Invoice Status Codes added in PUF</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>VF</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validation Failure.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>

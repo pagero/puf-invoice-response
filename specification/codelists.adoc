@@ -1,10 +1,8 @@
-Certain elements require the use of PUF specific code list/s. 
-
-Below you will find the lists and where the lists are applicable.
+Certain elements require the use of PUF specific Code list. Below you will find the lists and where the lists are applicable.
 
 In some of these code lists PUF only points towards an external code list to be used.
 
-Other times the code list to be used are a mix between values defined specifically for PUF and other external list/s.
+Other times the code list to be used is a mix between values defined specifically for PUF and other external list(s).
 
 Lastly, in some cases, *all* the values are defined solely for PUF.
 
@@ -15,50 +13,129 @@ Lastly, in some cases, *all* the values are defined solely for PUF.
 |===
 |Business Term |Path |listID
 
-|Codelist XYZ
-|`XPath`
-|<<_puf_xyz_1>>
+|Mime code
+|`cac:DocumentResponse/cac:Response/ext:UBLExtensions/ext:UBLExtension` + 
+`[ext:ExtensionURI='urn:pagero:ExtensionComponent:1.0:PageroExtension` +
+`:ResponseExtension']/ext:ExtensionContent/puf:PageroExtension/` +
+`puf:ResponseExtension/puf:AdditionalDocumentReference/` +
+`cac:Attachment/cbc:EmbeddedDocumentBinaryObject/@mimeCode`
+|<<_puf_006_mimecodes>>
 
-|Codelist XYZ
-|`XPath`
-|<<_puf_xyz_2>>
+|Electronic address scheme
+|`cac:AccountingSupplierParty/cac:Party/cbc:EndpointID/@schemeID` +
+`cac:AccountingCustomerParty/cac:Party/cbc:EndpointID/@schemeID` +
+|<<_puf_007_endpointscheme>>
 
-|...
-|...
-|...
+|Identification scheme
+|`cac:AccountingSupplierParty/cac:Party/cac:PartyIdentification/ +
+cbc:ID/@schemeID` +
+`cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/ +
+cbc:CompanyID/@schemeID` +
+|<<_puf_008_identificationscheme>>
+|===
+
+==== PUF-006-MIMECODES
+
+List of available MIME codes.
+
+|===
+|Value | Description
+
+|`text/csv` | Comma separated value file
+
+|`application/pdf` | PDF document
+
+|`image/jpeg` | JPEG image
+
+|`application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` | Spreadsheet document
+
+|`application/vnd.oasis.opendocument.spreadsheet` | Spreadsheet docuement
 
 |===
 
-==== PUF-XYZ-1
+==== PUF-007-ENDPOINTSCHEME
 
-The code list value consist of `country code` + `:` + `type of value`. 
+For available values see OpenPeppol's code list https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/[Electronic Address Scheme (EAS)].
 
-Country code states which country the value is applicable for.
+==== PUF-008-IDENTIFICATIONSCHEME
+
+Supported values can be found in OpenPeppol's code list https://docs.peppol.eu/poacc/billing/3.0/codelist/ICD/[ISO 6523 ICD list].
+
+For `cac:AccountingSupplierParty/cac:Party/cac:PartyIdentification/cbc:ID/@schemeID` and
+`cac:PayeeParty/cac:PartyIdentification/cbc:ID/@schemeID` an additional code list is also applicable: https://docs.peppol.eu/poacc/billing/3.0/codelist/SEPA/[SEPA indicator].
+
+For additional identification scheme identifier added in PUF see below recommendations.
+
+===== Identification scheme Saudi Arabia
+|===
+|Value |Description
+
+|`SA:HQ`
+|Group VAT number
+
+|`SA:NAT`
+|National ID
+
+|`SA:TIN`
+|Tax Identification Number
+
+|`SA:IQA`
+|Iqama Number
+
+|`SA:PAS`
+|Passport ID
+
+|`SA:CRN`
+|Commercial registration number
+
+|`SA:MOM`
+|Momra license
+
+|`SA:MLS`
+|MLSD license
+
+|`SA:700`
+|700 number
+
+|`SA:SAG`
+|Sagia license
+
+|`SA:GCC`
+|GCC ID
+
+|`SA:OTH`
+|Other ID
+
+|===
+
+===== Identification scheme India
 
 |===
 |Value |Description
 
-|`XYZ:XYZ`
-|XYZ
+|`IN:PAN`
+|PAN is a 10-digit unique identification alpha-numeric number.
 
-|...
-|...
+|`IN:GSTIN`
+|GSTIN is a 15-digit PAN-based unique identification number assigned to every registered person under GST.
+
+|`IN:CIN`
+|Corporate Identification Number (CIN) is a 21 digits alpha-numeric unique identification number that is assigned by the Registrar of Companies (ROC).
 
 |===
 
-==== PUF-XYZ-2
 
-The code list value consist of `country code` + `:` + `type of value`. 
+==== PUF-016-INVOICESTATUSCODE
 
-Country code states which country the value is applicable for.
+Supported values can be found in https://peppol.org[OpenPeppol's] code list https://docs.peppol.eu/poacc/upgrade-3/codelist/UNCL4343-T111/[Invoice Status Code].
 
+For additional identification scheme identifier added in PUF see below recommendations.
+
+=== Additional Invoice Status Codes added in PUF
 |===
 |Value |Description
 
-|`XYZ:XYZ`
-|XYZ
-
-|...
-|...
+|`VF`
+|Validation Failure.
 
 |===
