@@ -23,6 +23,18 @@ _Value according to code list <<_puf_008_identificationscheme>>._
 |`cac:PartyLegalEntity/cbc:RegistrationName`
 |**Sender party name** +
 Sender party name.
+
+|`cac:Contact/cbc:Name`
+|**Sender party contact point name** +
+Name of the sending party contact point for communication regarding this message.
+
+|`cac:Contact/cbc:Telephone`
+|**Sender party contact point telephone** +
+Telephone number of the sending party contact point for communication regarding this message.
+
+|`cac:Contact/cbc:ElectronicMail`
+|**Sender party contact point email** +
+Email of the sending party contact point for communication regarding this message.
 |===
 
 *Example* +
