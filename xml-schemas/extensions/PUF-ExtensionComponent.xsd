@@ -56,6 +56,15 @@
 									</xsd:sequence>
 								</xsd:complexType>
 							</xsd:element>
+							
+							<xsd:element name="DocumentMatchingID" minOccurs="0"
+								maxOccurs="1">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element ref="cbc:ID" minOccurs="1" maxOccurs="1"/>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
 
 							<xsd:element name="ClearanceReferenceID" minOccurs="0" maxOccurs="1">
 								<xsd:complexType>

@@ -6,7 +6,7 @@ The validations available on Validex are:
 2. **XSD schema**
 3. **PUF business (schematron) rules** (if applicable)
 
-The validation artefacts are also available on https://github.com/pagero/puf-invoice-response4[GitHub].
+The validation artefacts are also available on https://github.com/pagero/puf-invoice-response[GitHub].
 
 
 

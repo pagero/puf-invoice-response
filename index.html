@@ -1350,6 +1350,9 @@ The description of the clarification given for the status.</p></td>
                 <span class="tag">&lt;puf:ReferencedDocumentInterchangeID&gt;</span>
                   <span class="tag">&lt;cbc:ID&gt;</span>123456789<span class="tag">&lt;/cbc:ID&gt;</span>
                 <span class="tag">&lt;/puf:ReferencedDocumentInterchangeID&gt;</span>
+                <span class="tag">&lt;puf:DocumentMatchingID&gt;</span>
+                  <span class="tag">&lt;cbc:ID&gt;</span>123456789<span class="tag">&lt;/cbc:ID&gt;</span>
+                <span class="tag">&lt;/puf:DocumentMatchingID&gt;</span>
               <span class="tag">&lt;/puf:PageroExtension&gt;</span>
               <span class="tag">&lt;puf:AdditionalDocumentReference&gt;</span>
                 <span class="tag">&lt;cbc:ID&gt;</span>1456123<span class="tag">&lt;/cbc:ID&gt;</span>
@@ -1460,7 +1463,13 @@ Type code of the referenced invoice (e.g. 380=Invoice, 381 Credit note etc.).</p
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:ReferencedDocumentInterchangeID/cbc:ID</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The interchange id of the referenced document (if sent by the issuer).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The interchange id of the referenced document (if sent by the issuer).<br>
+This ID is applicable when you receive a response. Then this ID will be the interchange ID (if sent) of the Invoice.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:DocumentMatchingID/cbc:ID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The unique Pagero ID used to match the response to an Invoice. This ID is applicable when you send a response. Then this ID can be sent to facilitate a matching/ connection between the response<br>
+to the Invoice in Pagero Online.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:AdditionalDocumentReference/cbc:ID</code></p></td>
@@ -1905,7 +1914,7 @@ cbc:CompanyID/@schemeID</code><br></p></td>
 </ol>
 </div>
 <div class="paragraph">
-<p>The validation artefacts are also available on <a href="https://github.com/pagero/puf-invoice-response4">GitHub</a>.</p>
+<p>The validation artefacts are also available on <a href="https://github.com/pagero/puf-invoice-response">GitHub</a>.</p>
 </div>
 </div>
 </div>
@@ -1918,7 +1927,7 @@ cbc:CompanyID/@schemeID</code><br></p></td>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/pagero/puf/tree/master/examples">PUF XYZ example files (.xml)</a></p>
+<p><a href="https://github.com/pagero/puf-invoice-response/tree/master/examples">PUF Invoice Response example files (.xml)</a></p>
 </li>
 </ul>
 </div>

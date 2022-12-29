@@ -7,7 +7,12 @@ Below table shows the definition of elements added to the extension `puf:Respons
 |Element |Description
 
 |`puf:ReferencedDocumentInterchangeID/cbc:ID`
-|The interchange id of the referenced document (if sent by the issuer).
+|The interchange id of the referenced document (if sent by the issuer). +
+This ID is applicable when you receive a response. Then this ID will be the interchange ID (if sent) of the Invoice.
+
+|`puf:DocumentMatchingID/cbc:ID`
+|The unique Pagero ID used to match the response to an Invoice. This ID is applicable when you send a response. Then this ID can be sent to facilitate a matching/ connection between the response + 
+to the Invoice in Pagero Online.
 
 |`puf:AdditionalDocumentReference/cbc:ID`
 |If there are any attachments that relates to the response. +
@@ -53,7 +58,7 @@ _puf:ResponseExtension with sample values._
               <puf:PageroExtension>
                 <puf:ReferencedDocumentInterchangeID>
                   <cbc:ID>123456789</cbc:ID>
-                </puf:ReferencedDocumentInterchangeID>  
+                </puf:ReferencedDocumentInterchangeID>    
               </puf:PageroExtension>
               <puf:AdditionalDocumentReference>
                 <cbc:ID>1456123</cbc:ID>

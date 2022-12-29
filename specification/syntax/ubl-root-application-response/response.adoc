@@ -40,6 +40,9 @@ _cac:Response with example values_
                 <puf:ReferencedDocumentInterchangeID>
                   <cbc:ID>123456789</cbc:ID>
                 </puf:ReferencedDocumentInterchangeID>  
+                <puf:DocumentMatchingID>
+                  <cbc:ID>123456789</cbc:ID>
+                </puf:DocumentMatchingID>  
               </puf:PageroExtension>
               <puf:AdditionalDocumentReference>
                 <cbc:ID>1456123</cbc:ID>
