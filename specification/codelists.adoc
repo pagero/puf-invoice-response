@@ -131,7 +131,7 @@ Supported values can be found in https://peppol.org[OpenPeppol's] code list http
 
 For additional identification scheme identifier added in PUF see below recommendations.
 
-=== Additional Invoice Status Codes added in PUF
+===== Additional Invoice Status Codes added in PUF
 |===
 |Value |Description
 

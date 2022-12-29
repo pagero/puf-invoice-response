@@ -1,0 +1,72 @@
+==== puf:ResponseExtension
+
+Below table shows the definition of elements added to the extension `puf:ResponseExtension`.
+
+.Elements added in puf:ResponseExtension
+|===
+|Element |Description
+
+|`puf:ReferencedDocumentInterchangeID/cbc:ID`
+|The interchange id of the referenced document (if sent by the issuer).
+
+|`puf:AdditionalDocumentReference/cbc:ID`
+|If there are any attachments that relates to the response. +
+Identifier of the additional document reference.
+
+|`puf:AdditionalDocumentReference/cbc:DocumentTypeCode`
+|Type of attachment. + 
+**M** = Miscellaneous
+
+|`puf:AdditionalDocumentReference/cbc:DocumentDescription`
+|Description of the attached document.
+
+|`puf:AdditionalDocumentReference/cac:Attachment/ + 
+cbc:EmbeddedDocumentBinaryObject/@filename`
+|Filename of the attached document.
+
+|`puf:AdditionalDocumentReference/cac:Attachment/ + 
+cbc:EmbeddedDocumentBinaryObject/@mimeCode`
+|MIME code of the attached document. + 
+Supported MIME codes can be found in the code list +
+<<_puf_006_mimecodes>>.
+
+|`puf:AdditionalDocumentReference/cac:Attachment/ + 
+cbc:EmbeddedDocumentBinaryObject`
+|The attached document embedded as binary object (Base64).
+
+|===
+
+See example below as well as the URI to be used for this extension.
+
+*Example* +
+_puf:ResponseExtension with sample values._
+[source,xml]
+----
+<ApplicationResponse>
+  <!-- Code omitted for clarity -->
+  <cac:DocumentResponse>
+    <cac:Response>
+      <ext:UBLExtensions>
+        <ext:UBLExtension>
+          <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+          <ext:ExtensionContent>
+              <puf:PageroExtension>
+                <puf:ReferencedDocumentInterchangeID>
+                  <cbc:ID>123456789</cbc:ID>
+                </puf:ReferencedDocumentInterchangeID>  
+              </puf:PageroExtension>
+              <puf:AdditionalDocumentReference>
+                <cbc:ID>1456123</cbc:ID>
+                <cbc:DocumentTypeCode>M</cbc:DocumentTypeCode>
+                <cbc:DocumentDescription>LCD</cbc:DocumentDescription>
+                <cac:Attachment>
+                  <cbc:EmbeddedDocumentBinaryObject filename="123456789_12345.xml" mimeCode="application/xml">U29tZSBkb2N1bWVudA==</cbc:EmbeddedDocumentBinaryObject>
+                </cac:Attachment>
+              </puf:AdditionalDocumentReference>
+          </ext:ExtensionContent>
+        </ext:UBLExtension>
+      <ext:UBLExtensions>
+    </cac:Response>    
+  <!-- Code omitted for clarity -->
+</ApplicationResponse>
+----

@@ -1,9 +1,5 @@
-=== ubl:XYZ (document level)
+=== Response extension
 
-Below chapters describe the different extensions added on document level.
+Below chapter describes the elements added in `cac:DocumentResponse/cac:Response/ext:UBLExtensions`.
 
-include::extensions/ubl-root-xyz/extension-xyz.adoc[]
-
-=== cac:XYZ (line level)
-
-include::extensions/another-ubl-level-xyz/extension-xyz.adoc[]
+include::extensions/ubl-root-application-response/response-extension.adoc[]

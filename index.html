@@ -576,14 +576,9 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </li>
 <li><a href="#_extensions">4. Extensions</a>
 <ul class="sectlevel2">
-<li><a href="#_ublxyz_document_level">4.1. ubl:XYZ (document level)</a>
+<li><a href="#_response_extension">4.1. Response extension</a>
 <ul class="sectlevel3">
-<li><a href="#_extension_xyz">4.1.1. Extension XYZ</a></li>
-</ul>
-</li>
-<li><a href="#_cacxyz_line_level">4.2. cac:XYZ (line level)</a>
-<ul class="sectlevel3">
-<li><a href="#_extension_xyz_2">4.2.1. Extension XYZ</a></li>
+<li><a href="#_pufresponseextension">4.1.1. puf:ResponseExtension</a></li>
 </ul>
 </li>
 </ul>
@@ -605,15 +600,10 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#_puf_016_invoicestatuscode">6.1.4. PUF-016-INVOICESTATUSCODE</a></li>
 </ul>
 </li>
-<li><a href="#_additional_invoice_status_codes_added_in_puf">6.2. Additional Invoice Status Codes added in PUF</a></li>
 </ul>
 </li>
 <li><a href="#_xml_schemas">7. XML schemas</a></li>
-<li><a href="#_validation">8. Validation</a>
-<ul class="sectlevel2">
-<li><a href="#_puf_business_rules">8.1. PUF business rules</a></li>
-</ul>
-</li>
+<li><a href="#_validation">8. Validation</a></li>
 <li><a href="#_examples">9. Examples</a></li>
 <li><a href="#_support">10. Support</a></li>
 </ul>
@@ -1321,22 +1311,24 @@ The name of the party receiving the response.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ext:UBLExtensions</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Extension Content</strong><br>
 Extension is added to provide additional information in the <code>cac:Response</code> element, added elements in regards to <code>ext:UBLExtensions</code> for <code>cac:Response</code> can be found below:<br>
-<a href="#_response_extension">[_response_extension]</a></p></td>
+<a href="#_response_extension">Response extension</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbc:ResponseCode</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Invoice status</strong><br>
-A code stating the status of the invoice in the process.</p></td>
+A code stating the status of the invoice in the process.<br>
+<em>Value according to code list<br>
+<a href="#_puf_016_invoicestatuscode">PUF-016-INVOICESTATUSCODE</a>.</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:Status/cbc:StatusReasonCode</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Status reason code</strong><br>
-A code defining a clarification given for the clearance notification status.</p></td>
+A code defining a clarification given for the status.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:Status/cbc:StatusReason</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Status reason text</strong><br>
-The description of the clarification given for the notification status.</p></td>
+The description of the clarification given for the status.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1359,12 +1351,6 @@ The description of the clarification given for the notification status.</p></td>
                   <span class="tag">&lt;cbc:ID&gt;</span>123456789<span class="tag">&lt;/cbc:ID&gt;</span>
                 <span class="tag">&lt;/puf:ReferencedDocumentInterchangeID&gt;</span>
               <span class="tag">&lt;/puf:PageroExtension&gt;</span>
-              <span class="tag">&lt;puf:ClearanceReferenceID&gt;</span>
-                <span class="tag">&lt;cbc:ID&gt;</span>4543f3ed-8c20-4eee-a19f-486025fe2773<span class="tag">&lt;/cbc:ID&gt;</span>
-              <span class="tag">&lt;/puf:ClearanceReferenceID&gt;</span>
-              <span class="tag">&lt;puf:ClearanceQR&gt;</span>
-                <span class="tag">&lt;puf:QRString&gt;</span>VGhlIFFSIENvZGU=<span class="tag">&lt;/puf:QRString&gt;</span>
-              <span class="tag">&lt;/puf:ClearanceQR&gt;</span>
               <span class="tag">&lt;puf:AdditionalDocumentReference&gt;</span>
                 <span class="tag">&lt;cbc:ID&gt;</span>1456123<span class="tag">&lt;/cbc:ID&gt;</span>
                 <span class="tag">&lt;cbc:DocumentTypeCode&gt;</span>M<span class="tag">&lt;/cbc:DocumentTypeCode&gt;</span>
@@ -1450,71 +1436,17 @@ Type code of the referenced invoice (e.g. 380=Invoice, 381 Credit note etc.).</p
 <h2 id="_extensions"><a class="anchor" href="#_extensions"></a><a class="link" href="#_extensions">4. Extensions</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_ublxyz_document_level"><a class="anchor" href="#_ublxyz_document_level"></a><a class="link" href="#_ublxyz_document_level">4.1. ubl:XYZ (document level)</a></h3>
+<h3 id="_response_extension"><a class="anchor" href="#_response_extension"></a><a class="link" href="#_response_extension">4.1. Response extension</a></h3>
 <div class="paragraph">
-<p>Below chapters describe the different extensions added on document level.</p>
+<p>Below chapter describes the elements added in <code>cac:DocumentResponse/cac:Response/ext:UBLExtensions</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="_extension_xyz"><a class="anchor" href="#_extension_xyz"></a><a class="link" href="#_extension_xyz">4.1.1. Extension XYZ</a></h4>
+<h4 id="_pufresponseextension"><a class="anchor" href="#_pufresponseextension"></a><a class="link" href="#_pufresponseextension">4.1.1. puf:ResponseExtension</a></h4>
 <div class="paragraph">
-<p>RestrictedInformation has been added on document level in order to cater the need for unique country specific data and internal customer information that might be required for internal processing.<br></p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Note that no customer specific information can be added without prior consulting with Pagero. If country specific information is available as restricted information value, this can be found in the Country Specific section.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The UBL extension to be used for below elements can be found <a href="#_extublextensions">here</a>.<br>
-The structure used from <code>PUF-ExtensionComponent.xsd</code> is <code>PageroExtension/RestrictedInformation</code>.<br></p>
-</div>
-<div class="paragraph">
-<p>See example below as well as the URI to be used for this extension.</p>
-</div>
-<div class="paragraph">
-<p><strong>Example</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;Invoice&gt;</span>
-  <span class="tag">&lt;ext:UBLExtensions&gt;</span>
-      <span class="tag">&lt;ext:UBLExtension&gt;</span>
-          <span class="tag">&lt;ext:ExtensionURI&gt;</span>urn:pagero:ExtensionComponent:1.0:PageroExtension:RestrictedInformation<span class="tag">&lt;/ext:ExtensionURI&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
-          <span class="tag">&lt;ext:ExtensionContent&gt;</span>
-              <span class="tag">&lt;puf:PageroExtension&gt;</span>
-                <span class="tag">&lt;puf:RestrictedInformation</span><span class="tag">/&gt;</span> <i class="conum" data-value="2"></i><b>(2)</b>
-              <span class="tag">&lt;/puf:PageroExtension&gt;</span>
-          <span class="tag">&lt;/ext:ExtensionContent&gt;</span>
-      <span class="tag">&lt;/ext:UBLExtension&gt;</span>
-  <span class="tag">&lt;/ext:UBLExtensions&gt;</span>
-  <span class="comment">&lt;!-- Code omitted for clarity --&gt;</span>
-<span class="tag">&lt;/Invoice&gt;</span></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>URI to be used if this extension is added.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Structure to be used if information from this extension will be used.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Below table show the definition of the new element added to the extension.</p>
+<p>Below table shows the definition of elements added to the extension <code>puf:ResponseExtension</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Elements added in puf:RestrictedInformation</caption>
+<caption class="title">Table 6. Elements added in puf:ResponseExtension</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1527,47 +1459,79 @@ The structure used from <code>PUF-ExtensionComponent.xsd</code> is <code>PageroE
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Key defining the type of value</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:ReferencedDocumentInterchangeID/cbc:ID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The interchange id of the referenced document (if sent by the issuer).</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value relevant to the assigned key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:AdditionalDocumentReference/cbc:ID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If there are any attachments that relates to the response.<br>
+Identifier of the additional document reference.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:AdditionalDocumentReference/cbc:DocumentTypeCode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of attachment.<br>
+<strong>M</strong> = Miscellaneous</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:AdditionalDocumentReference/cbc:DocumentDescription</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description of the attached document.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:AdditionalDocumentReference/cac:Attachment/<br>
+cbc:EmbeddedDocumentBinaryObject/@filename</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filename of the attached document.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:AdditionalDocumentReference/cac:Attachment/<br>
+cbc:EmbeddedDocumentBinaryObject/@mimeCode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MIME code of the attached document.<br>
+Supported MIME codes can be found in the code list<br>
+<a href="#_puf_006_mimecodes">PUF-006-MIMECODES</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:AdditionalDocumentReference/cac:Attachment/<br>
+cbc:EmbeddedDocumentBinaryObject</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The attached document embedded as binary object (Base64).</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
+<p>See example below as well as the URI to be used for this extension.</p>
+</div>
+<div class="paragraph">
 <p><strong>Example</strong><br>
-<em>RestrictedInformation example from Hungary specific section</em></p>
+<em>puf:ResponseExtension with sample values.</em></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;Invoice&gt;</span>
-  <span class="tag">&lt;ext:UBLExtensions&gt;</span>
-    <span class="tag">&lt;ext:UBLExtension&gt;</span>
-        <span class="tag">&lt;ext:ExtensionURI&gt;</span>urn:pagero:ExtensionComponent:1.0:PageroExtension:RestrictedInformation<span class="tag">&lt;/ext:ExtensionURI&gt;</span>
-        <span class="tag">&lt;ext:ExtensionContent&gt;</span>
-            <span class="tag">&lt;puf:PageroExtension&gt;</span>
-              <span class="tag">&lt;puf:RestrictedInformation&gt;</span>
-                  <span class="tag">&lt;puf:Key&gt;</span>modifyWithoutMaster<span class="tag">&lt;/puf:Key&gt;</span>
-                  <span class="tag">&lt;puf:Value&gt;</span>false<span class="tag">&lt;/puf:Value&gt;</span>
-              <span class="tag">&lt;/puf:RestrictedInformation&gt;</span>
-            <span class="tag">&lt;/puf:PageroExtension&gt;</span>
-        <span class="tag">&lt;/ext:ExtensionContent&gt;</span>
-    <span class="tag">&lt;/ext:UBLExtension&gt;</span>
-  <span class="tag">&lt;/ext:UBLExtensions&gt;</span>
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;ApplicationResponse&gt;</span>
   <span class="comment">&lt;!-- Code omitted for clarity --&gt;</span>
-<span class="tag">&lt;/Invoice&gt;</span></code></pre>
+  <span class="tag">&lt;cac:DocumentResponse&gt;</span>
+    <span class="tag">&lt;cac:Response&gt;</span>
+      <span class="tag">&lt;ext:UBLExtensions&gt;</span>
+        <span class="tag">&lt;ext:UBLExtension&gt;</span>
+          <span class="tag">&lt;ext:ExtensionURI&gt;</span>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension<span class="tag">&lt;/ext:ExtensionURI&gt;</span>
+          <span class="tag">&lt;ext:ExtensionContent&gt;</span>
+              <span class="tag">&lt;puf:PageroExtension&gt;</span>
+                <span class="tag">&lt;puf:ReferencedDocumentInterchangeID&gt;</span>
+                  <span class="tag">&lt;cbc:ID&gt;</span>123456789<span class="tag">&lt;/cbc:ID&gt;</span>
+                <span class="tag">&lt;/puf:ReferencedDocumentInterchangeID&gt;</span>
+              <span class="tag">&lt;/puf:PageroExtension&gt;</span>
+              <span class="tag">&lt;puf:AdditionalDocumentReference&gt;</span>
+                <span class="tag">&lt;cbc:ID&gt;</span>1456123<span class="tag">&lt;/cbc:ID&gt;</span>
+                <span class="tag">&lt;cbc:DocumentTypeCode&gt;</span>M<span class="tag">&lt;/cbc:DocumentTypeCode&gt;</span>
+                <span class="tag">&lt;cbc:DocumentDescription&gt;</span>LCD<span class="tag">&lt;/cbc:DocumentDescription&gt;</span>
+                <span class="tag">&lt;cac:Attachment&gt;</span>
+                  <span class="tag">&lt;cbc:EmbeddedDocumentBinaryObject</span> <span class="attribute-name">filename</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">123456789_12345.xml</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">mimeCode</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>U29tZSBkb2N1bWVudA==<span class="tag">&lt;/cbc:EmbeddedDocumentBinaryObject&gt;</span>
+                <span class="tag">&lt;/cac:Attachment&gt;</span>
+              <span class="tag">&lt;/puf:AdditionalDocumentReference&gt;</span>
+          <span class="tag">&lt;/ext:ExtensionContent&gt;</span>
+        <span class="tag">&lt;/ext:UBLExtension&gt;</span>
+      <span class="tag">&lt;ext:UBLExtensions&gt;</span>
+    <span class="tag">&lt;/cac:Response&gt;</span>
+  <span class="comment">&lt;!-- Code omitted for clarity --&gt;</span>
+<span class="tag">&lt;/ApplicationResponse&gt;</span></code></pre>
 </div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cacxyz_line_level"><a class="anchor" href="#_cacxyz_line_level"></a><a class="link" href="#_cacxyz_line_level">4.2. cac:XYZ (line level)</a></h3>
-<div class="sect3">
-<h4 id="_extension_xyz_2"><a class="anchor" href="#_extension_xyz_2"></a><a class="link" href="#_extension_xyz_2">4.2.1. Extension XYZ</a></h4>
-<div class="paragraph">
-<p>Information about line level extension XYZ.</p>
 </div>
 </div>
 </div>
@@ -1878,10 +1842,8 @@ cbc:CompanyID/@schemeID</code><br></p></td>
 <div class="paragraph">
 <p>For additional identification scheme identifier added in PUF see below recommendations.</p>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_additional_invoice_status_codes_added_in_puf"><a class="anchor" href="#_additional_invoice_status_codes_added_in_puf"></a><a class="link" href="#_additional_invoice_status_codes_added_in_puf">6.2. Additional Invoice Status Codes added in PUF</a></h3>
+<div class="sect4">
+<h5 id="_additional_invoice_status_codes_added_in_puf"><a class="anchor" href="#_additional_invoice_status_codes_added_in_puf"></a><a class="link" href="#_additional_invoice_status_codes_added_in_puf">Additional Invoice Status Codes added in PUF</a></h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -1903,16 +1865,18 @@ cbc:CompanyID/@schemeID</code><br></p></td>
 </div>
 </div>
 </div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_xml_schemas"><a class="anchor" href="#_xml_schemas"></a><a class="link" href="#_xml_schemas">7. XML schemas</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The PUF XYZ XML schemas including Pagero/PUF Extension can be downloaded here:</p>
+<p>The PUF Invoice Ressponse XML schemas including Pagero/PUF Extension can be downloaded here:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="xsd/puf-XYZ-xsd-schemas.zip">PUF XYZ XML schemas</a></p>
+<p><a href="https://github.com/pagero/puf-invoice-response/tree/master/xml-schemas/puf-ubl-application-response.zip">PUF Invoice response XML schemas</a></p>
 </li>
 </ul>
 </div>
@@ -1936,45 +1900,12 @@ cbc:CompanyID/@schemeID</code><br></p></td>
 <p><strong>XSD schema</strong></p>
 </li>
 <li>
-<p><strong>PUF business (schematron) rules</strong> (see below)</p>
+<p><strong>PUF business (schematron) rules</strong> (if applicable)</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>The validation artefacts are also available on <a href="https://github.com/pagero/puf">GitHub</a>.</p>
-</div>
-<div class="sect2">
-<h3 id="_puf_business_rules"><a class="anchor" href="#_puf_business_rules"></a><a class="link" href="#_puf_business_rules">8.1. PUF business rules</a></h3>
-<div class="paragraph">
-<p>The following rules apply in PUF XYZ.</p>
-</div>
-<table class="tableblock frame-all grid-all fit-content stretch">
-<caption class="title">Table 9. Schematron rules in PUF XYZ</caption>
-<colgroup>
-<col>
-<col>
-<col>
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Rule name</th>
-<th class="tableblock halign-left valign-top">Description of rule</th>
-<th class="tableblock halign-left valign-top">Flag</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PUF-XYZ</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[PUF-XYZ] - Error message/description</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fatal/Warning</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
-</tr>
-</tbody>
-</table>
+<p>The validation artefacts are also available on <a href="https://github.com/pagero/puf-invoice-response4">GitHub</a>.</p>
 </div>
 </div>
 </div>

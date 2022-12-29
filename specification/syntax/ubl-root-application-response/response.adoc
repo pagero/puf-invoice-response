@@ -9,15 +9,17 @@ Extension is added to provide additional information in the `cac:Response` eleme
 
 |`cbc:ResponseCode`
 |**Invoice status** +
-A code stating the status of the invoice in the process.
+A code stating the status of the invoice in the process. +
+_Value according to code list +
+<<_puf_016_invoicestatuscode>>._
 
 |`cac:Status/cbc:StatusReasonCode`
 |**Status reason code** +
-A code defining a clarification given for the clearance notification status.
+A code defining a clarification given for the status.
 
 |`cac:Status/cbc:StatusReason`
 |**Status reason text** +
-The description of the clarification given for the notification status.
+The description of the clarification given for the status.
 
 |===
 
@@ -39,12 +41,6 @@ _cac:Response with example values_
                   <cbc:ID>123456789</cbc:ID>
                 </puf:ReferencedDocumentInterchangeID>  
               </puf:PageroExtension>
-              <puf:ClearanceReferenceID>
-                <cbc:ID>4543f3ed-8c20-4eee-a19f-486025fe2773</cbc:ID>
-              </puf:ClearanceReferenceID>
-              <puf:ClearanceQR>
-                <puf:QRString>VGhlIFFSIENvZGU=</puf:QRString>
-              </puf:ClearanceQR>
               <puf:AdditionalDocumentReference>
                 <cbc:ID>1456123</cbc:ID>
                 <cbc:DocumentTypeCode>M</cbc:DocumentTypeCode>

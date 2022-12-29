@@ -1,7 +1,0 @@
-|===
-|Path |Description
-
-|`ext:UBLExtensions`
-|**Extension Content** +
-Added elements in regards to `ext:UBLExtensions` for `XYZ` can be found below.
-|===

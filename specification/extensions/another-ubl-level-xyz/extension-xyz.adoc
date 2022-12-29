@@ -1,3 +1,0 @@
-==== Extension XYZ
-
-Information about line level extension XYZ.

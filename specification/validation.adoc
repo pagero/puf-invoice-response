@@ -4,25 +4,9 @@ The validations available on Validex are:
 
 1. **XML well-formedness**
 2. **XSD schema**
-3. **PUF business (schematron) rules** (see below)
+3. **PUF business (schematron) rules** (if applicable)
 
-The validation artefacts are also available on https://github.com/pagero/puf[GitHub].
+The validation artefacts are also available on https://github.com/pagero/puf-invoice-response4[GitHub].
 
-=== PUF business rules
 
-The following rules apply in PUF XYZ.
 
-.Schematron rules in PUF XYZ
-[%autowidth.stretch]
-|===
-|Rule name |Description of rule | Flag
-
-|PUF-XYZ
-|[PUF-XYZ] - Error message/description
-|Fatal/Warning
-
-|...
-|...
-|...
-
-|===
