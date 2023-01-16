@@ -32,6 +32,10 @@ cbc:ID/@schemeID` +
 `cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/ +
 cbc:CompanyID/@schemeID` +
 |<<_puf_008_identificationscheme>>
+
+|Invoice status codes 
+|`cac:DocumentResponse/cac:Response/cbc:ResponseCode`
+|<<_puf_016_invoicestatuscode>>
 |===
 
 ==== PUF-006-MIMECODES
