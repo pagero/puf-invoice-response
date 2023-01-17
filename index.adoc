@@ -38,10 +38,18 @@ include::specification/syntax.adoc[]
 
 include::specification/extensions.adoc[]
 
+
+[comment]
+--
+-----------------------------------------------------------------------
+Country specific section commented out at this point
+
 == Country specifics
 
 include::specification/country-specifics.adoc[]
 
+-----------------------------------------------------------------------
+--
 == Code lists
 
 include::specification/codelists.adoc[]
