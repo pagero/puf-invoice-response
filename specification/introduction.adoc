@@ -24,9 +24,9 @@ Depending on which legal domain the document issuer operates in, the need for va
 
 The response message types available in the PUF suite for use in https://www.pageroonline.com[Pagero Online] are:
 
-- https://a[Technical Acknowledgement]
-- https://b[Clearance Notification]
-- https://c[Invoice Response]
+- https://pagero.github.io/puf-technical-acknowledgement[Technical Acknowledgement^]
+- https://pagero.github.io/puf-clearance-notification[Clearance Notification^]
+- https://pagero.github.io/puf-invoice-response[Invoice Response^]
 
 To illustrate the flow of the various response messages:
 
