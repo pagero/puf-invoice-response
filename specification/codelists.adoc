@@ -1,4 +1,4 @@
-Certain elements require the use of PUF specific Code list. Below you will find the lists and where the lists are applicable.
+Certain elements require the use of https://pagero.github.io/puf-code-lists/[PUF specific code lists^]. Below you will find the lists and where the lists are applicable.
 
 In some of these code lists PUF only points towards an external code list to be used.
 
@@ -19,127 +19,22 @@ Lastly, in some cases, *all* the values are defined solely for PUF.
 `:ResponseExtension']/ext:ExtensionContent/puf:PageroExtension/` +
 `puf:ResponseExtension/puf:AdditionalDocumentReference/` +
 `cac:Attachment/cbc:EmbeddedDocumentBinaryObject/@mimeCode`
-|<<_puf_006_mimecodes>>
+|https://pagero.github.io/puf-code-lists/#_puf_006_mimecodes[PUF-006-MIMECODES^]
 
 |Electronic address scheme
 |`cac:AccountingSupplierParty/cac:Party/cbc:EndpointID/@schemeID` +
 `cac:AccountingCustomerParty/cac:Party/cbc:EndpointID/@schemeID` +
-|<<_puf_007_endpointscheme>>
+|https://pagero.github.io/puf-code-lists/#_puf_007_endpointscheme[PUF-007-ENDPOINTSCHEME^]
 
 |Identification scheme
 |`cac:AccountingSupplierParty/cac:Party/cac:PartyIdentification/ +
 cbc:ID/@schemeID` +
 `cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/ +
 cbc:CompanyID/@schemeID` +
-|<<_puf_008_identificationscheme>>
+|https://pagero.github.io/puf-code-lists/#_puf_008_identificationscheme[PUF-008-IDENTIFICATIONSCHEME^]
 
 |Invoice status codes 
 |`cac:DocumentResponse/cac:Response/cbc:ResponseCode`
-|<<_puf_016_invoicestatuscode>>
+|https://pagero.github.io/puf-code-lists/#_puf_016_invoicestatuscode[PUF-016-INVOICESTATUSCODE^]
 |===
 
-==== PUF-006-MIMECODES
-
-List of available MIME codes.
-
-|===
-|Value | Description
-
-|`text/csv` | Comma separated value file
-
-|`application/pdf` | PDF document
-
-|`image/jpeg` | JPEG image
-
-|`application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` | Spreadsheet document
-
-|`application/vnd.oasis.opendocument.spreadsheet` | Spreadsheet docuement
-
-|===
-
-==== PUF-007-ENDPOINTSCHEME
-
-For available values see OpenPeppol's code list https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/[Electronic Address Scheme (EAS)].
-
-==== PUF-008-IDENTIFICATIONSCHEME
-
-Supported values can be found in OpenPeppol's code list https://docs.peppol.eu/poacc/billing/3.0/codelist/ICD/[ISO 6523 ICD list].
-
-For `cac:AccountingSupplierParty/cac:Party/cac:PartyIdentification/cbc:ID/@schemeID` and
-`cac:PayeeParty/cac:PartyIdentification/cbc:ID/@schemeID` an additional code list is also applicable: https://docs.peppol.eu/poacc/billing/3.0/codelist/SEPA/[SEPA indicator].
-
-For additional identification scheme identifier added in PUF see below recommendations.
-
-===== Identification scheme Saudi Arabia
-|===
-|Value |Description
-
-|`SA:HQ`
-|Group VAT number
-
-|`SA:NAT`
-|National ID
-
-|`SA:TIN`
-|Tax Identification Number
-
-|`SA:IQA`
-|Iqama Number
-
-|`SA:PAS`
-|Passport ID
-
-|`SA:CRN`
-|Commercial registration number
-
-|`SA:MOM`
-|Momra license
-
-|`SA:MLS`
-|MLSD license
-
-|`SA:700`
-|700 number
-
-|`SA:SAG`
-|Sagia license
-
-|`SA:GCC`
-|GCC ID
-
-|`SA:OTH`
-|Other ID
-
-|===
-
-===== Identification scheme India
-
-|===
-|Value |Description
-
-|`IN:PAN`
-|PAN is a 10-digit unique identification alpha-numeric number.
-
-|`IN:GSTIN`
-|GSTIN is a 15-digit PAN-based unique identification number assigned to every registered person under GST.
-
-|`IN:CIN`
-|Corporate Identification Number (CIN) is a 21 digits alpha-numeric unique identification number that is assigned by the Registrar of Companies (ROC).
-
-|===
-
-
-==== PUF-016-INVOICESTATUSCODE
-
-Supported values can be found in https://peppol.org[OpenPeppol's] code list https://docs.peppol.eu/poacc/upgrade-3/codelist/UNCL4343-T111/[Invoice Status Code].
-
-For additional identification scheme identifier added in PUF see below recommendations.
-
-===== Additional Invoice Status Codes added in PUF
-|===
-|Value |Description
-
-|`VF`
-|Validation Failure.
-
-|===

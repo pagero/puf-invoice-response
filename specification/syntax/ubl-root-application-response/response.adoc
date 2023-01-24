@@ -11,7 +11,7 @@ Extension is added to provide additional information in the `cac:Response` eleme
 |**Invoice status** +
 A code stating the status of the invoice in the process. +
 _Value according to code list +
-<<_puf_016_invoicestatuscode>>._
+https://pagero.github.io/puf-code-lists/#_puf_016_invoicestatuscode[PUF-016-INVOICESTATUSCODE^]._
 
 |`cac:Status/cbc:StatusReasonCode`
 |**Status reason code** +

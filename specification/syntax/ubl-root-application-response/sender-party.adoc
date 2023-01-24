@@ -9,7 +9,7 @@ Sender's electronic address.
 |`cbc:EndpointID/@schemeID`
 |**Electronic Identifier scheme ID** +
 Scheme identifier of electronic address. +
-_According to code list <<_puf_007_endpointscheme>>_
+_According to code list https://pagero.github.io/puf-code-lists/#_puf_007_endpointscheme[PUF-007-ENDPOINTSCHEME^]._
 
 |`cac:PartyIdentification/cbc:ID`
 |**Sender party identifier** +
@@ -18,7 +18,8 @@ Identifier of the sender.
 |`cac:PartyIdentification/cbc:ID/@schemeID`
 |**Sender party identifier scheme id** +
 Scheme identifier of sender identifier. +
-_Value according to code list <<_puf_008_identificationscheme>>._
+_Value according to code list + 
+https://pagero.github.io/puf-code-lists/#_puf_008_identificationscheme[PUF-008-IDENTIFICATIONSCHEME^]._
 
 |`cac:PartyLegalEntity/cbc:RegistrationName`
 |**Sender party name** +
