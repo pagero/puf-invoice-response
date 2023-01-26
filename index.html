@@ -607,13 +607,13 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h2 id="_introduction"><a class="anchor" href="#_introduction"></a><a class="link" href="#_introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Pagero Universal Format, hereafter referred to as "PUF", is a collection of business document specifications developed and maintained by <a href="https://www.pagero.com">Pagero Group</a>.</p>
+<p>Pagero Universal Format, hereafter referred to as "PUF", is a collection of business document specifications developed and maintained by <a href="https://www.pagero.com" target="_blank" rel="noopener">Pagero Group</a>.</p>
 </div>
 <div class="paragraph">
-<p>All response message types within the PUF suite implement the <a href="https://docs.oasis-open.org/ubl/UBL-2.3.html">UBL 2.3 XML structure</a>.</p>
+<p>All response message types within the PUF suite implement the <a href="https://docs.oasis-open.org/ubl/UBL-2.3.html" target="_blank" rel="noopener">UBL 2.3 XML structure</a>.</p>
 </div>
 <div class="paragraph">
-<p><a href="https://pagero.github.io/puf">The PUF landing page</a> lists all document types supported in the suite and in which directions these are available.</p>
+<p><a href="https://pagero.github.io/puf" target="_blank" rel="noopener">The PUF landing page</a> lists all document types supported in the suite and in which directions these are available.</p>
 </div>
 <div class="paragraph">
 <p>To align with new regulation and business needs throughout the world, the core idea of PUF is to enable its users to send/receive the data required to meet requirements in these markets and jurisdictions.</p>
@@ -625,7 +625,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <p>Another core idea of PUF is to create flexible, extendable business document specifications which can be updated quickly to meet the requirements of the fast-changing global electronic document landscape.</p>
 </div>
 <div class="paragraph">
-<p>PUF will to a large extent try to follow and align with the work done in <a href="https://peppol.org/">OpenPeppol</a> and other UBL based specifications.</p>
+<p>PUF will to a large extent try to follow and align with the work done in <a href="https://peppol.org/" target="_blank" rel="noopener">OpenPeppol</a> and other UBL based specifications.</p>
 </div>
 <div class="sect2">
 <h3 id="_response_messages_in_general"><a class="anchor" href="#_response_messages_in_general"></a><a class="link" href="#_response_messages_in_general">1.1. Response messages in general</a></h3>
@@ -642,10 +642,10 @@ This specification concerns the <strong>Invoice Response</strong> message type.
 </table>
 </div>
 <div class="paragraph">
-<p>When issuing an electronic document (e.g. electronic invoice) there might be a need to inform about the process status of that document duing its lifecycle.</p>
+<p>When issuing an electronic document (e.g. electronic invoice or other document type) there might be a need to inform about the process status of that document during its lifecycle.</p>
 </div>
 <div class="paragraph">
-<p>This can include information about the transport of a message, status regarding clearance/reporting or status of an invoice in the buyer&#8217;s approval or rejection etc.</p>
+<p>This can include information about the transport of a message, status regarding clearance/reporting of a message or status of a message concerning the recipients approval or rejection etc.</p>
 </div>
 <div class="paragraph">
 <p>Depending on which legal domain the document issuer operates in, the need for various response messages might differ.</p>
@@ -667,25 +667,28 @@ This specification concerns the <strong>Invoice Response</strong> message type.
 </ul>
 </div>
 <div class="paragraph">
-<p>To illustrate the flow of the various response messages:</p>
+<p><em>Example: A possible orchestation of messages supporting a market where invoices are required to be reported to a clearance authority and where a buyer has the possibility to send an invoice response.</em></p>
 </div>
 <div class="paragraph">
-<p><em>Example: Flow of different reponse messages</em>
-<span class="image center"><img src="images/response-messages-overview.JPG" alt="response messages overview" width="100%"></span></p>
+<p><span class="image center"><img src="images/response-messages-overview.JPG" alt="response messages overview" width="100%"></span></p>
 </div>
 <div class="sect3">
 <h4 id="_technical_acknowledgement"><a class="anchor" href="#_technical_acknowledgement"></a><a class="link" href="#_technical_acknowledgement">1.1.1. Technical acknowledgement</a></h4>
 <div class="paragraph">
-<p>This type of response message is mainly used to inform the issuer about the transport of a document from point A to B but in Pagero Online the use of these Technical acknowledgements is applicable in informing the issuer about technical validation such as schematron errors etc.</p>
+<p>This type of response message is mainly used to inform a sender about the transport of a document from<br>
+point A to B.</p>
+</div>
+<div class="paragraph">
+<p>In addition, in Pagero Online the use of technical acknowledgements is used for informing the sender about technical validation results such as XML schema validations, schematron errors etc.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_clearance_notification"><a class="anchor" href="#_clearance_notification"></a><a class="link" href="#_clearance_notification">1.1.2. Clearance Notification</a></h4>
 <div class="paragraph">
-<p>The use of Clearance Notification message type is applicable in clearance and CTC markets where documents needs to be cleared or reported to the government or assigned authority.</p>
+<p>The use of the Clearance Notification message type is applicable in clearance and CTC markets where documents needs to be cleared or reported to the government or another assigned authority.</p>
 </div>
 <div class="paragraph">
-<p>It will inform the issuer of an invoice regarding clearance/reporting status (i.e. rejected or accepted) but can also contain clearance artefacts such as QR codes or a signed cleared document.</p>
+<p>It will inform the issuer of an document of the clearance/reporting status (i.e. rejected or accepted) but can also contain clearance artefacts such as QR codes or a signed cleared document.</p>
 </div>
 </div>
 <div class="sect3">
@@ -694,7 +697,7 @@ This specification concerns the <strong>Invoice Response</strong> message type.
 <p>This is often referred to as business level response.</p>
 </div>
 <div class="paragraph">
-<p>It is a document issued by the recipient/buyer to inform the issuer of an invoice about business decisions.</p>
+<p>It is a document issued by the recipient/buyer to inform the issuer of an <strong>invoice</strong> about business decisions.</p>
 </div>
 <div class="paragraph">
 <p>The delivered invoice may be technically correct and delivered to the recipient/buyer but there might be the need for a buyer to inform the issuer if the invoice is accepted or if there is a reason for a rejection.</p>
@@ -718,7 +721,7 @@ This specification concerns the <strong>Invoice Response</strong> message type.
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2022-12-01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2023-01-27</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">First version published</p></td>
 </tr>
 </tbody>
