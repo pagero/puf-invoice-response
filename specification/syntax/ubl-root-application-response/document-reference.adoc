@@ -14,10 +14,9 @@ _Format must be "YYYY-MM-DD"._
 |`cbc:DocumentTypeCode`
 |**Document type code** +
 Type code of the referenced invoice (e.g. 380=Invoice, 381 Credit note etc.).
-For valid values see code list + 
-https://pagero.github.io/puf-code-lists/#_puf_019_documentreferencedoctypecode[PUF-019-DOCUMENTREFERENCEDOCTYPECODE^] + 
-Note that not all codes are applicable in PUF Invoice Response
-
+For valid values see code list: + 
+https://pagero.github.io/puf-code-lists/#_puf_019_documentreferencedoctypecode[PUF-019-DOCUMENTREFERENCEDOCTYPECODE^]. + 
+Note that not all codes are applicable in PUF Invoice Response.
 
 |===
 

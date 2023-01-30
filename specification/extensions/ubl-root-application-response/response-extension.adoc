@@ -7,37 +7,46 @@ Below table shows the definition of elements added to the extension `puf:Respons
 |Element |Description
 
 |`puf:ReferencedDocumentInterchangeID/cbc:ID`
-|The interchange id of the referenced document (if sent by the issuer). +
+|**Referenced document interchange identifier** +
+The interchange id of the referenced document (if sent by the issuer). +
 This ID is applicable when you receive a response. Then this ID will be the interchange ID (if sent) of the Invoice.
 
 |`puf:DocumentMatchingID/cbc:ID`
-|The unique Pagero ID used to match the response to an Invoice. This ID is applicable when you send a response. Then this ID can be sent to facilitate a matching/ connection between the response + 
-to the Invoice in Pagero Online.
+|**Referenced document matching identifier** +
+The unique Pagero ID used to match the response to an Invoice. +
+This ID is applicable when you send a response. +
+Then this ID can be sent to facilitate a matching/connection between the response to the Invoice in Pagero Online.
 
 |`puf:AdditionalDocumentReference/cbc:ID`
-|If there are any attachments that relates to the response. +
+|**Additional document reference identifier** +
+If there are any attachments that relates to the response. +
 Identifier of the additional document reference.
 
 |`puf:AdditionalDocumentReference/cbc:DocumentTypeCode`
-|Type of attachment. + 
+|**Additional document reference type code** +
+Type of attachment. + 
 **M** = Miscellaneous
 
 |`puf:AdditionalDocumentReference/cbc:DocumentDescription`
-|Description of the attached document.
+|**Additional document reference description** +
+Description of the attached document.
 
 |`puf:AdditionalDocumentReference/cac:Attachment/ + 
 cbc:EmbeddedDocumentBinaryObject/@filename`
-|Filename of the attached document.
+|**Additional document reference filename** +
+Filename of the attached document.
 
 |`puf:AdditionalDocumentReference/cac:Attachment/ + 
 cbc:EmbeddedDocumentBinaryObject/@mimeCode`
-|MIME code of the attached document. + 
+|**Additional document reference MIME code** +
+MIME code of the attached document. + 
 Supported MIME codes can be found in the code list +
 https://pagero.github.io/puf-code-lists/#_puf_006_mimecodes[PUF-006-MIMECODES^].
 
 |`puf:AdditionalDocumentReference/cac:Attachment/ + 
 cbc:EmbeddedDocumentBinaryObject`
-|The attached document embedded as binary object (Base64).
+|**Additional document reference binary object** +
+The attached document embedded as binary object (Base64).
 
 |===
 

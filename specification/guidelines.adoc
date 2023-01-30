@@ -8,7 +8,7 @@ In areas where support for certain information is available in the existing http
 
 In other areas where there are no suitable elements in the existing https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3] schema, PUF implements `ext:UBLExtensions`.
 
-=== How to get started with PUF Invoice Response
+=== How to get started
 
 In the following chapters you can see which elements and what type of information that PUF Invoice Response supports. 
 
@@ -50,8 +50,12 @@ To indicate the correct PUF specification identifer and the profile identifier, 
 *Example*
 [source,xml]
 ----
-<cbc:CustomizationID>urn:pagero.com:puf:invoice_response:1.0</cbc:CustomizationID>
-<cbc:ProfileID>urn:pagero.com:puf:invoice_response:1.0</cbc:ProfileID>
+<ApplicationResponse>
+  <!-- Code omitted for clarity -->
+  <cbc:CustomizationID>urn:pagero.com:puf:invoice_response:1.0</cbc:CustomizationID>
+  <cbc:ProfileID>urn:pagero.com:puf:invoice_response:1.0</cbc:ProfileID>
+  <!-- Code omitted for clarity -->
+</ApplicationResponse>
 ----
 
 === Working with extensions
@@ -87,12 +91,16 @@ After this URI, the specific resource name is added.
 _UBLExtension used in the cac:Response structure._
 [source,xml]
 ----
-<cac:Response>
-      <ext:UBLExtensions>
-          <ext:UBLExtension>
-              <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
-              <!-- Code omitted for clarity -->
-</cac:Response>
+<ApplicationResponse>
+  <!-- Code omitted for clarity -->
+  <cac:Response>
+    <ext:UBLExtensions>
+      <ext:UBLExtension>
+        <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+        <!-- Code omitted for clarity -->
+  </cac:Response>
+  <!-- Code omitted for clarity -->
+</ApplicationResponse>
 ----
 
 For detailed examples and how to use possible values in each extension please see the chapters where PUF-specific elements are described.

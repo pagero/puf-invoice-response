@@ -12,6 +12,14 @@ Another core idea of PUF is to create flexible, extendable business document spe
 
 PUF will to a large extent try to follow and align with the work done in https://peppol.org/[OpenPeppol, window=_blank] and other UBL based specifications.
 
+=== Version and changelog
+
+.Version
+|===
+|Version |Date |Description
+|1.0 |2023-01-27 |First version published.
+|===
+
 === Response messages in general
 
 NOTE: This specification concerns the *Invoice Response* message type.
@@ -40,24 +48,16 @@ point A to B.
 
 In addition, in Pagero Online the use of technical acknowledgements is used for informing the sender about technical validation results such as XML schema validations, schematron errors etc.
 
-==== Clearance Notification
+==== Clearance notification
 
 The use of the Clearance Notification message type is applicable in clearance and CTC markets where documents needs to be cleared or reported to the government or another assigned authority.
 
 It will inform the issuer of an document of the clearance/reporting status (i.e. rejected or accepted) but can also contain clearance artefacts such as QR codes or a signed cleared document.
 
-==== Invoice Response
+==== Invoice response
 
 This is often referred to as business level response.
 
 It is a document issued by the recipient/buyer to inform the issuer of an **invoice** about business decisions.
 
 The delivered invoice may be technically correct and delivered to the recipient/buyer but there might be the need for a buyer to inform the issuer if the invoice is accepted or if there is a reason for a rejection.
-
-=== Invoice Response. Version and changelog
-
-.Version
-|===
-|Version |Date |Description
-|1.0 |2023-01-27 |First version published
-|===

@@ -5,7 +5,7 @@
 |`ext:UBLExtensions`
 |**Extension Content** +
 Extension is added to provide additional information in the `cac:Response` element, added elements in regards to `ext:UBLExtensions` for `cac:Response` can be found below: +
-<<_response_extension>>
+<<_response_extension>>.
 
 |`cbc:ResponseCode`
 |**Invoice status** +

@@ -9,7 +9,7 @@ More "levels" can be added if needed, see e.g. ubl:ApplicationResponse.
 -----------------------------------------------------------------------
 --
 
-=== ApplictionResponse
+=== ApplicationResponse
 
 NOTE: This is the root element in the UBL XML schema.
 
