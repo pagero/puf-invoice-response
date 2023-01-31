@@ -1,8 +1,8 @@
-Pagero Universal Format, hereafter referred to as "PUF", is a collection of business document specifications developed and maintained by https://www.pagero.com[Pagero Group, window=_blank].
+Pagero Universal Format, hereafter referred to as "PUF", is a collection of business document specifications developed and maintained by https://www.pagero.com[Pagero Group^].
 
-All response message types within the PUF suite implement the https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3 XML structure, window=_blank]. 
+All response message types within the PUF suite implement the https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3 XML structure^]. 
 
-https://pagero.github.io/puf[The PUF landing page, window=_blank] lists all document types supported in the suite and in which directions these are available.
+https://pagero.github.io/puf[The PUF landing page^] lists all document types supported in the suite and in which directions these are available.
 
 To align with new regulation and business needs throughout the world, the core idea of PUF is to enable its users to send/receive the data required to meet requirements in these markets and jurisdictions.
 
@@ -10,7 +10,7 @@ Based on extensive analysis, PUF has been designed to meet various country-, ind
 
 Another core idea of PUF is to create flexible, extendable business document specifications which can be updated quickly to meet the requirements of the fast-changing global electronic document landscape.
 
-PUF will to a large extent try to follow and align with the work done in https://peppol.org/[OpenPeppol, window=_blank] and other UBL based specifications.
+PUF will to a large extent try to follow and align with the work done in https://peppol.org/[OpenPeppol^] and other UBL based specifications.
 
 === Version and changelog
 
@@ -30,7 +30,7 @@ This can include information about the transport of a message, status regarding 
 
 Depending on which legal domain the document issuer operates in, the need for various response messages might differ.
 
-The response message types available in the PUF suite for use in https://www.pageroonline.com[Pagero Online] are:
+The response message types available in the PUF suite for use in https://www.pageroonline.com[Pagero Online^] are:
 
 - https://pagero.github.io/puf-technical-acknowledgement[Technical Acknowledgement^]
 - https://pagero.github.io/puf-clearance-notification[Clearance Notification^]

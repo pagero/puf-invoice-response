@@ -1,4 +1,4 @@
-To validate PUF documents please create a free account on https://pagero.validex.net[Pagero Validex].
+To validate PUF documents please create a free account on https://pagero.validex.net[Pagero Validex^].
 
 The validations available on Validex are:
 
@@ -6,7 +6,7 @@ The validations available on Validex are:
 2. **XSD schema**
 3. **PUF business (schematron) rules** (if applicable)
 
-The validation artefacts are also available on https://github.com/pagero/puf-invoice-response[GitHub].
+The validation artefacts are also available on https://github.com/pagero/puf-invoice-response[GitHub^].
 
 
 

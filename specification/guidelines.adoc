@@ -2,11 +2,11 @@ PUF Invoice Response is a document type that is applicable to be exchanged betwe
 
 This is often referred to as business level response.
 
-PUF Invoice Response is developed to be compliant to the https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3] schema.
+PUF Invoice Response is developed to be compliant to the https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3^] schema.
 
-In areas where support for certain information is available in the existing https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3] schema, PUF implements these elements.
+In areas where support for certain information is available in the existing https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3^] schema, PUF implements these elements.
 
-In other areas where there are no suitable elements in the existing https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3] schema, PUF implements `ext:UBLExtensions`.
+In other areas where there are no suitable elements in the existing https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3^] schema, PUF implements `ext:UBLExtensions`.
 
 === How to get started
 
@@ -16,7 +16,7 @@ In some cases we provide longer snippets of code and implementation guidelines d
 
 There is also a section with <<_examples>> that can be useful when building support for PUF Invoice Response in various markets.
 
-If your ERP system already can receive/issue documents in https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3] or if your ERP system can interpret/create another UBL 2.3 based format you can easily use this as stepping stone when moving towards PUF.
+If your ERP system already can receive/issue documents in https://docs.oasis-open.org/ubl/UBL-2.3.html[UBL 2.3^] or if your ERP system can interpret/create another UBL 2.3 based format you can easily use this as stepping stone when moving towards PUF.
 
 === Namespaces
 
@@ -115,14 +115,14 @@ A minor release will always be backward compatible and will take place without p
 
 Minor releases may include bugfixes, new elements, schematron updates and other features. 
 
-To be automatically notified of all releases, please "Watch" the project repository on https://github.com/pagero/puf-invoice-response[GitHub].
+To be automatically notified of all releases, please "Watch" the project repository on https://github.com/pagero/puf-invoice-response[GitHub^].
 
 ==== Major release
 
 A major release may include changes that are not backward compatible. 
 
-Such a release will be notified at least three months prior to date of implementation, to users who registered an account on Pagero validex or on https://github.com/pagero/puf-invoice-response[GitHub].
+Such a release will be notified at least three months prior to date of implementation, to users who registered an account on Pagero validex or on https://github.com/pagero/puf-invoice-response[GitHub^].
 
-To register for PUF major release notification you can create a free account on https://pagero.validex.net[Pagero Validex]. 
+To register for PUF major release notification you can create a free account on https://pagero.validex.net[Pagero Validex^]. 
 
-But we strongly urge all interested parties to "Watch" the project repository on https://github.com/pagero/puf-invoice-response[GitHub] where all releases will trigger automatic notifications.
+But we strongly urge all interested parties to "Watch" the project repository on https://github.com/pagero/puf-invoice-response[GitHub^] where all releases will trigger automatic notifications.
