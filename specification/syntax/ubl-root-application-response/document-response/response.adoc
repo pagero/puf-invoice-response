@@ -41,7 +41,9 @@ _cac:Response with example values_
                   <cbc:ID>123456789</cbc:ID>
                 </puf:ReferencedDocumentInterchangeID>  
                 <puf:DocumentMatchingID>
+                  <!-- Either cbc:ID or cbc:UUID can be used, see Extensions documentation -->
                   <cbc:ID>123456789</cbc:ID>
+                  <cbc:UUID>4408ca72-f3c0-11ed-a05b-0242ac120003</cbc:UUID>
                 </puf:DocumentMatchingID>  
               </puf:PageroExtension>
               <puf:AdditionalDocumentReference>
