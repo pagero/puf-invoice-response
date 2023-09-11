@@ -105,6 +105,33 @@ _UBLExtension used in the cac:Response structure._
 
 For detailed examples and how to use possible values in each extension please see the chapters where PUF-specific elements are described.
 
+=== Document reference matching
+
+[sidebar.pagero-sidebar]
+****
+Below information is only applicable when sending PUF Invoice Response to Pagero.
+****
+
+An Invoice Response always corresponds to an Invoice document. When transmitting the PUF Invoice Response, there are several methods by which Pagero Online establishes a connection between the Invoice Response and its corresponding Invoice (assuming the Invoice is present within Pagero Online).
+
+Pagero Online will attempt to match the response based on specific values. The xpaths for these are prioritized and used in the sequence listed below:
+
+. `cac:DocumentResponse/cac:Response/ext:UBLExtensions/ext:UBLExtension[ext:ExtensionURI = 'urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension']/ext:ExtensionContent/puf:PageroExtension/puf:ResponseExtension/puf:DocumentMatchingID/cbc:ID`
+
+. `cac:DocumentResponse/cac:Response/ext:UBLExtensions/ext:UBLExtension[ext:ExtensionURI = 'urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension']/ext:ExtensionContent/puf:PageroExtension/puf:ResponseExtension/puf:DocumentMatchingID/cbc:UUID`
+
+. Combined segment information:
+* `cac:DocumentResponse/cac:Response/cac:DocumentReference/cbc:ID`
+* `cac:DocumentResponse/cac:Response/cac:DocumentReference/cbc:IssueDate`
+* `cac:SenderParty/cac:PartyIdentification/cbc:ID`
+* `cac:ReceiverParty/cac:PartyIdentification/cbc:ID`
+
+For this last option, the identifiers (`cac:PartyIdentification/cbc:ID`) from both the sender and receiver parties must correspond to those present in the Invoice document within Pagero Online. Additionally, the invoice number and date should also align.
+
+You can read more about DocumentMatchingID in <<puf:ResponseExtension>>
+
+NOTE: If Pagero Online is unable to match the referenced document, the identifiers provided in `cac:ReceiverParty` will be used for routing the response to the recipient.
+
 === Release management
 
 PUF will be continuously updated to meet new market demands.

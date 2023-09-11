@@ -1,0 +1,8 @@
+This document refers to an Excel file that serves as an additional mapping guide for the Pagero Universal Format (PUF) in complement to the online documentation. It's designed to provide an essential understanding of the structure and core components of the PUF.
+
+Please note that the guide is intended to be used only when [.underline]#sending# PUF Invoice Response.
+
+The Excel file can be accessed through the following link:
+
+- https://github.com/pagero/puf-invoice-response/blob/master/specification/excel/Pagero%20Universal%20Format%20-%20Send%20Invoice%20Response.xlsx[PUF Specification^]
+

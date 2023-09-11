@@ -39,7 +39,7 @@ The response message types available in the PUF suite for use in https://www.pag
 
 _Example: A possible orchestation of messages supporting a market where invoices are required to be reported to a clearance authority and where a buyer has the possibility to send an invoice response._
 
-image:images/response-messages-overview.JPG[float="center", width=100%]
+image:images/response-messages-overview.png[float="center", width=100%]
 
 ==== Technical acknowledgement
 
