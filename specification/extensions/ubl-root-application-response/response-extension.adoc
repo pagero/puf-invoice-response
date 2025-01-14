@@ -6,6 +6,11 @@ Below table shows the definition of elements added to the extension `puf:PageroE
 |===
 |Element |Description
 
+|`puf:RestrictedInformation/puf:Key +
+puf:RestrictedInformation/puf:Value`
+|**Returnable restricted information** +
+From PUF Billing documents sent to Pagero, restricted information values on document level with keys prefixed by "returnInResponse_" will be returned in the response message with the same key and value.
+
 |`puf:ReferencedDocumentInterchangeID/cbc:ID`
 |**Referenced document interchange identifier** +
 The interchange id of the referenced document (if sent by the issuer). +
