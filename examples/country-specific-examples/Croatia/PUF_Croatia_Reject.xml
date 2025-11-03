@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EXAMPLE FILE PUF Invoice Response. Use Case: Response sent from Buyer -> Pagero -> Supplier. REJECTING an invoice -->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:invoice_response:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:invoice_response:1.0</cbc:ProfileID>
+    <!-- Response Identifier -->
+    <cbc:ID>123456</cbc:ID>
+    <!-- Response Issue date -->
+    <cbc:IssueDate>2025-11-01</cbc:IssueDate>
+    <!-- Response Issue Time -->
+    <cbc:IssueTime>12:00:00</cbc:IssueTime>
+    <!-- Sender Party -->
+    <cac:SenderParty>
+        <!-- Sender Party Elextronic address -->
+        <cbc:EndpointID schemeID="9934">11223344556</cbc:EndpointID>
+        <cac:PartyLegalEntity>
+            <!-- Party Name -->
+            <cbc:RegistrationName>Logistics Solutions Varaždin d.o.o.</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party -->
+    <cac:ReceiverParty>
+        <!-- Receiver Party electronic address -->
+        <cbc:EndpointID schemeID="9934">22334455667</cbc:EndpointID>
+        <cac:PartyLegalEntity>
+            <!-- Party Name -->
+            <cbc:RegistrationName>Industri ja Sisak d.d.</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <!-- Response -->
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <!-- The unique Pagero ID used to match the response to an Invoice. This ID is applicable when you send a response. Then this ID can be sent to 
+                                     facilitate a matching/connection between the response to the Invoice in Pagero Online. -->
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>111222333</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!-- Response Code -->
+            <!-- Only RE (Reject) is allowed in Croatia -->
+            <cbc:ResponseCode>RE</cbc:ResponseCode>
+            <cac:Status>
+                <!-- Possible codes: 
+                     N – Data mismatch that does not affect tax calculation
+                     U – Data mismatch that affects tax calculation
+                     O – Other
+                -->
+                <cbc:StatusReasonCode>O</cbc:StatusReasonCode>
+                <cbc:StatusReason>Reason for rejection</cbc:StatusReason>
+            </cac:Status>
+        </cac:Response>
+        <!-- Document Reference -->
+        <cac:DocumentReference>
+            <!-- Invoice identifier of the referenced document -->
+            <cbc:ID>HR-2025-888</cbc:ID>
+            <!-- Identifier Type code -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>
