@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EXAMPLE FILE PUF Invoice Response. Use Case: Response sent from Buyer -> Pagero -> Supplier. REJECTING an invoice -->
+<!-- EXAMPLE FILE PUF Document Status. Use Case: Response sent from Seller -> Pagero -> Buyer. Indicating PAYMENT RECEIVED for an invoice. Equivalent of status 212 (Encaissée) in CDAR. -->
 <ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
                      xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
                      xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
