@@ -53,21 +53,19 @@
                                 <puf:Amounts>
                                     <puf:Amount>
                                         <puf:AmountType>MEN</puf:AmountType>
-                                        <cbc:TaxExclusiveAmount>1000</cbc:TaxExclusiveAmount>
-                                        <cbc:TaxInclusiveAmount>1200</cbc:TaxInclusiveAmount>
+                                        <cbc:TaxExclusiveAmount currencyID="EUR">1000</cbc:TaxExclusiveAmount>
+                                        <cbc:TaxInclusiveAmount currencyID="EUR">1200</cbc:TaxInclusiveAmount>
                                         <cac:ClassifiedTaxCategory>
                                             <cbc:Percent>20</cbc:Percent>
                                         </cac:ClassifiedTaxCategory>
-                                        <cbc:CurrencyCode>EUR</cbc:CurrencyCode>
                                     </puf:Amount>
                                     <puf:Amount>
                                         <puf:AmountType>MEN</puf:AmountType>
-                                        <cbc:TaxExclusiveAmount>100</cbc:TaxExclusiveAmount>
-                                        <cbc:TaxInclusiveAmount>110</cbc:TaxInclusiveAmount>
+                                        <cbc:TaxExclusiveAmount currencyID="EUR">100</cbc:TaxExclusiveAmount>
+                                        <cbc:TaxInclusiveAmount currencyID="EUR">110</cbc:TaxInclusiveAmount>
                                         <cac:ClassifiedTaxCategory>
                                             <cbc:Percent>10</cbc:Percent>
                                         </cac:ClassifiedTaxCategory>
-                                        <cbc:CurrencyCode>EUR</cbc:CurrencyCode>
                                     </puf:Amount>
                                 </puf:Amounts>
                             </puf:ResponseExtension>
