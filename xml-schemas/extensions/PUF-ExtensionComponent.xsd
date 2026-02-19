@@ -20,6 +20,7 @@
 		schemaLocation="../common/BDNDR-UnqualifiedDataTypes-1.1.xsd"/>
 	<!-- ===== Element Declarations ===== -->
 	<xsd:element name="Amount" type="PUFAmountType"/>
+	<xsd:element name="Amounts" type="PUFAmountsListType"/>
 	<xsd:element name="IDType" type="PUFIDType"/>
 	<xsd:element name="Code" type="PUFCodeType"/>
 	<xsd:element name="Key" type="PUFCodeType"/>
@@ -112,6 +113,14 @@
 								</xsd:annotation>
 							</xsd:element>
 
+							<xsd:element ref="Amounts" minOccurs="0" maxOccurs="unbounded">
+								<xsd:annotation>
+									<xsd:documentation>
+										Amounts relating to the status. This group can be repeated, for example to provide multiple VAT rates or different types of amounts (discounts, payments, etc.).
+									</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+
 							<xsd:any namespace="##other" processContents="lax" minOccurs="0"
 								maxOccurs="1"/>
 						</xsd:sequence>
@@ -153,5 +162,22 @@
 		<xsd:simpleContent>
 			<xsd:extension base="ccts-cct:TextType"/>
 		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<!-- ===== Response Extension Amounts types ===== -->
+	<xsd:complexType name="PUFAmountsListType">
+		<xsd:sequence>
+			<xsd:element name="Amount" type="PUFAmountEntryType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PUFAmountEntryType">
+		<xsd:sequence>
+			<xsd:element name="AmountType" type="PUFTextType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="cbc:TaxExclusiveAmount" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="cbc:TaxInclusiveAmount" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="ClassifiedTaxCategory" type="cac:TaxCategoryType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="cbc:CurrencyCode" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

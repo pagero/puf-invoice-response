@@ -15,16 +15,25 @@ https://pagero.github.io/puf-code-lists/#_puf_016_invoicestatuscode[PUF-016-INVO
 
 |`cac:Status/cbc:StatusReasonCode`
 |**Status reason code** +
-A code defining a clarification given for the status.
+A code defining a clarification given for the status. +
+
+
+The primary purpose of the `cac:Status` group is to explain *why* a given status is issued. However, the group can be *repeated* to also convey a *requested action* from the recipient (e.g. requesting that a new invoice is issued). In that case, an additional `cac:Status` entry should be included with a code from the https://docs.peppol.eu/poacc/upgrade-3/codelist/OPStatusAction/[OPStatusAction^] code list.
 
 |`cac:Status/cbc:StatusReasonCode/@listID`
 |**Status reason code list identifier** +
-List identifier for clarification +
-Should **only** be used if following https://docs.peppol.eu/poacc/upgrade-3/syntax/InvoiceResponse/cac-DocumentResponse/cac-Response/cac-Status/cbc-StatusReasonCode/[Peppol Status Clarification Reason codes^].
+List identifier identifying which code list the `cbc:StatusReasonCode` value belongs to. +
+`@listID` is **not required** by PUF, but should be included when following Peppol rules. +
+
+For **status clarification reasons** (i.e. *why* the status is given), set `@listID` to `OPStatusReason` and use a code from the Peppol Status Clarification Reason code list: +
+https://docs.peppol.eu/poacc/upgrade-3/syntax/InvoiceResponse/cac-DocumentResponse/cac-Response/cac-Status/cbc-StatusReasonCode/[Peppol Status Clarification Reason codes^]. +
+
+For **requested actions** (i.e. what the recipient is asked to *do*), set `@listID` to `OPStatusAction` and use a code from the OPStatusAction code list: +
+https://docs.peppol.eu/poacc/upgrade-3/codelist/OPStatusAction/[OPStatusAction^].
 
 |`cac:Status/cbc:StatusReason`
 |**Status reason text** +
-The description of the clarification given for the status.
+A free-text explanation of the clarification or requested action given for the status.
 
 |===
 

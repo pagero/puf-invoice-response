@@ -1,5 +1,5 @@
 :doctitle: image:images/puf-logo.png[float="center", width=100%] PUF Invoice Response 1.0
-:author: Copyright &copy; 2023, Pagero Group
+:author: Copyright &copy; 2026, Pagero Group
 :email: https://pagero.com
 :copyright: Pagero Group
 :minor: 1.0
@@ -38,17 +38,9 @@ include::specification/syntax.adoc[]
 
 include::specification/extensions.adoc[]
 
-[comment]
---
------------------------------------------------------------------------
-Country specific section commented out at this point
-
 == Country specifics
 
 include::specification/country-specifics.adoc[]
-
------------------------------------------------------------------------
---
 
 == Code lists
 

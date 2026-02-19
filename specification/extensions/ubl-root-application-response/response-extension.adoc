@@ -1,8 +1,10 @@
 ==== puf:ResponseExtension
 
-Below table shows the definition of elements added to the extension `puf:PageroExtension/puf:ResponseExtension`.
+Below tables shows the definition of elements added to the extension `puf:PageroExtension/puf:ResponseExtension`. 
 
-.Elements added in puf:ResponseExtension
+.Elements added in puf:ResponseExtension relating to RestrictedInformation.
+[.response-extension-table]
+[%stretch,cols="1,1"]
 |===
 |Element |Description
 
@@ -10,6 +12,14 @@ Below table shows the definition of elements added to the extension `puf:PageroE
 puf:RestrictedInformation/puf:Value`
 |**Returnable restricted information** +
 From PUF Billing documents sent to Pagero, restricted information values on document level with keys prefixed by "returnInResponse_" will be returned in the response message with the same key and value.
+
+|===
+
+.Elements added in puf:ResponseExtension relating to document/reference matching.
+[.response-extension-table]
+[%stretch,cols="1,1"]
+|===
+|Element |Description
 
 |`puf:ReferencedDocumentInterchangeID/cbc:ID`
 |**Referenced document interchange identifier** +
@@ -27,6 +37,14 @@ Then this ID can be sent to facilitate a matching/connection between the respons
 The unique Pagero UUID used to match the response to an Invoice. +
 This ID is applicable when you **_send a response_**. +
 The UUID is only availble via **Document API** when using https://pagero.github.io/document-api-doc/#tag/document[GET^] documents.
+
+|===
+
+.Elements added in puf:ResponseExtension relating to attachments and related documents. 
+[.response-extension-table]
+[%stretch,cols="1,1"]
+|===
+|Element |Description
 
 |`puf:AdditionalDocumentReference/cbc:ID`
 |**Additional document reference identifier** +
@@ -60,11 +78,36 @@ cbc:EmbeddedDocumentBinaryObject`
 The attached document embedded as binary object (Base64).
 
 |===
+.Elements added in puf:ResponseExtension relating to amounts. 
+[.response-extension-table]
+[%stretch,cols="1,1"]
+|===
+|Element |Description
+
+|`puf:Amounts/puf:Amount/puf:AmountType`
+|**Amount type** +
+The type of amount that is being specified. +
+AmountType code currently depend on country guidelines. See section <<_country_specifics>> for more details on how it's handled in each country.
+
+|`puf:Amounts/puf:Amount/cbc:TaxExclusiveAmount`
+|**Net amount** +
+The net amount (excl. taxes) for the specified amount type.
+
+|`puf:Amounts/puf:Amount/cbc:TaxInclusiveAmount`
+|**Total amount** +
+The total amount (incl. taxes) for the specified amount type.
+
+|`puf:Amounts/puf:Amount/cac:ClassifiedTaxCategory/cbc:Percent`
+|**Tax rate** +
+The tax rate applicable for the specified amount type.
+
+|===
 
 See example below as well as the URI to be used for this extension.
 
 *Example* +
 _puf:ResponseExtension with sample values._
+[%nowrap]
 [source,xml]
 ----
 <ApplicationResponse>
@@ -93,6 +136,24 @@ _puf:ResponseExtension with sample values._
                                         <cbc:EmbeddedDocumentBinaryObject filename="123456789_12345.xml" mimeCode="application/xml">U29tZSBkb2N1bWVudA==</cbc:EmbeddedDocumentBinaryObject>
                                     </cac:Attachment>
                                 </puf:AdditionalDocumentReference>
+                                <puf:Amounts>
+                                    <puf:Amount>
+                                        <puf:AmountType>MEN</puf:AmountType>
+                                        <cbc:TaxExclusiveAmount currencyID="EUR">100.00</cbc:TaxExclusiveAmount>
+                                        <cbc:TaxInclusiveAmount currencyID="EUR">120.00</cbc:TaxInclusiveAmount>
+                                        <puf:ClassifiedTaxCategory>
+                                            <cbc:Percent>20</cbc:Percent>
+                                        </puf:ClassifiedTaxCategory>
+                                    </puf:Amount>
+                                    <puf:Amount>
+                                        <puf:AmountType>MEN</puf:AmountType>
+                                        <cbc:TaxExclusiveAmount currencyID="EUR">10.00</cbc:TaxExclusiveAmount>
+                                        <cbc:TaxInclusiveAmount currencyID="EUR">11.00</cbc:TaxInclusiveAmount>
+                                        <puf:ClassifiedTaxCategory>
+                                            <cbc:Percent>10</cbc:Percent>
+                                        </puf:ClassifiedTaxCategory>
+                                    </puf:Amount>
+                                </puf:Amounts>
                             </puf:ResponseExtension>
                         </puf:PageroExtension>
                     </ext:ExtensionContent>
@@ -102,3 +163,4 @@ _puf:ResponseExtension with sample values._
         <!-- Code omitted for clarity -->
 </ApplicationResponse>
 ----
+

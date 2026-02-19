@@ -38,13 +38,26 @@ _ApplicationResponse example for target namespace_
 
 To indicate the correct PUF specification identifer and the profile identifier, the values in below table must be sent in `cbc:CustomizationID` and `cbc:ProfileID`.
 
-[%autowidth.stretch]
+The two types (*Invoice Response* and *Document Status*) represent two different underlying business processes and are selected based on the role the sending party has in that process:
+
+* *Invoice Response* is used when the *buyer* provides a business status update for a referenced document.
+* *Document Status* is used when the *seller* provides a business status update for a referenced document.
+
+The supported statuses and content is the same in both types; only the sender’s role (buyer or seller) differs.
+
+
 |===
-|Type |Element `cbc:CustomizationID` |Element `cbc:ProfileID`
+|Type |Element `cbc:CustomizationID` |Element `cbc:ProfileID` |Process/Business roles
 
 |*Invoice Response*
 |urn:pagero.com:puf:invoice_response:1.0
 |urn:pagero.com:puf:invoice_response:1.0
+|Buyer to Seller
+
+|*Document Status*
+|urn:pagero.com:puf:document_status:1.0
+|urn:pagero.com:puf:document_status:1.0
+|Seller to Buyer
 |===
 
 *Example*

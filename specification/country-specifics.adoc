@@ -1,0 +1,5 @@
+This section will provide information on how common country specific data in PUF Invoice Response is implemented.
+
+=== France
+
+include::country-specifics/france.adoc[]
