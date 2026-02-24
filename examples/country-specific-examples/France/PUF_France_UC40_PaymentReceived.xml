@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Document Status — France
+    Use Case: UC40 — Compensation / Netting Between Trading Partners
+    Use Case: Seller → Buyer. Reporting payment collection via netting (Encaissée).
+    French CDAR status code: 212 (Encaissée)
+
+    Reference invoice: PUF_France_UC40_Netting_Invoice2_FarmerToCoop.xml (EARL-2026-0089)
+    Sender  (Seller): EARL Martin Viticulture — SIREN 555666777
+    Receiver (Buyer): Coopérative Agricole Provence — SIREN 111222333
+
+    Netting context:
+      Invoice 1 (Coop → Farmer, services): COOP-2026-0234 = 2,400.00 EUR TTC (2,000.00 HT @ 20%)
+      Invoice 2 (Farmer → Coop, grapes):   EARL-2026-0089 = 5,280.00 EUR TTC (4,400.00 HT @ 20%)
+      Net settlement (Coop pays Farmer):    2,880.00 EUR on 2026-02-15
+
+    IMPORTANT — MEN amount reporting for netting:
+      Although the actual cash transfer was only 2,880.00 EUR (the net difference),
+      the MEN amount in this Encaissée MUST report the FULL invoice TTC (5,280.00 EUR).
+      Reason: the invoice was "collected" in full via legal set-off / compensation.
+      The French Tax Authority requires MEN to reflect the full amount of the taxable
+      transaction — partial or net settlement amounts must NOT be reported here.
+
+    The seller (farmer) also sends a separate Encaissée for invoice COOP-2026-0234,
+    as the cooperative's services invoice was equally collected by netting.
+
+    Payment means code 97 (Clearing between partners) was used on the invoice.
+
+    See also: PUF_France_UC40_Netting_Invoice2_FarmerToCoop.xml
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:document_status:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:document_status:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-FR-UC40-001</cbc:ID>
+    <!-- Response issue date = netting settlement date -->
+    <cbc:IssueDate>2026-02-15</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>17:00:00</cbc:IssueTime>
+    <!-- Sender Party (Seller — farmer, reports full invoice TTC as collected via netting) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">555666777</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>EARL Martin Viticulture</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Buyer — cooperative) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">111222333</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Coopérative Agricole Provence</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>40100000001</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!-- Response Code: PAYMENT_RECEIVED = Encaissée (French code 212) -->
+            <cbc:ResponseCode>PAYMENT_RECEIVED</cbc:ResponseCode>
+            <!--
+                MEN = FULL invoice TTC (5,280.00 EUR), NOT the net settlement (2,880.00 EUR).
+                The invoice was collected in full via legal compensation/set-off (netting).
+                The French Tax Authority requires MEN to reflect the full taxable amount.
+                Net settlement amount is NOT used here — only the full invoice TTC.
+            -->
+            <cac:Status>
+                <ext:UBLExtensions>
+                    <ext:UBLExtension>
+                        <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:StatusExtension</ext:ExtensionURI>
+                        <ext:ExtensionContent>
+                            <puf:PageroExtension>
+                                <puf:StatusExtension>
+                                    <puf:Amounts>
+                                        <puf:Amount>
+                                            <puf:AmountType>MEN</puf:AmountType>
+                                            <cbc:TaxExclusiveAmount currencyID="EUR">4400.00</cbc:TaxExclusiveAmount>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">5280.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                    </puf:Amounts>
+                                </puf:StatusExtension>
+                            </puf:PageroExtension>
+                        </ext:ExtensionContent>
+                    </ext:UBLExtension>
+                </ext:UBLExtensions>
+                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
+            </cac:Status>
+        </cac:Response>
+        <cac:DocumentReference>
+            <cbc:ID>EARL-2026-0089</cbc:ID>
+            <cbc:IssueDate>2026-02-03</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>

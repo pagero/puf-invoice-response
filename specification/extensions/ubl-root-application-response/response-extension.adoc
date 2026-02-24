@@ -78,30 +78,6 @@ cbc:EmbeddedDocumentBinaryObject`
 The attached document embedded as binary object (Base64).
 
 |===
-.Elements added in puf:ResponseExtension relating to amounts. 
-[.response-extension-table]
-[%stretch,cols="1,1"]
-|===
-|Element |Description
-
-|`puf:Amounts/puf:Amount/puf:AmountType`
-|**Amount type** +
-The type of amount that is being specified. +
-AmountType code currently depend on country guidelines. See section <<_country_specifics>> for more details on how it's handled in each country.
-
-|`puf:Amounts/puf:Amount/cbc:TaxExclusiveAmount`
-|**Net amount** +
-The net amount (excl. taxes) for the specified amount type.
-
-|`puf:Amounts/puf:Amount/cbc:TaxInclusiveAmount`
-|**Total amount** +
-The total amount (incl. taxes) for the specified amount type.
-
-|`puf:Amounts/puf:Amount/cac:ClassifiedTaxCategory/cbc:Percent`
-|**Tax rate** +
-The tax rate applicable for the specified amount type.
-
-|===
 
 See example below as well as the URI to be used for this extension.
 
@@ -136,24 +112,6 @@ _puf:ResponseExtension with sample values._
                                         <cbc:EmbeddedDocumentBinaryObject filename="123456789_12345.xml" mimeCode="application/xml">U29tZSBkb2N1bWVudA==</cbc:EmbeddedDocumentBinaryObject>
                                     </cac:Attachment>
                                 </puf:AdditionalDocumentReference>
-                                <puf:Amounts>
-                                    <puf:Amount>
-                                        <puf:AmountType>MEN</puf:AmountType>
-                                        <cbc:TaxExclusiveAmount currencyID="EUR">100.00</cbc:TaxExclusiveAmount>
-                                        <cbc:TaxInclusiveAmount currencyID="EUR">120.00</cbc:TaxInclusiveAmount>
-                                        <puf:ClassifiedTaxCategory>
-                                            <cbc:Percent>20</cbc:Percent>
-                                        </puf:ClassifiedTaxCategory>
-                                    </puf:Amount>
-                                    <puf:Amount>
-                                        <puf:AmountType>MEN</puf:AmountType>
-                                        <cbc:TaxExclusiveAmount currencyID="EUR">10.00</cbc:TaxExclusiveAmount>
-                                        <cbc:TaxInclusiveAmount currencyID="EUR">11.00</cbc:TaxInclusiveAmount>
-                                        <puf:ClassifiedTaxCategory>
-                                            <cbc:Percent>10</cbc:Percent>
-                                        </puf:ClassifiedTaxCategory>
-                                    </puf:Amount>
-                                </puf:Amounts>
                             </puf:ResponseExtension>
                         </puf:PageroExtension>
                     </ext:ExtensionContent>

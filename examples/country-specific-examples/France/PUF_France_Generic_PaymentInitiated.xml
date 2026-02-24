@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Invoice Response — France
+    Use Case: Buyer → Seller. Notifying that payment has been initiated (Paiement Transmis).
+    French CDAR status code: 211 (Paiement Transmis)
+
+    Reference invoice: PUF_France_Generic_Invoice.xml (FR-INV-2026-001)
+    Sender  (Buyer):  Entreprise Client France SA — SIREN 123456789
+    Receiver (Seller): TechDistrib France SARL — SIREN 987654321
+
+    The MPA amount type indicates the total amount the buyer has transferred.
+    Amount breakdown per VAT rate is optional for Paiement Transmis but recommended.
+    This status is sent by the buyer when payment has been issued (not yet confirmed
+    as received by the seller — that is reported via PAYMENT_RECEIVED/Encaissée).
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:invoice_response:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:invoice_response:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-FR-2026-003</cbc:ID>
+    <!-- Response issue date -->
+    <cbc:IssueDate>2026-03-03</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>11:15:00</cbc:IssueTime>
+    <!-- Sender Party (Buyer — sends Invoice Response) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">123456789</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Entreprise Client France SA</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Seller — receives Invoice Response) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">987654321</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>TechDistrib France SARL</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <!-- Response element containing the status code and amount details -->
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <!-- DocumentMatchingID links this response to the original transaction -->
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>10000000003</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!-- Response Code: PAYMENT_INITIATED = Paiement Transmis (French code 211) -->
+            <cbc:ResponseCode>PAYMENT_INITIATED</cbc:ResponseCode>
+            <!--
+                Status with MPA amount (amount paid/transferred by buyer).
+                Amount breakdown per VAT rate is optional but included here for completeness.
+            -->
+            <cac:Status>
+                <ext:UBLExtensions>
+                    <ext:UBLExtension>
+                        <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:StatusExtension</ext:ExtensionURI>
+                        <ext:ExtensionContent>
+                            <puf:PageroExtension>
+                                <puf:StatusExtension>
+                                    <puf:Amounts>
+                                        <!--
+                                            MPA = Amount paid (incl. tax).
+                                            Represents the total payment amount sent by the buyer.
+                                        -->
+                                        <puf:Amount>
+                                            <puf:AmountType>MPA</puf:AmountType>
+                                            <cbc:TaxExclusiveAmount currencyID="EUR">1000.00</cbc:TaxExclusiveAmount>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">1200.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                    </puf:Amounts>
+                                </puf:StatusExtension>
+                            </puf:PageroExtension>
+                        </ext:ExtensionContent>
+                    </ext:UBLExtension>
+                </ext:UBLExtensions>
+                <!-- NON = no specific reason code; status is informational -->
+                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
+            </cac:Status>
+        </cac:Response>
+        <!-- Reference to the original invoice -->
+        <cac:DocumentReference>
+            <!-- Invoice number of the referenced document -->
+            <cbc:ID>FR-INV-2026-001</cbc:ID>
+            <cbc:IssueDate>2026-02-01</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>

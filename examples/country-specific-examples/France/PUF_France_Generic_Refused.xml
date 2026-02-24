@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Invoice Response — France
+    Use Case: Buyer → Seller. Refusing an invoice (Refusée).
+    French CDAR status code: 210 (Refusée)
+
+    Reference invoice: PUF_France_Generic_Invoice.xml (FR-INV-2026-001)
+    Sender  (Buyer):  Entreprise Client France SA — SIREN 123456789
+    Receiver (Seller): TechDistrib France SARL — SIREN 987654321
+
+    Refusal reason: CALCUL_ERR — Calculation error on invoice amounts.
+    Requested action: NIN — Issue a corrected invoice.
+
+    Note: The reason code must be one of the 22 French-specific reason codes
+    defined in the PUF Invoice Response France country specifics specification.
+    See france.adoc for the full list and applicability per response code.
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:invoice_response:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:invoice_response:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-FR-2026-002</cbc:ID>
+    <!-- Response issue date -->
+    <cbc:IssueDate>2026-02-10</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>09:30:00</cbc:IssueTime>
+    <!-- Optional freetext note -->
+    <cbc:Note>Refus de la facture FR-INV-2026-001 : erreur de calcul sur le montant total HT.</cbc:Note>
+    <!-- Sender Party (Buyer — sends Invoice Response) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">123456789</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Entreprise Client France SA</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Seller — receives Invoice Response) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">987654321</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>TechDistrib France SARL</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <!-- Response element containing the status code and reason/action -->
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <!-- DocumentMatchingID links this response to the original transaction -->
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>10000000002</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!-- Response Code: RE = Refusée (French code 210) -->
+            <cbc:ResponseCode>RE</cbc:ResponseCode>
+            <!--
+                Status 1 — Reason code (why the invoice is refused).
+                listID="OPStatusReason" identifies this as a reason code status.
+                CALCUL_ERR = error in the calculation of amounts.
+                Applicable to response code RE (210) per French spec.
+            -->
+            <cac:Status>
+                <cbc:StatusReasonCode listID="OPStatusReason">CALCUL_ERR</cbc:StatusReasonCode>
+                <cbc:StatusReason>Erreur de calcul : le montant total HT ne correspond pas à la somme des lignes de facturation.</cbc:StatusReason>
+            </cac:Status>
+            <!--
+                Status 2 — Requested action (what the seller should do).
+                listID="OPStatusAction" identifies this as an action code status.
+                NIN = Issue a corrected invoice (Non-Invoice action).
+            -->
+            <cac:Status>
+                <cbc:StatusReasonCode listID="OPStatusAction">NIN</cbc:StatusReasonCode>
+                <cbc:StatusReason>Veuillez émettre une facture rectificative avec les montants corrects.</cbc:StatusReason>
+            </cac:Status>
+        </cac:Response>
+        <!-- Reference to the original invoice -->
+        <cac:DocumentReference>
+            <!-- Invoice number of the referenced document -->
+            <cbc:ID>FR-INV-2026-001</cbc:ID>
+            <cbc:IssueDate>2026-02-01</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>

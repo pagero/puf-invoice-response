@@ -13,6 +13,11 @@ A code stating the status of the invoice in the process. +
 _Value according to code list +
 https://pagero.github.io/puf-code-lists/#_puf_016_invoicestatuscode[PUF-016-INVOICESTATUSCODE^]._
 
+|`ext:UBLExtensions`
+|**Extension Content** +
+Extension is added to provide additional information in the `cac:Status` element, added elements in regards to `ext:UBLExtensions` for `cac:Status` can be found below: +
+<<_status_extension>>.
+
 |`cac:Status/cbc:StatusReasonCode`
 |**Status reason code** +
 A code defining a clarification given for the status. +

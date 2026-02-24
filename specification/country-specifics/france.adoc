@@ -50,7 +50,7 @@ NOTE: Generally, only one "amount" per ``puf:Amount`` should be sent, i.e. choos
 
 
 *Example* +
-_puf:ResponseExtension with sample values. The example scenario illustrated below is an invoice for €1310 (incl. VAT) with two VAT rates (20 % and 10 %). The taxpayer reports that two amounts have been paid: €120 (incl. 20 % VAT) and €11 (incl. 10 % VAT). In addition to this, the taxpayer also informs the recipient that they have €1080 (incl. 20 % VAT) and €99 (incl. 10 % VAT) remaining to be paid (RAP)._
+_puf:StatusExtension with sample values. The example scenario illustrated below is an invoice for €1310 (incl. VAT) with two VAT rates (20 % and 10 %). The taxpayer reports that two amounts have been paid: €120 (incl. 20 % VAT) and €11 (incl. 10 % VAT). In addition to this, the taxpayer also informs the recipient that they have €1080 (incl. 20 % VAT) and €99 (incl. 10 % VAT) remaining to be paid (RAP)._
 [%nowrap]
 [source,xml]
 ----
@@ -58,48 +58,62 @@ _puf:ResponseExtension with sample values. The example scenario illustrated belo
     <!-- Code omitted for clarity -->
     <cac:DocumentResponse>
         <cac:Response>
-            <ext:UBLExtensions>
-                <ext:UBLExtension>
-                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
-                    <ext:ExtensionContent>
-                        <puf:PageroExtension>
-                            <puf:ResponseExtension>
-                                <!-- Code omitted for clarity -->
-                                <puf:Amounts>
-                                    <puf:Amount>
-                                        <puf:AmountType>MEN</puf:AmountType>
-                                        <cbc:TaxInclusiveAmount currencyID="EUR">120.00</cbc:TaxInclusiveAmount>
-                                        <puf:ClassifiedTaxCategory>
-                                            <cbc:Percent>20</cbc:Percent>
-                                        </puf:ClassifiedTaxCategory>
-                                    </puf:Amount>
-                                    <puf:Amount>
-                                        <puf:AmountType>MEN</puf:AmountType>
-                                        <cbc:TaxInclusiveAmount currencyID="EUR">11.00</cbc:TaxInclusiveAmount>
-                                        <puf:ClassifiedTaxCategory>
-                                            <cbc:Percent>10</cbc:Percent>
-                                        </puf:ClassifiedTaxCategory>
-                                    </puf:Amount>
-                                    <puf:Amount>
-                                        <puf:AmountType>RAP</puf:AmountType>
-                                        <cbc:TaxInclusiveAmount currencyID="EUR">1080.00</cbc:TaxInclusiveAmount><!--.-->
-                                        <puf:ClassifiedTaxCategory>
-                                            <cbc:Percent>20</cbc:Percent><!--.-->
-                                        </puf:ClassifiedTaxCategory>
-                                    </puf:Amount>
-                                    <puf:Amount>
-                                        <puf:AmountType>RAP</puf:AmountType>
-                                        <cbc:TaxInclusiveAmount currencyID="EUR">99.00</cbc:TaxInclusiveAmount>
-                                        <puf:ClassifiedTaxCategory>
-                                            <cbc:Percent>10</cbc:Percent>
-                                        </puf:ClassifiedTaxCategory>
-                                    </puf:Amount>
-                                </puf:Amounts>
-                            </puf:ResponseExtension>
-                        </puf:PageroExtension>
-                    </ext:ExtensionContent>
-                </ext:UBLExtension>
-            </ext:UBLExtensions>
+            <cac:Status>
+                <ext:UBLExtensions>
+                    <ext:UBLExtension>
+                        <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:StatusExtension</ext:ExtensionURI>
+                        <ext:ExtensionContent>
+                            <puf:PageroExtension>
+                                <puf:StatusExtension>
+                                    <!-- Code omitted for clarity -->
+                                    <puf:Amounts>
+                                        <puf:Amount>
+                                            <puf:AmountType>MEN</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">120.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                        <puf:Amount>
+                                            <puf:AmountType>MEN</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">11.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                        <puf:Amount>
+                                            <puf:AmountType>RAP</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">1080.00</cbc:TaxInclusiveAmount><!--.-->
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent><!--.-->
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                        <puf:Amount>
+                                            <puf:AmountType>RAP</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">99.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>10</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                    </puf:Amounts>
+                                </puf:StatusExtension>
+                            </puf:PageroExtension>
+                        </ext:ExtensionContent>
+                    </ext:UBLExtension>
+                </ext:UBLExtensions>
+            </cac:Status>
         </cac:Response>
         <!-- Code omitted for clarity -->
 </ApplicationResponse>

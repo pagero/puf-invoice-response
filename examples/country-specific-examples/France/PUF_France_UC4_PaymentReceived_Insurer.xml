@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Document Status — France
+    Use Case: UC4 — Partial Third-Party Payment (Insurance) — Insurer Portion
+    Use Case: Seller → Buyer. Reporting collection of the insurer's payment (Encaissée).
+    French CDAR status code: 212 (Encaissée)
+
+    Reference invoice: PUF_France_UC4_PartialThirdPartyPayment_Invoice.xml (REP-2026-0845)
+    Sender  (Seller): Garage Auto Réparation Lyon SARL — SIREN 987654321
+    Receiver (Buyer): Transport Express Rhône SARL — SIREN 333444555
+
+    Invoice total: 3,600.00 EUR TTC (3,000.00 HT + 600.00 TVA 20%)
+    Split:
+      - Buyer pays deductible + VAT:  1,100.00 EUR TTC → separate Encaissée message
+      - Insurer pays insurance portion: 2,500.00 EUR TTC → this message (MEN @ 0%)
+
+    Two separate Encaissée messages are required per French spec:
+    1. PUF_France_UC4_PaymentReceived_Buyer.xml: buyer's payment (deductible + VAT) at 20%.
+    2. This file: insurer's payment at 0% VAT rate (indemnité assurance — not a taxable VAT
+       transaction from the insurer's perspective).
+
+    The insurer (Assurance Auto France SA) paid 2,500.00 EUR directly to the garage as
+    insurance indemnity. VAT rate = 0% because insurance indemnities are not subject to VAT.
+
+    See also: PUF_France_UC4_PartialThirdPartyPayment_Invoice.xml
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:document_status:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:document_status:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-FR-UC4-INS-001</cbc:ID>
+    <!-- Response issue date (after invoice due date 2026-02-28) -->
+    <cbc:IssueDate>2026-03-05</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>09:00:00</cbc:IssueTime>
+    <!-- Sender Party (Seller — garage, reports collection from insurer) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">987654321</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Garage Auto Réparation Lyon SARL</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Buyer — transport company, addressee of the Document Status) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">333444555</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Transport Express Rhône SARL</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>40000000002</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!-- Response Code: PAYMENT_RECEIVED = Encaissée (French code 212) -->
+            <cbc:ResponseCode>PAYMENT_RECEIVED</cbc:ResponseCode>
+            <!--
+                MEN = insurer's payment (2,500.00 EUR) at 0% VAT.
+                Insurance indemnity payments are not subject to VAT (taux = 0%).
+                This represents the insurance company's portion of the invoice settlement.
+                Total invoice TTC: 3,600.00 EUR. Buyer pays 1,100.00; insurer pays 2,500.00.
+            -->
+            <cac:Status>
+                <ext:UBLExtensions>
+                    <ext:UBLExtension>
+                        <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:StatusExtension</ext:ExtensionURI>
+                        <ext:ExtensionContent>
+                            <puf:PageroExtension>
+                                <puf:StatusExtension>
+                                    <puf:Amounts>
+                                        <puf:Amount>
+                                            <puf:AmountType>MEN</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">2500.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <!--
+                                                    0% VAT: the insurer's payment is an insurance
+                                                    indemnity (indemnité assurance), not subject to VAT.
+                                                -->
+                                                <cbc:Percent>0</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                    </puf:Amounts>
+                                </puf:StatusExtension>
+                            </puf:PageroExtension>
+                        </ext:ExtensionContent>
+                    </ext:UBLExtension>
+                </ext:UBLExtensions>
+                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
+            </cac:Status>
+        </cac:Response>
+        <cac:DocumentReference>
+            <cbc:ID>REP-2026-0845</cbc:ID>
+            <cbc:IssueDate>2026-01-28</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>
