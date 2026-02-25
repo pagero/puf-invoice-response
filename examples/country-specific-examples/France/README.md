@@ -1,8 +1,7 @@
 # France Invoice Response and Document Status Examples
 
 This directory contains example PUF Invoice Response and Document Status files for France's
-e-invoicing lifecycle messaging, aligned with the French CDAR (Compte-Rendu d'Avancement de
-Réception) status system and the requirements of the French Tax Authority (DGFiP).
+e-invoicing lifecycle messaging, aligned with the French CDAR (Cross Domain Acknowledgement and Response) status system and the requirements of the French Tax Authority (DGFiP).
 
 ## Overview
 
