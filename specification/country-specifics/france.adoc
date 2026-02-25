@@ -1,0 +1,278 @@
+This section contains requirements and other information concerning the use of PUF Invoice Response in France.
+
+==== Payment reporting
+
+In France it is a requirement to report received payments for certain transactions to the Tax Authority. The PUF Invoice Response format has been extended with additional elements relating to payment amounts to facilitate this. The full list of elements is available in <<_pufresponseextension>>.
+
+
+===== Amount Type
+
+The ``<puf:AmountType>`` element is used to indicate what the specified amounts mean. In France, the following list is applicable:
+
+.puf:AmountType values applicable in France
+|===
+|Code |Definition
+
+|`MEN`
+|Amount collected (incl. tax)
+
+|`MPA`
+|Amount paid
+
+|`RAP`
+|Remaining to pay (in case of partial payment)
+
+|`ESC`
+|Discount granted
+
+|`RAB`
+|Rebate granted
+
+|`REM`
+|Reduction granted
+
+|`MAP`
+|Net Amount Approved
+
+|`MAPTTC`
+|Gross Amount Approved (incl. tax)
+
+|`MNA`
+|Net Amount NOT Approved
+
+|`MNATTC`
+|Gross Amount NOT Approved (incl. tax)
+|===
+
+NOTE: *MEN* (with accompanying ``cbc:TaxInclusiveAmount`` and ``cbc:Percent``) is the only type *required* by the Tax Authority, but the other Amount Types (``puf:AmountType``) and related data fields (``cbc:TaxExclusiveAmount``) are useful to convey additional information to the receiving party and can be used *in addition to* MEN.
+
+NOTE: Generally, only one "amount" per ``puf:Amount`` should be sent, i.e. choose to use either ``cbc:TaxExclusiveAmount`` or ``cbc:TaxInclusiveAmount``, *not* both. 
+
+
+*Example* +
+_puf:StatusExtension with sample values. The example scenario illustrated below is an invoice for €1310 (incl. VAT) with two VAT rates (20 % and 10 %). The taxpayer reports that two amounts have been paid: €120 (incl. 20 % VAT) and €11 (incl. 10 % VAT). In addition to this, the taxpayer also informs the recipient that they have €1080 (incl. 20 % VAT) and €99 (incl. 10 % VAT) remaining to be paid (RAP)._
+[%nowrap]
+[source,xml]
+----
+<ApplicationResponse>
+    <!-- Code omitted for clarity -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <cac:Status>
+                <ext:UBLExtensions>
+                    <ext:UBLExtension>
+                        <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:StatusExtension</ext:ExtensionURI>
+                        <ext:ExtensionContent>
+                            <puf:PageroExtension>
+                                <puf:StatusExtension>
+                                    <!-- Code omitted for clarity -->
+                                    <puf:Amounts>
+                                        <puf:Amount>
+                                            <puf:AmountType>MEN</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">120.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                        <puf:Amount>
+                                            <puf:AmountType>MEN</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">11.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                        <puf:Amount>
+                                            <puf:AmountType>RAP</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">1080.00</cbc:TaxInclusiveAmount><!--.-->
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent><!--.-->
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                        <puf:Amount>
+                                            <puf:AmountType>RAP</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">99.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>10</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                    </puf:Amounts>
+                                </puf:StatusExtension>
+                            </puf:PageroExtension>
+                        </ext:ExtensionContent>
+                    </ext:UBLExtension>
+                </ext:UBLExtensions>
+            </cac:Status>
+        </cac:Response>
+        <!-- Code omitted for clarity -->
+</ApplicationResponse>
+----
+<.> Either of ``cbc:TaxExclusiveAmount`` and ``cbc:TaxInclusiveAmount`` may be relevant for some Amount Types. Here ``cbc:TaxInclusiveAmount`` is used to show total (incl. VAT) amount remaining to be paid.
+<.> ``cbc:Percent`` may also be relevant for some Amount Types. In this example the "amount remaining to be paid" (RAP) has been split per VAT rate. 
+
+==== Status Reason
+
+It is possible to provide a reason as to why a certain response (e.g. Refused) is being sent.
+
+See the section <<_cacresponse>> for additional details.
+
+In France, the reason codes are unique and defined in the table below. The table also indicates for which response codes (`cbc:ResponseCode`) each reason code is applicable.
+
+.French reason codes and applicability per response code
+[%stretch,cols="2,3,5,1,1,1,1"]
+|===
+|French code |Label |Description ^|PARTIALLY_ACCEPTED (206) ^|UNDER_QUERY (207) ^|ON_HOLD (208) ^|REJECTED (210)
+
+|`MONTANTTOTAL_ERR`
+|Incorrect Total Amount
+|One of the invoice total amounts is incorrect, for example Net payable
+^|❌ ^|✅ ^|❌ ^|✅
+
+|`CALCUL_ERR`
+|Invoice calculation error
+|Either detected at schematron, or afterwards (for lines, or rounding not accepted)
+^|❌ ^|✅ ^|❌ ^|✅
+
+|`NON_CONFORME`
+|Missing legal information
+|Any missing legal information that hasn't been checked by systematic validations.
+^|❌ ^|✅ ^|❌ ^|✅
+
+|`DOUBLON`
+|Duplicate invoice (already issued / received)
+|Duplicate invoice (same number, same supplier and same year of invoice date)
+^|❌ ^|✅ ^|❌ ^|✅
+
+|`DEST_ERR`
+|Recipient error
+|The legal entity recipient of the invoice is not the correct one (recipient's SIREN number). For example in case of multi-company within a group, and the billed company is not the one that should have been.
+^|❌ ^|✅ ^|❌ ^|✅
+
+|`TRANSAC_INC`
+|Unknown transaction
+|The invoice does not correspond to a delivery made or a service rendered.
+^|❌ ^|✅ ^|❌ ^|✅
+
+|`EMMET_INC`
+|Unknown issuer
+|The invoice issuer is unknown to the Recipient (anti-spam)
+^|❌ ^|✅ ^|❌ ^|✅
+
+|`CONTRAT_TERM`
+|Contract terminated
+|Contract terminated, no more invoicing possible
+^|❌ ^|✅ ^|❌ ^|✅
+
+|`DOUBLE_FACT`
+|Double invoice
+|Service or delivery already invoiced on another invoice
+^|❌ ^|✅ ^|❌ ^|✅
+
+|`CMD_ERR`
+|Incorrect or missing order number
+|Order number incorrect, non-existent or already invoiced. Can only be used together with rejected (210) status if the order number was provided by the buyer before invoicing.
+^|✅ ^|✅ ^|✅ ^|✅
+
+|`ADR_ERR`
+|Incorrect electronic billing address
+|The recipient's electronic billing address (BT-49 or BT-34) is absent or incorrect
+^|❌ ^|✅ ^|❌ ^|❌
+
+|`SIRET_ERR`
+|Incorrect or missing SIRET
+|The recipient's SIRET is incorrect or missing when required
+^|✅ ^|✅ ^|✅ ^|❌
+
+|`CODE_ROUTAGE_ERR`
+|Incorrect or missing ROUTING_CODE
+|The recipient's ROUTING_CODE is incorrect or missing when required
+^|✅ ^|✅ ^|✅ ^|❌
+
+|`REF_CT_ABSENT`
+|Contractual reference required for invoice processing is missing
+|Contractually required reference is absent (list to be defined) and to be identified in the lifecycle: BT-12 (Contract number), Delivery note number (BT-16), Buyer reference (BT-10), Invoiced object (BT-18), Project reference (BT-11), Previous invoice (BG-3) etc.
+^|✅ ^|✅ ^|✅ ^|✅
+
+|`REF_ERR`
+|Incorrect reference
+|The specific incorrect reference is identified in the other data fields
+^|✅ ^|✅ ^|✅ ^|❌
+
+|`PU_ERR`
+|Incorrect unit prices
+|A unit price is not as expected
+^|✅ ^|✅ ^|❌ ^|❌
+
+|`REM_ERR`
+|Incorrect discount
+|A discount is missing or is not as expected
+^|✅ ^|✅ ^|❌ ^|❌
+
+|`QTE_ERR`
+|Incorrect invoiced quantity
+|An invoiced quantity is not as expected
+^|✅ ^|✅ ^|❌ ^|❌
+
+|`ART_ERR`
+|Incorrect invoiced item
+|An invoiced item is incorrect
+^|✅ ^|✅ ^|❌ ^|❌
+
+|`MODPAI_ERR`
+|Incorrect payment terms
+|The payment terms (e.g., due date) are not as expected
+^|✅ ^|✅ ^|❌ ^|❌
+
+|`QUALITE_ERR`
+|Incorrect quality of delivered item
+|One (or more) of the delivered items is defective
+^|✅ ^|✅ ^|❌ ^|❌
+
+|`LIVR_INCOMP`
+|Delivery problem
+|Incomplete or non-compliant delivery
+^|✅ ^|✅ ^|❌ ^|❌
+
+|===
+
+*Example* +
+_cac:Response with response code RE (EN: Rejected/Refused, FR: 210) and reason code `MONTANTTOTAL_ERR` (Incorrect Total Amount)._
+[%nowrap]
+[source,xml]
+----
+<ApplicationResponse>
+    <!-- Code omitted for clarity -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <cbc:ResponseCode>RE</cbc:ResponseCode>
+            <cac:Status>
+                <cbc:StatusReasonCode listID="OPStatusReason">MONTANTTOTAL_ERR</cbc:StatusReasonCode>
+                <cbc:StatusReason>One of the invoice total amounts is incorrect</cbc:StatusReason>
+            </cac:Status>
+        </cac:Response>
+        <!-- Code omitted for clarity -->
+    </cac:DocumentResponse>
+</ApplicationResponse>
+----
+
+==== Requested Action
+
+It is possible to request the recipient of the PUF Invoice Response to perform a certain action (generally to resolve a dispute). A common example scenario could be one where the Buyer requests that the Seller issues a new invoice, as the current one has incorrect data. 
+
+See the section <<_cacresponse>> for additional details. 
+
+In France, the action codes will follow the Peppol list https://docs.peppol.eu/poacc/upgrade-3/codelist/OPStatusAction/[OPStatusAction^]. 
+
+NOTE: *Only* the Action Code list follows Peppol. The Reason code list is unique to France and can be found in the <<_status_reason, Status Reason section above>>.
+

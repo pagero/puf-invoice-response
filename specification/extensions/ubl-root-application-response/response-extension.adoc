@@ -1,8 +1,10 @@
 ==== puf:ResponseExtension
 
-Below table shows the definition of elements added to the extension `puf:PageroExtension/puf:ResponseExtension`.
+Below tables shows the definition of elements added to the extension `puf:PageroExtension/puf:ResponseExtension`. 
 
-.Elements added in puf:ResponseExtension
+.Elements added in puf:ResponseExtension relating to RestrictedInformation.
+[.response-extension-table]
+[%stretch,cols="1,1"]
 |===
 |Element |Description
 
@@ -10,6 +12,14 @@ Below table shows the definition of elements added to the extension `puf:PageroE
 puf:RestrictedInformation/puf:Value`
 |**Returnable restricted information** +
 From PUF Billing documents sent to Pagero, restricted information values on document level with keys prefixed by "returnInResponse_" will be returned in the response message with the same key and value.
+
+|===
+
+.Elements added in puf:ResponseExtension relating to document/reference matching.
+[.response-extension-table]
+[%stretch,cols="1,1"]
+|===
+|Element |Description
 
 |`puf:ReferencedDocumentInterchangeID/cbc:ID`
 |**Referenced document interchange identifier** +
@@ -27,6 +37,14 @@ Then this ID can be sent to facilitate a matching/connection between the respons
 The unique Pagero UUID used to match the response to an Invoice. +
 This ID is applicable when you **_send a response_**. +
 The UUID is only availble via **Document API** when using https://pagero.github.io/document-api-doc/#tag/document[GET^] documents.
+
+|===
+
+.Elements added in puf:ResponseExtension relating to attachments and related documents. 
+[.response-extension-table]
+[%stretch,cols="1,1"]
+|===
+|Element |Description
 
 |`puf:AdditionalDocumentReference/cbc:ID`
 |**Additional document reference identifier** +
@@ -65,6 +83,7 @@ See example below as well as the URI to be used for this extension.
 
 *Example* +
 _puf:ResponseExtension with sample values._
+[%nowrap]
 [source,xml]
 ----
 <ApplicationResponse>
@@ -102,3 +121,4 @@ _puf:ResponseExtension with sample values._
         <!-- Code omitted for clarity -->
 </ApplicationResponse>
 ----
+

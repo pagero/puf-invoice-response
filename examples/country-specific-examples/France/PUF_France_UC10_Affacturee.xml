@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Document Status — France
+    Use Case: UC10 — Post-Factoring (Affacturage post-cession)
+    Use Case: Seller → Buyer. Notifying the buyer that the invoice has been assigned to a factor (Affacturée).
+    French CDAR status code: 225 (Affacturée — classic open factoring / affacturage classique)
+
+    Reference invoice: PUF_France_UC10_PostFactoring_Invoice.xml (UC10-IND-2026-0345)
+    Sender  (Seller): IndustrialTech Lyon SA — SIREN 111222333
+    Receiver (Buyer): Automotive Suppliers Network SAS — SIREN 777888999
+
+    Status 225 (Affacturée) is a French-specific factoring notification code.
+    The seller notifies the buyer that the invoice has been assigned (cédée) to a factor
+    and instructs the buyer to direct all payments to the factor's bank account.
+
+    French factoring status codes (outside PUF-016 standard):
+      225 — Affacturée                    : classic (open) factoring, buyer is notified
+      226 — Affacturée Confidentiel       : confidential factoring, seller and factor only
+      227 — Changement de Compte à payer  : update to factoring bank account
+      228 — Non Affacturée                : cancellation / withdrawal of factoring assignment
+
+    The factor bank details (IBAN/BIC) are communicated via the cbc:Note element.
+    Buyer must update their accounts payable records to reflect the new payee (factor).
+
+    See also: PUF_France_UC10_PostFactoring_Invoice.xml
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:document_status:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:document_status:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-FR-UC10-FAC-001</cbc:ID>
+    <!-- Response issue date (day after invoice date) -->
+    <cbc:IssueDate>2026-01-31</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>08:00:00</cbc:IssueTime>
+    <!--
+        Note communicating the factor's bank details.
+        The buyer must redirect payment to the factor for this invoice.
+    -->
+    <cbc:Note>Facture cédée à France Capital Factoring SA. Veuillez effectuer le règlement exclusivement sur le compte bancaire du factor : IBAN FR76 3000 4000 5000 6000 7000 123 / BIC BNPAFRPPXXX. Tout paiement au vendeur ne libèrera pas le débiteur de son obligation.</cbc:Note>
+    <!-- Sender Party (Seller — notifies buyer of factoring assignment) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">111222333</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>IndustrialTech Lyon SA</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Buyer — must pay the factor instead of the seller) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">777888999</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Automotive Suppliers Network SAS</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>10100000001</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!--
+                Response Code: 225 = Affacturée (French-specific factoring notification code).
+                This code is outside the standard PUF-016 response code list and is
+                specific to the French e-invoicing lifecycle (CDAR).
+                Code 225 = Classic (open) factoring — buyer is informed and must pay the factor.
+            -->
+            <cbc:ResponseCode>225</cbc:ResponseCode>
+            <!--
+                Informational status — no reason or action codes required for Affacturée.
+                The factor's identity and bank details are communicated in cbc:Note above.
+            -->
+            <cac:Status>
+                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
+                <cbc:StatusReason>Cession de créance à France Capital Factoring SA en vertu de la loi Dailly.</cbc:StatusReason>
+            </cac:Status>
+        </cac:Response>
+        <cac:DocumentReference>
+            <cbc:ID>UC10-IND-2026-0345</cbc:ID>
+            <cbc:IssueDate>2026-01-30</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>

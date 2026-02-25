@@ -254,6 +254,13 @@ table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border
 table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0 0}
 table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
 table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+
+/*
+ * Keep the four ResponseExtension definition tables visually aligned.
+ * The Asciidoctor HTML backend may auto-size tables/columns per-table based on content;
+ * forcing a fixed layout makes the column widths consistent across tables.
+ */
+table.tableblock.response-extension-table{width:100%;table-layout:fixed}
 table.frame-all{border-width:1px}
 table.frame-sides{border-width:0 1px}
 table.frame-topbot{border-width:1px 0}

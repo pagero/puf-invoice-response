@@ -3,7 +3,9 @@
 
 |`cbc:CustomizationID`
 |**Document specification identifier** +
-_Must be value 'urn:pagero.com:puf:invoice_response:1.0'._
+_Must be one of the following values:_ +
+`urn:pagero.com:puf:invoice_response:1.0` (Invoice Response) +
+`urn:pagero.com:puf:document_status:1.0` (Document Status)
 |===
 
 *Example* +
