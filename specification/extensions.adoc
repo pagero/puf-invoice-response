@@ -3,3 +3,9 @@
 Below chapter describes the elements added in `cac:DocumentResponse/cac:Response/ext:UBLExtensions`.
 
 include::extensions/ubl-root-application-response/response-extension.adoc[]
+
+=== Status extension
+
+Below chapter describes the elements added in `puf:PageroExtension/puf:StatusExtension`.
+
+include::extensions/ubl-root-application-response/status-extension.adoc[]

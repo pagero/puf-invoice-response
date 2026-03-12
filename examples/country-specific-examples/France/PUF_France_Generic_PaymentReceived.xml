@@ -92,6 +92,7 @@
                                                     <cbc:ID>VAT</cbc:ID>
                                                 </cac:TaxScheme>
                                             </puf:ClassifiedTaxCategory>
+                                            <puf:Date>2026-03-01</puf:Date>
                                         </puf:Amount>
                                     </puf:Amounts>
                                 </puf:StatusExtension>

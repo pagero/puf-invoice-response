@@ -24,6 +24,10 @@ The total amount (incl. taxes) for the specified amount type.
 |`puf:Amounts/puf:Amount/cac:ClassifiedTaxCategory/cbc:Percent`
 |**Tax rate** +
 The tax rate applicable for the specified amount type.
+
+|`puf:Amounts/puf:Amount/puf:Date`
+|**Date** +
+A date associated with the amount entry (e.g. payment collection date).
 |===
 
 See example below as well as the URI to be used for this extension.
@@ -56,6 +60,7 @@ _puf:StatusExtension with sample values. The example scenario illustrated below 
                                                     <cbc:ID>VAT</cbc:ID>
                                                 </cac:TaxScheme>
                                             </puf:ClassifiedTaxCategory>
+                                            <puf:Date>2026-01-15</puf:Date>
                                         </puf:Amount>
                                         <puf:Amount>
                                             <puf:AmountType>MEN</puf:AmountType>
