@@ -170,6 +170,7 @@
             <xsd:element ref="cbc:TaxInclusiveAmount" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="ClassifiedTaxCategory" type="cac:TaxCategoryType" minOccurs="0" maxOccurs="1"/>
             <xsd:element ref="cbc:CurrencyCode" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="Date" type="PUFDateType" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
     </xsd:complexType>
 </xsd:schema>
