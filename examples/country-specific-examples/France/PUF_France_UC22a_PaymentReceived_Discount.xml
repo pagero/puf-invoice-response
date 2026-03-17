@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Document Status — France
+    Use Case: UC22a — Early Payment Discount (Escompte) — Services, VAT on Cash Basis
+    Use Case: Seller → Buyer. Reporting collection with discount applied (Encaissée).
+    French CDAR status code: 212 (Encaissée)
+    Mandatory reporting to Tax Authority (PPF).
+
+    Scenario: SELLER provides consulting services for 10,000 EUR HT + 20% VAT = 12,000 EUR TTC.
+    Invoice offers "2% discount for payment within 10 days" (BT-21=AAB, BT-22=discount terms).
+    BUYER takes the discount and pays 11,760 EUR (12,000 - 240 discount).
+
+    Parties:
+      Sender  (Seller): Conseil Stratégique Paris SAS — SIREN 333444555
+      Receiver (Buyer): Groupe Industriel Loire SA — SIREN 666777888
+
+    Reference invoice: UC22A-CON-2026-0200
+      - 10,000 EUR HT + 20% VAT = 12,000 EUR TTC
+      - BT-23 = S1 (standard service invoice)
+      - BT-21/BT-22 = AAB / "Escompte de 2% pour paiement sous 10 jours"
+
+    This Encaissée demonstrates the discount pattern:
+      - MEN amount = 11,760 EUR TTC (actual amount received = TTC minus 2% discount)
+      - ESC amount = 240 EUR TTC (discount applied, not collected)
+      - VAT pre-filling at CdD PPF is based on 11,760 EUR (not the original 12,000 EUR)
+
+    The ESC (Escompte appliqué) amount type is defined in the PUF Invoice Response France
+    country specifics (france.adoc) and communicates the discount that was NOT paid.
+    Unlike UC22b (goods/VAT on debits), no credit note is needed — the Encaissée status
+    with the reduced amount automatically adjusts VAT pre-filling.
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:document_status:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:document_status:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-FR-UC22A-001</cbc:ID>
+    <!-- Response issue date -->
+    <cbc:IssueDate>2026-03-20</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>15:00:00</cbc:IssueTime>
+    <!-- Sender Party (Seller — reports collection with discount applied) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">333444555</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Conseil Stratégique Paris SAS</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Buyer — paid with early payment discount) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">666777888</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Groupe Industriel Loire SA</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>22000000001</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!-- Response Code: PAYMENT_RECEIVED = Encaissée (French code 212) -->
+            <cbc:ResponseCode>PAYMENT_RECEIVED</cbc:ResponseCode>
+            <!--
+                Status with two amount types:
+                1. MEN = Amount actually collected (TTC minus discount) — required by Tax Authority
+                2. ESC = Discount applied (amount NOT collected) — informational
+
+                Original invoice: 10,000 HT + 2,000 VAT @ 20% = 12,000 TTC
+                Discount: 2% of 12,000 TTC = 240 EUR
+                Amount received: 12,000 - 240 = 11,760 EUR
+
+                VAT pre-filling at CdD PPF will use 11,760 EUR (MEN), not 12,000 EUR.
+            -->
+            <cac:Status>
+                <ext:UBLExtensions>
+                    <ext:UBLExtension>
+                        <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:StatusExtension</ext:ExtensionURI>
+                        <ext:ExtensionContent>
+                            <puf:PageroExtension>
+                                <puf:StatusExtension>
+                                    <puf:Amounts>
+                                        <!--
+                                            MEN = Amount collected (incl. tax) after discount.
+                                            Required by French Tax Authority.
+                                            11,760 EUR = 12,000 TTC - 240 discount.
+                                        -->
+                                        <puf:Amount>
+                                            <puf:AmountType>MEN</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">11760.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                            <puf:Date>2026-03-18</puf:Date>
+                                        </puf:Amount>
+                                        <!--
+                                            ESC = Discount applied (escompte).
+                                            Informational — communicates the discount amount NOT collected.
+                                            240 EUR = 2% of 12,000 TTC.
+                                        -->
+                                        <puf:Amount>
+                                            <puf:AmountType>ESC</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">240.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                    </puf:Amounts>
+                                </puf:StatusExtension>
+                            </puf:PageroExtension>
+                        </ext:ExtensionContent>
+                    </ext:UBLExtension>
+                </ext:UBLExtensions>
+                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
+            </cac:Status>
+        </cac:Response>
+        <!-- Reference to the original invoice -->
+        <cac:DocumentReference>
+            <cbc:ID>UC22A-CON-2026-0200</cbc:ID>
+            <cbc:IssueDate>2026-03-05</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>

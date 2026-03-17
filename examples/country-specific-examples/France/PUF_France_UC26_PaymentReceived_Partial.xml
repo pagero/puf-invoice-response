@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Document Status — France
+    Use Case: UC26 — Contractual Reservation Clause (Retenue de Garantie) — Partial Payment
+    Use Case: Seller → Buyer. Reporting partial collection after initial payment (Encaissée).
+    French CDAR status code: 212 (Encaissée)
+    Mandatory reporting to Tax Authority (PPF).
+
+    Scenario: Construction service contract with a 5% retention guarantee (retenue de garantie).
+    SELLER delivers construction services and invoices 20,000 EUR HT + 10% VAT = 22,000 EUR TTC.
+    BUYER pays 95% immediately (20,900 EUR) and withholds 5% (1,100 EUR) pending
+    satisfactory completion (clause de réserve contractuelle).
+
+    The invoice was issued for the FULL amount (BT-112 = 22,000, BT-115 = 22,000).
+    The retention is expressed only as a free-text note (BT-21 = ABU, BT-22 = "clause de réserve").
+    EN 16931 and EXTENDED-CTC-FR do NOT support structured payment schedules with
+    reservation-conditioned amounts.
+
+    Parties:
+      Sender  (Seller): Rénovation Habitat Bordeaux SARL — SIREN 777888999
+      Receiver (Buyer): Groupe Résidentiel Atlantique SA — SIREN 111333555
+
+    Reference invoice: UC26-REN-2026-0075
+      - 20,000 EUR HT + 10% VAT = 22,000 EUR TTC
+      - BT-23 = S1 (standard service invoice)
+      - BT-21/BT-22 = ABU / "Retenue de garantie de 5% conformément au contrat"
+      - VAT on cash basis (services, no debit option)
+
+    This is the FIRST Encaissée for the initial 95% partial payment:
+      - MEN = 20,900 EUR TTC @ 10% (95% of 22,000)
+      - A SECOND Encaissée will follow if and when the reservation clause is lifted
+        and the remaining 5% (1,100 EUR) is paid
+
+    If the reservation is enforced (retention NOT released):
+      - SELLER issues a credit note for 1,100 EUR
+      - No Encaissée is needed for the balance or the credit note
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:document_status:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:document_status:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-FR-UC26-P1-001</cbc:ID>
+    <!-- Response issue date -->
+    <cbc:IssueDate>2026-06-20</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>16:30:00</cbc:IssueTime>
+    <!-- Sender Party (Seller — reports partial collection, 95% of invoice) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">777888999</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Rénovation Habitat Bordeaux SARL</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Buyer — paid 95%, withholding 5% retention guarantee) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">111333555</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Groupe Résidentiel Atlantique SA</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>26000000001</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!-- Response Code: PAYMENT_RECEIVED = Encaissée (French code 212) -->
+            <cbc:ResponseCode>PAYMENT_RECEIVED</cbc:ResponseCode>
+            <!--
+                Status with MEN and RAP amounts for partial payment with retention:
+
+                Invoice total: 20,000 HT + 2,000 VAT @ 10% = 22,000 TTC
+                Initial payment: 95% = 20,900 TTC
+                Retention withheld: 5% = 1,100 TTC (pending reservation clause lift)
+
+                MEN = 20,900 EUR (amount actually collected — 95%)
+                RAP = 1,100 EUR (remaining to pay — 5% retention, conditionally payable)
+
+                VAT pre-filling at CdD PPF is based on 20,900 EUR (amount received so far).
+                A second Encaissée for 1,100 EUR will follow if the clause is lifted.
+            -->
+            <cac:Status>
+                <ext:UBLExtensions>
+                    <ext:UBLExtension>
+                        <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:StatusExtension</ext:ExtensionURI>
+                        <ext:ExtensionContent>
+                            <puf:PageroExtension>
+                                <puf:StatusExtension>
+                                    <puf:Amounts>
+                                        <!--
+                                            MEN = Amount collected (incl. tax) — 95% of invoice.
+                                            Required by French Tax Authority.
+                                            20,900 EUR = 95% of 22,000 TTC.
+                                        -->
+                                        <puf:Amount>
+                                            <puf:AmountType>MEN</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">20900.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>10</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                            <puf:Date>2026-06-15</puf:Date>
+                                        </puf:Amount>
+                                        <!--
+                                            RAP = Remaining to pay (retention withheld).
+                                            Informational — communicates the retention amount still pending.
+                                            1,100 EUR = 5% of 22,000 TTC.
+                                        -->
+                                        <puf:Amount>
+                                            <puf:AmountType>RAP</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">1100.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>10</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                        </puf:Amount>
+                                    </puf:Amounts>
+                                </puf:StatusExtension>
+                            </puf:PageroExtension>
+                        </ext:ExtensionContent>
+                    </ext:UBLExtension>
+                </ext:UBLExtensions>
+                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
+            </cac:Status>
+        </cac:Response>
+        <!-- Reference to the original invoice -->
+        <cac:DocumentReference>
+            <cbc:ID>UC26-REN-2026-0075</cbc:ID>
+            <cbc:IssueDate>2026-05-15</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>
