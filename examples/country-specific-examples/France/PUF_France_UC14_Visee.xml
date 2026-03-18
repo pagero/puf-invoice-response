@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Document Status — France
+    Use Case: UC14 — Co-Contracting (Co-traitance) — Lead Contractor Endorsement
+    Use Case: Lead Contractor → Buyer. Endorsing co-contractor invoices (Visée).
+    French CDAR status code: 214 (Visée)
+
+    Scenario: Private construction market (marché privé de travaux) with co-contracting.
+    Multiple CO-CONTRACTORs invoice the BUYER directly. The LEAD CONTRACTOR (chef de file)
+    reviews all F1 invoices (from co-contractors) and F2 (their own), then posts the
+    "Visée" (Endorsed) status to signal to the BUYER that the invoices are validated
+    and ready for grouped processing/payment.
+
+    Parties:
+      Sender  (Lead Contractor): Coordination BTP Marseille SAS — SIREN 444555666
+      Receiver (Buyer):          Promoteur Immobilier Sud SA — SIREN 111222333
+
+    This endorsement applies to co-contractor invoice:
+      Reference invoice (F1): UC14-CC-2026-0050 (Co-contractor → Buyer)
+        - Plumbing works by Plomberie Martin SARL
+        - 15,000 EUR HT + 10% VAT = 16,500 EUR TTC
+        - BT-23 = S6 (co-contractor service invoice)
+
+    Prerequisites:
+      - PA-R (Buyer's platform) must grant the LEAD CONTRACTOR delegated access rights
+      - LEAD CONTRACTOR is identified as AGENT DE VENDEUR (EXT-FR-FE-BG-03) in the
+        co-contractor invoices
+
+    Status 214 (Visée) is conditional:
+      - Only applicable when the BUYER requires the LEAD CONTRACTOR's endorsement
+      - Requires PA-R to support delegated access for the LEAD CONTRACTOR
+
+    PUF Response Code: ENDORSED (maps to French CDAR code 214).
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:document_status:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:document_status:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-FR-UC14-VIS-01</cbc:ID>
+    <!-- Response issue date -->
+    <cbc:IssueDate>2026-05-15</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>11:30:00</cbc:IssueTime>
+    <!--
+        Note from the LEAD CONTRACTOR confirming endorsement of the co-contractor's invoice.
+    -->
+    <cbc:Note>Visa du chef de file : La facture UC14-CC-2026-0050 de Plomberie Martin SARL a été vérifiée et validée par le mandataire Coordination BTP Marseille SAS. Les travaux de plomberie sont conformes au contrat de co-traitance et le montant est approuvé pour paiement groupé.</cbc:Note>
+    <!-- Sender Party (Lead Contractor — endorses co-contractor invoices) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">444555666</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Coordination BTP Marseille SAS</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Buyer — receives endorsement for grouped payment processing) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">111222333</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Promoteur Immobilier Sud SA</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>14000000001</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!--
+                Response Code: ENDORSED = Visée (CDAR code 214).
+                The LEAD CONTRACTOR validates that the co-contractor's invoice is correct
+                and approved for grouped payment by the BUYER.
+            -->
+            <cbc:ResponseCode>ENDORSED</cbc:ResponseCode>
+            <cac:Status>
+                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
+                <cbc:StatusReason>Facture visée par le chef de file conformément au contrat de co-traitance.</cbc:StatusReason>
+            </cac:Status>
+        </cac:Response>
+        <!--
+            Reference to the F1 invoice (Co-contractor → Buyer).
+            The LEAD CONTRACTOR endorses this invoice after reviewing it on PA-R.
+        -->
+        <cac:DocumentReference>
+            <!-- Co-contractor's F1 invoice number -->
+            <cbc:ID>UC14-CC-2026-0050</cbc:ID>
+            <cbc:IssueDate>2026-05-01</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>

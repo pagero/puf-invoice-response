@@ -31,15 +31,12 @@ Two types of messages are used:
 | `PAYMENT_INITIATED` | 211 | Paiement Transmis | Buyer |
 | `PAYMENT_RECEIVED` | 212 | Encaissée | Seller |
 | `VF` | 213 | Rejetée | Platform |
-| `225` | 225 | Affacturée | Seller |
-| `226` | 226 | Affacturée Confidentiel | Seller/Factor |
-| `227` | 227 | Changement de Compte à payer | Seller/Factor |
-| `228` | 228 | Non Affacturée | Seller |
-
-> **Note on codes 225–228:** These French-specific factoring codes are currently outside the
-> standard PUF-016 code list and are used as raw numeric strings. Dedicated PUF response codes
-> for these statuses are **under consideration/development** and may replace the numeric values
-> in a future release of the PUF Invoice Response specification.
+| `ENDORSED` | 214 | Visée | Lead Contractor |
+| `REQUEST_PAYMENT` | 224 | Demande de Paiement Direct | Subcontractor |
+| `FACTORED` | 225 | Affacturée | Seller |
+| `FACTORED_CONFIDENTIAL` | 226 | Affacturée Confidentiel | Seller/Factor |
+| `ACCOUNT_CHANGED` | 227 | Changement de Compte à payer | Seller/Factor |
+| `FACTORING_CANCELLED` | 228 | Non Affacturée | Seller |
 
 > **Mandatory Tax Authority reporting:** The statuses Déposée (200), Rejetée (213),
 > Refusée (210) and **Encaissée (212)** must be reported to PPF. Encaissée is mandatory
@@ -125,28 +122,63 @@ Second Encaissée for the same invoice:
 
 ---
 
+#### UC13: Subcontracting (Direct Payment Request)
+
+##### 7. `PUF_France_UC13_DirectPaymentRequest.xml`
+
+**Demande de Paiement Direct — Document Status (Subcontractor → Buyer + Main Contractor)**
+Reference: F1 invoice `UC13-ST-2026-0100` (Subcontractor → Main Contractor)
+
+Demonstrates the French-specific CDAR status code `REQUEST_PAYMENT` (224 — Demande de Paiement Direct):
+- Subcontractor requests direct payment from the final BUYER, bypassing the MAIN CONTRACTOR
+- F1 invoice: 10,000 EUR (reverse-charged, VATEX-FR-AE autoliquidation)
+- BT-23 = S5 (subcontractor invoice with direct payment)
+- Subcontractor's bank details communicated via `cbc:Note`
+
+> **Dual distribution**: This CDAR message must be sent simultaneously to **both** the BUYER
+> (PA-R) and the MAIN CONTRACTOR (PA-TR). The `cac:ReceiverParty` shows the BUYER; the
+> MAIN CONTRACTOR also receives the same message.
+
+> Optional in B2B private markets, mandatory in B2G public procurement.
+
+---
+
+#### UC14: Co-Contracting (Lead Contractor Endorsement)
+
+##### 8. `PUF_France_UC14_Visee.xml`
+
+**Visée — Document Status (Lead Contractor → Buyer)**
+Reference: F1 invoice `UC14-CC-2026-0050` (Co-contractor → Buyer)
+
+Demonstrates the French-specific CDAR status code `ENDORSED` (214 — Visée):
+- Lead contractor (chef de file) endorses a co-contractor's invoice
+- Signals to the BUYER that the invoice is validated and approved for grouped payment
+- BT-23 = S6 (co-contractor service invoice)
+- Requires PA-R to grant the LEAD CONTRACTOR delegated access rights
+
+> Conditional on BUYER requiring endorsement and PA-R supporting delegated access.
+
+---
+
 #### UC10: Post-Factoring
 
-##### 7. `PUF_France_UC10_Affacturee.xml`
+##### 9. `PUF_France_UC10_Affacturee.xml`
 
 **Affacturée — Document Status (Seller → Buyer)**
 Reference: `PUF_France_UC10_PostFactoring_Invoice.xml` — invoice `UC10-IND-2026-0345`
 
-Demonstrates the French-specific factoring notification code `225` (Affacturée):
+Demonstrates the French-specific factoring notification code `FACTORED` (225 — Affacturée):
 - Seller notifies buyer that the invoice has been assigned (cédée) to a factor
 - Factor's bank details communicated via `cbc:Note`
 - Buyer must redirect payment to the factor
 
-> Response code `225` is outside the standard PUF-016 code list and is specific to French CDAR.
-> Related codes: 226 (Affacturée Confidentiel), 227 (Changement de Compte), 228 (Non Affacturée).
-> Dedicated PUF response codes for these statuses are **under consideration/development** and may
-> replace the numeric values in a future release of the PUF Invoice Response specification.
+> Related codes: `FACTORED_CONFIDENTIAL` (226), `ACCOUNT_CHANGED` (227), `FACTORING_CANCELLED` (228).
 
 ---
 
 #### UC19b: Self-Billing
 
-##### 8. `PUF_France_UC19b_PaymentReceived.xml`
+##### 10. `PUF_France_UC19b_PaymentReceived.xml`
 
 **Encaissée — Document Status (Seller → Buyer)**
 Reference: `PUF_France_UC19b_SelfBilling_Invoice.xml` — invoice `SMBF-AF-2026-01234`
@@ -159,9 +191,48 @@ Demonstrates Encaissée for a self-billing scenario:
 
 ---
 
+#### UC22a: Early Payment Discount (Escompte)
+
+##### 11. `PUF_France_UC22a_PaymentReceived_Discount.xml`
+
+**Encaissée with Discount — Document Status (Seller → Buyer)**
+Reference: invoice `UC22A-CON-2026-0200` (consulting services, 12,000 EUR TTC @ 20%)
+
+Demonstrates Encaissée when a 2% early payment discount (escompte) has been applied:
+- MEN = **11,760.00 EUR TTC @ 20%** — actual amount received (12,000 − 240 discount)
+- ESC = **240.00 EUR TTC @ 20%** — discount applied (amount NOT collected)
+- VAT pre-filling at CdD PPF uses the MEN amount (11,760), not the invoice total (12,000)
+
+> For services with VAT on cash basis (UC22a), the discount is automatically accounted
+> for in the Encaissée amount — **no credit note is needed**. The `ESC` amount type is
+> informational and communicates the discount to the receiving party.
+
+---
+
+#### UC26: Contractual Reservation Clause (Retenue de Garantie)
+
+##### 12. `PUF_France_UC26_PaymentReceived_Partial.xml`
+
+**Encaissée (partial, 95%) — Document Status (Seller → Buyer)**
+Reference: invoice `UC26-REN-2026-0075` (construction services, 22,000 EUR TTC @ 10%)
+
+Demonstrates the first Encaissée for a partial payment with retention guarantee:
+- MEN = **20,900.00 EUR TTC @ 10%** — 95% initial payment received
+- RAP = **1,100.00 EUR TTC @ 10%** — 5% retention withheld (remaining to pay)
+- Invoice note BT-21 = ABU / BT-22 = "clause de réserve" on the referenced invoice
+
+> A second Encaissée for 1,100 EUR will follow if/when the reservation clause is lifted.
+> If retention is enforced (not released), the SELLER issues a credit note instead —
+> no Encaissée is needed for the balance or the credit note.
+>
+> This differs from UC4 (split payer): here the **same** BUYER pays in phases,
+> rather than multiple payers splitting the amount.
+
+---
+
 #### UC40: Netting / Compensation
 
-##### 9. `PUF_France_UC40_PaymentReceived.xml`
+##### 13. `PUF_France_UC40_PaymentReceived.xml`
 
 **Encaissée — Document Status (Seller → Buyer)**
 Reference: `PUF_France_UC40_Netting_Invoice2_FarmerToCoop.xml` — invoice `EARL-2026-0089`

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Document Status — France
+    Use Case: UC13 — Subcontracting (Sous-traitance) — Direct Payment Request
+    Use Case: Subcontractor → Buyer + Main Contractor.
+    Requesting direct payment from the final buyer to the subcontractor (Demande de Paiement Direct).
+    French CDAR status code: 224 (Demande de Paiement Direct)
+
+    Scenario: Private construction market (marché privé de travaux).
+    The SUBCONTRACTOR has invoiced the MAIN CONTRACTOR for earthwork services (F1 invoice,
+    reverse-charged under autoliquidation). The SUBCONTRACTOR now requests direct payment from
+    the final BUYER, bypassing the MAIN CONTRACTOR for this portion.
+
+    Parties:
+      Sender  (Subcontractor): Terrassement Dupont SARL — SIREN 222333444
+      Receiver 1 (Buyer):      Immobilière du Rhône SA — SIREN 555666777
+      Receiver 2 (Main Contractor): BTP Construction Générale SAS — SIREN 888999111
+        (Main Contractor receives the same CDAR message — dual distribution is mandatory)
+
+    Reference invoice (F1): UC13-ST-2026-0100 (Subcontractor → Main Contractor)
+      - 10,000 EUR HT, VAT = 0 (VATEX-FR-AE autoliquidation), TTC = 10,000 EUR
+      - BT-23 = S5 (subcontractor invoice with direct payment)
+
+    The CDAR status 224 is:
+      - Optional in B2B private markets (SUBCONTRACTOR's choice)
+      - Mandatory in B2G public procurement
+    The F1 invoice is attached to this CDAR message (MDT-96).
+
+    PUF Response Code: REQUEST_PAYMENT (maps to French CDAR code 224).
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:document_status:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:document_status:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-FR-UC13-DPR-01</cbc:ID>
+    <!-- Response issue date -->
+    <cbc:IssueDate>2026-04-10</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>10:00:00</cbc:IssueTime>
+    <!--
+        Note communicating the direct payment request details.
+        The BUYER is requested to pay the subcontracted amount directly to the SUBCONTRACTOR.
+    -->
+    <cbc:Note>Demande de paiement direct au titre de l'article 14-1 de la loi n°75-1334 du 31 décembre 1975. Le sous-traitant Terrassement Dupont SARL demande le paiement direct du montant de 10 000,00 EUR par le maître d'ouvrage Immobilière du Rhône SA. IBAN : FR76 1234 5678 9012 3456 7890 123 / BIC : AGRIFRPPXXX.</cbc:Note>
+    <!-- Sender Party (Subcontractor — requests direct payment) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">222333444</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Terrassement Dupont SARL</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!--
+        Receiver Party (Buyer — final buyer who must pay the subcontractor directly).
+        Note: The MAIN CONTRACTOR (BTP Construction Générale SAS, SIREN 888999111) also
+        receives this same CDAR message. Dual distribution to both PA-R (Buyer) and
+        PA-TR (Main Contractor) is mandatory per the specification.
+    -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">555666777</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Immobilière du Rhône SA</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>13000000001</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!--
+                Response Code: REQUEST_PAYMENT = Demande de Paiement Direct (CDAR code 224).
+                The SUBCONTRACTOR requests the BUYER to pay them directly for the
+                subcontracted portion, instead of paying the MAIN CONTRACTOR.
+            -->
+            <cbc:ResponseCode>REQUEST_PAYMENT</cbc:ResponseCode>
+            <cac:Status>
+                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
+                <cbc:StatusReason>Demande de paiement direct du sous-traitant conformément au contrat de sous-traitance accepté par le maître d'ouvrage.</cbc:StatusReason>
+            </cac:Status>
+        </cac:Response>
+        <!--
+            Reference to the F1 invoice (Subcontractor → Main Contractor).
+            The F1 invoice itself is attached to this CDAR message (MDT-96) per specification.
+        -->
+        <cac:DocumentReference>
+            <!-- F1 invoice number -->
+            <cbc:ID>UC13-ST-2026-0100</cbc:ID>
+            <cbc:IssueDate>2026-04-01</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>

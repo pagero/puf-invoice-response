@@ -13,11 +13,11 @@
     The seller notifies the buyer that the invoice has been assigned (cédée) to a factor
     and instructs the buyer to direct all payments to the factor's bank account.
 
-    French factoring status codes (outside PUF-016 standard):
-      225 — Affacturée                    : classic (open) factoring, buyer is notified
-      226 — Affacturée Confidentiel       : confidential factoring, seller and factor only
-      227 — Changement de Compte à payer  : update to factoring bank account
-      228 — Non Affacturée                : cancellation / withdrawal of factoring assignment
+    French factoring status codes:
+      FACTORED (225)              — Affacturée: classic (open) factoring, buyer is notified
+      FACTORED_CONFIDENTIAL (226) — Affacturée Confidentiel: confidential factoring, seller and factor only
+      ACCOUNT_CHANGED (227)       — Changement de Compte à payer: update to factoring bank account
+      FACTORING_CANCELLED (228)   — Non Affacturée: cancellation / withdrawal of factoring assignment
 
     The factor bank details (IBAN/BIC) are communicated via the cbc:Note element.
     Buyer must update their accounts payable records to reflect the new payee (factor).
@@ -82,12 +82,10 @@
                 </ext:UBLExtension>
             </ext:UBLExtensions>
             <!--
-                Response Code: 225 = Affacturée (French-specific factoring notification code).
-                This code is outside the standard PUF-016 response code list and is
-                specific to the French e-invoicing lifecycle (CDAR).
-                Code 225 = Classic (open) factoring — buyer is informed and must pay the factor.
+                Response Code: FACTORED = Affacturée (CDAR code 225).
+                Classic (open) factoring — buyer is informed and must pay the factor.
             -->
-            <cbc:ResponseCode>225</cbc:ResponseCode>
+            <cbc:ResponseCode>FACTORED</cbc:ResponseCode>
             <!--
                 Informational status — no reason or action codes required for Affacturée.
                 The factor's identity and bank details are communicated in cbc:Note above.
