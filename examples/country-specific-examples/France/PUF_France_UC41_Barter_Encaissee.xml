@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Document Status — France
+    Use Case: UC41 — Barter (Échange) Payment Received (Encaissée — Échange)
+
+    Use Case Context:
+    A barter transaction involves an exchange of goods/services where the HT value
+    is compensated in kind (not in cash). Only VAT is settled in cash (since VAT cannot
+    be compensated under French tax law).
+
+    The companion invoice PE-2026-0115 (PUF_France_UC41_Barter_Invoice.xml):
+      - EUR 10,000 HT + EUR 2,000 VAT @ 20% = EUR 12,000 TTC
+      - BT-113 (PrepaidAmount) = EUR 10,000 (HT compensated in kind)
+      - BT-115 (PayableAmount) = EUR 2,000 (VAT only, in cash)
+
+    THE CHALLENGE FOR FLUX 2 (Encaissée reporting):
+    The tax authority needs to know:
+    1. The TOTAL amount actually settled (including in-kind compensation)
+    2. MINUS the in-kind portion (which is NOT a cash receipt)
+    3. = The NET cash collected (VAT only)
+
+    SOLUTION — DUAL MEN AMOUNTS:
+    The seller sends two MEN entries:
+      Entry 1 (POSITIVE): Full TTC = EUR +12,000 @ 20% (entire invoice considered "received"
+                          because the in-kind compensation constitutes full settlement of HT)
+      Entry 2 (NEGATIVE): In-kind portion = EUR -10,000 @ 0% (deducting the barter/compensation
+                          component which carries no VAT impact on cash flow)
+
+    NET EFFECT: EUR +12,000 - EUR -10,000 = EUR +2,000 VAT paid in cash
+    → Tax authority pre-fill = EUR 2,000 TTC (VAT amount only)
+    → This is correct: only EUR 2,000 of VAT cash was actually received
+
+    WHY NEGATIVE MEN AT 0%:
+    The in-kind compensation (EUR 10,000 HT) is not a cash receipt.
+    Using percent=0 for the negative MEN entry signals to the tax authority that
+    this deduction is NOT reducing a VAT-bearing receipt — it is removing a
+    zero-VAT-impact component (the barter exchange itself).
+
+    Sender  (Seller): Publicité Express SAS — SIREN 567890123
+    Receiver (Buyer): Troc & Co SARL — SIREN 345678901
+
+    Reference invoice: PE-2026-0115 (PUF_France_UC41_Barter_Invoice.xml)
+
+    Reference: XP Z12-014 Annexe A, Section 3.2.40 (Cas n°41), V1.3
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:document_status:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:document_status:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-UC41-BARTER-001</cbc:ID>
+    <!-- Response issue date — after the barter exchange is completed and VAT collected -->
+    <cbc:IssueDate>2026-02-28</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>17:00:00</cbc:IssueTime>
+    <!-- Sender Party (Seller / advertiser — reports receipt of VAT + in-kind exchange) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <cbc:ID schemeID="0002">567890123</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Publicité Express SAS</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Buyer / barter company — provided in-kind advertising services) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <cbc:ID schemeID="0002">345678901</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Troc &amp; Co SARL</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>41000000001</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!-- Response Code: PAYMENT_RECEIVED = Encaissée (French CDAR code 212) -->
+            <cbc:ResponseCode>PAYMENT_RECEIVED</cbc:ResponseCode>
+            <!--
+                Status with DUAL MEN amounts for barter settlement:
+
+                Invoice: EUR 10,000 HT + EUR 2,000 VAT @ 20% = EUR 12,000 TTC
+                BT-113 (barter compensation): EUR 10,000 (= HT, compensated in kind)
+                BT-115 (cash payment): EUR 2,000 (= VAT only)
+
+                MEN Entry 1 (POSITIVE @ 20%):
+                  TaxInclusiveAmount = +12,000 EUR TTC
+                  TaxExclusiveAmount = +10,000 EUR HT
+                  Percent = 20 (standard VAT rate on advertising services)
+                  Date = date of exchange completion (in-kind services delivered)
+                  Meaning: The full invoice TTC is "received" — the barter exchange
+                           constitutes settlement of the HT portion
+
+                MEN Entry 2 (NEGATIVE @ 0%):
+                  TaxInclusiveAmount = -10,000 EUR (the in-kind compensation, NO VAT)
+                  Percent = 0 (the barter component is zero-rated for reporting purposes)
+                  Date = same as Entry 1 (same settlement event)
+                  Meaning: Deducting the HT barter component (not a cash receipt, no VAT flow)
+
+                Net MEN for tax pre-filling:
+                  +12,000 (@ 20%) + (-10,000 @ 0%) = +2,000 EUR
+                  → EUR 2,000 of VAT-bearing cash income declared
+                  → Matches actual cash received (VAT only, per invoice BT-115)
+            -->
+            <cac:Status>
+                <ext:UBLExtensions>
+                    <ext:UBLExtension>
+                        <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:StatusExtension</ext:ExtensionURI>
+                        <ext:ExtensionContent>
+                            <puf:PageroExtension>
+                                <puf:StatusExtension>
+                                    <puf:Amounts>
+                                        <!--
+                                            MEN ENTRY 1 — Full TTC settlement.
+                                            The barter exchange + VAT cash together constitute
+                                            full settlement of the invoice (EUR 12,000 TTC).
+                                            VAT rate = 20% (advertising services rate).
+                                            Date = date services were delivered under the barter.
+                                        -->
+                                        <puf:Amount>
+                                            <puf:AmountType>MEN</puf:AmountType>
+                                            <cbc:TaxExclusiveAmount currencyID="EUR">10000.00</cbc:TaxExclusiveAmount>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">12000.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                            <puf:Date>2026-02-28</puf:Date>
+                                        </puf:Amount>
+                                        <!--
+                                            MEN ENTRY 2 — NEGATIVE: in-kind compensation deduction.
+                                            Deducting the HT barter component (EUR -10,000) from
+                                            the total settlement. This component was settled in KIND
+                                            (not in cash) and therefore should NOT contribute to
+                                            VAT pre-filling of cash-basis income.
+
+                                            TaxInclusiveAmount = -10,000 (= -BT-113 from invoice)
+                                            Percent = 0 (no VAT applies to this deduction;
+                                                         the VAT on the barter component was already
+                                                         captured in Entry 1 @ 20%)
+                                            Date = same date as Entry 1 (same settlement event)
+                                        -->
+                                        <puf:Amount>
+                                            <puf:AmountType>MEN</puf:AmountType>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">-10000.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>0</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                            <puf:Date>2026-02-28</puf:Date>
+                                        </puf:Amount>
+                                    </puf:Amounts>
+                                </puf:StatusExtension>
+                            </puf:PageroExtension>
+                        </ext:ExtensionContent>
+                    </ext:UBLExtension>
+                </ext:UBLExtensions>
+                <!-- NON = no specific reason code -->
+                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
+            </cac:Status>
+        </cac:Response>
+        <!-- Reference to the original barter invoice -->
+        <cac:DocumentReference>
+            <cbc:ID>PE-2026-0115</cbc:ID>
+            <cbc:IssueDate>2026-01-20</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>

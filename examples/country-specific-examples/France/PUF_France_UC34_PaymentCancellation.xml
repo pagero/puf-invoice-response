@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Document Status — France
+    Use Case: UC34 — Payment Cancellation (Correction/Annulation d'Encaissée)
+
+    Use Case Context:
+    A seller previously declared a payment receipt (PAYMENT_RECEIVED code 212) to the
+    tax authority, but the payment was subsequently reversed (e.g., bank reversal,
+    buyer recalled transfer, mutual agreement to cancel).
+
+    To correct the tax authority's pre-filled data, the seller sends a NEW Document Status
+    with PAYMENT_RECEIVED and a NEGATIVE MEN amount equal to the previously declared amount.
+    This approach is also used when:
+    - A payment was returned (virement de retour)
+    - The seller declared a payment by mistake (erreur de saisie)
+    - The parties mutually agree to reverse a completed payment
+
+    IMPORTANT: A negative Encaissée (MEN < 0) is a CORRECTION, not a new status type.
+    The response code remains PAYMENT_RECEIVED. Only the amounts become negative.
+
+    Sender  (Seller): TechDistrib France SARL — SIREN 987654321
+    Receiver (Buyer): Entreprise Client France SA — SIREN 123456789
+
+    Reference invoice: FR-UC34-INV-2026-001
+      - EUR 1,000.00 HT + EUR 200.00 VAT @ 20% = EUR 1,200.00 TTC
+      - BT-23 = S1 (standard services invoice)
+
+    Payment cancellation scenario:
+      - On 25/02/2026 the seller had declared: MEN = EUR 1,200 TTC (full payment)
+        (that Encaissée was sent with response ID RESP-UC34-FULL-001)
+      - On 01/03/2026 the buyer's bank reversed the transfer (virement de retour)
+      - The seller now sends a NEGATIVE Encaissée: MEN = EUR -1,200 TTC
+      - NET effect on tax authority records: EUR 0 (the previous declaration is cancelled)
+      - Invoice reverts to "outstanding" status from tax authority perspective
+
+    After sending this cancellation:
+      - The seller must await actual receipt before sending a new positive Encaissée
+      - No new invoice is required; the original invoice remains valid
+      - If the debt is ultimately unrecoverable, a credit note may be issued
+
+    Reference: XP Z12-014 Annexe A, Section 3.2.33 (Cas n°34), V1.3
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:document_status:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:document_status:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) — unique from the original declaration -->
+    <cbc:ID>RESP-UC34-CNCL-001</cbc:ID>
+    <!-- Response issue date -->
+    <cbc:IssueDate>2026-03-03</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>11:30:00</cbc:IssueTime>
+    <!-- Sender Party (Seller — sends the payment cancellation correction) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <cbc:ID schemeID="0002">987654321</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>TechDistrib France SARL</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Buyer — whose payment was reversed) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <cbc:ID schemeID="0002">123456789</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Entreprise Client France SA</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>34000000002</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!--
+                Response Code: PAYMENT_RECEIVED
+                The code is ALWAYS PAYMENT_RECEIVED even for a cancellation (negative amount).
+                The NEGATIVE MEN amount signals the reversal/correction to the tax authority.
+                This is NOT a different status code — it is a correction of a prior Encaissée.
+            -->
+            <cbc:ResponseCode>PAYMENT_RECEIVED</cbc:ResponseCode>
+            <!--
+                Status with NEGATIVE MEN amount:
+
+                Previously declared via RESP-UC34-FULL-001:
+                  MEN = +EUR 1,200 TTC @ 20% (full payment on 25/02/2026)
+
+                This cancellation declares:
+                  MEN = -EUR 1,200 TTC @ 20% (bank reversal on 01/03/2026)
+
+                Net effect on tax authority pre-filled data:
+                  (+1,200) + (-1,200) = EUR 0 → invoice back to outstanding
+
+                NOTE: The Date field carries the date of the bank reversal (not the original
+                      payment date). This is the date the reversal was received/confirmed.
+            -->
+            <cac:Status>
+                <ext:UBLExtensions>
+                    <ext:UBLExtension>
+                        <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:StatusExtension</ext:ExtensionURI>
+                        <ext:ExtensionContent>
+                            <puf:PageroExtension>
+                                <puf:StatusExtension>
+                                    <puf:Amounts>
+                                        <!--
+                                            NEGATIVE MEN = cancellation of previously declared receipt.
+                                            Must equal the exact amount of the prior positive Encaissée.
+                                            EUR -1,200 TTC @ 20% cancels the EUR +1,200 TTC declared
+                                            in the prior Document Status (RESP-UC34-FULL-001).
+
+                                            TaxExclusiveAmount = -1,000 EUR (= -1,200 / 1.20)
+                                            TaxInclusiveAmount = -1,200 EUR (total TTC reversed)
+                                            Percent = 20 (same VAT rate as original declaration)
+                                            Date = date the bank reversal was confirmed
+                                        -->
+                                        <puf:Amount>
+                                            <puf:AmountType>MEN</puf:AmountType>
+                                            <cbc:TaxExclusiveAmount currencyID="EUR">-1000.00</cbc:TaxExclusiveAmount>
+                                            <cbc:TaxInclusiveAmount currencyID="EUR">-1200.00</cbc:TaxInclusiveAmount>
+                                            <puf:ClassifiedTaxCategory>
+                                                <cbc:Percent>20</cbc:Percent>
+                                                <cac:TaxScheme>
+                                                    <cbc:ID>VAT</cbc:ID>
+                                                </cac:TaxScheme>
+                                            </puf:ClassifiedTaxCategory>
+                                            <!-- Date of the bank reversal confirmation -->
+                                            <puf:Date>2026-03-01</puf:Date>
+                                        </puf:Amount>
+                                    </puf:Amounts>
+                                </puf:StatusExtension>
+                            </puf:PageroExtension>
+                        </ext:ExtensionContent>
+                    </ext:UBLExtension>
+                </ext:UBLExtensions>
+                <!-- NON = no specific reason code (correction is implicit from negative amount) -->
+                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
+            </cac:Status>
+        </cac:Response>
+        <!-- Reference to the original invoice (same as the corrected Encaissée) -->
+        <cac:DocumentReference>
+            <cbc:ID>FR-UC34-INV-2026-001</cbc:ID>
+            <cbc:IssueDate>2026-02-01</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>
