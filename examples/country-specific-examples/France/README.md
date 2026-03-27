@@ -230,9 +230,41 @@ Demonstrates the first Encaissée for a partial payment with retention guarantee
 
 ---
 
+---
+
+#### UC34: Partial Payment and Payment Cancellation
+
+##### 14. `PUF_France_UC34_PartialPayment.xml`
+
+**Encaissée (partial) — Document Status (Seller → Buyer)**
+Reference: `FR-UC34-INV-2026-001` (TechDistrib France SARL → Entreprise Client France SA, 1,200.00 EUR TTC @ 20%)
+
+Demonstrates a partial `PAYMENT_RECEIVED` where the buyer pays 50% of the invoice in the first instalment:
+- MEN = **600.00 EUR TTC @ 20%** — first payment received (2026-02-15)
+- RAP = **600.00 EUR TTC @ 20%** — outstanding balance (remaining to pay)
+
+> Each partial payment must be declared separately. A second Encaissée for 600 EUR TTC must follow
+> when the balance is received. If the balance is written off, a credit note should be issued.
+
+##### 15. `PUF_France_UC34_PaymentCancellation.xml`
+
+**Encaissée (negative / cancellation) — Document Status (Seller → Buyer)**
+Reference: `FR-UC34-INV-2026-001` (same invoice as UC34_PartialPayment)
+
+Demonstrates a correction Encaissée using a NEGATIVE MEN to cancel a previously-declared payment receipt:
+- MEN = **-1,200.00 EUR TTC @ 20%** — reversal of a full payment previously declared in error
+- TaxExclusiveAmount = -1,000.00 EUR; TaxInclusiveAmount = -1,200.00 EUR
+- Date = date the bank reversal was confirmed (2026-03-01)
+
+> The response code remains `PAYMENT_RECEIVED`. Only the TaxInclusiveAmount (and TaxExclusiveAmount)
+> become negative to signal the reversal. Net effect: the prior positive declaration is cancelled.
+> Used for: bank reversals, recalled transfers, error corrections, or mutual payment cancellations.
+
+---
+
 #### UC40: Netting / Compensation
 
-##### 13. `PUF_France_UC40_PaymentReceived.xml`
+##### 16. `PUF_France_UC40_PaymentReceived.xml`
 
 **Encaissée — Document Status (Seller → Buyer)**
 Reference: `PUF_France_UC40_Netting_Invoice2_FarmerToCoop.xml` — invoice `EARL-2026-0089`
@@ -246,6 +278,30 @@ Demonstrates Encaissée when payment was settled via netting/compensation:
 > Per French Tax Authority requirements, MEN must report the **full amount of the taxable
 > transaction** — the invoice was collected in full via legal set-off (compensation).
 > The net payment amount must not be used for MEN.
+
+---
+
+#### UC41: Barter (Échange)
+
+##### 17. `PUF_France_UC41_Barter_Encaissee.xml`
+
+**Encaissée (dual MEN — barter) — Document Status (Seller → Buyer)**
+Reference: `PUF_France_UC41_Barter_Invoice.xml` — invoice `PE-2026-0115`
+(Publicité Express SAS → Troc & Co SARL, 10,000 EUR HT + 20% VAT = 12,000 EUR TTC)
+
+Demonstrates the dual-MEN pattern required when payment is partly settled in kind (barter exchange):
+- **MEN Entry 1** (POSITIVE @ 20%): TaxInclusiveAmount = **+12,000.00 EUR** — full TTC "received" (in-kind + VAT cash)
+- **MEN Entry 2** (NEGATIVE @ 0%): TaxInclusiveAmount = **-10,000.00 EUR** — deducting the HT barter component (no cash)
+
+Net declared amount for VAT pre-filling: +12,000 − 10,000 = **+2,000 EUR** (VAT cash only)
+
+> This technique uses two MEN entries in one Document Status:
+> - Entry 1 reports the full settlement (in-kind exchange + VAT)
+> - Entry 2 credits back the zero-VAT barter component (not a cash receipt)
+> - Net result = actual cash received (VAT only, matching BT-115 on the invoice)
+>
+> The 0% percent on Entry 2 signals that the deduction is not reducing a VAT-bearing receipt.
+> Companion invoice: BT-113 (PrepaidAmount) on `PUF_France_UC41_Barter_Invoice.xml` = EUR 10,000 HT.
 
 ---
 
