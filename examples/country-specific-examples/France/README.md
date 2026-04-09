@@ -10,8 +10,8 @@ Two types of messages are used:
 
 | Type | Direction | CustomizationID |
 |------|-----------|-----------------|
-| **Invoice Response** | Buyer → Seller | `urn:pagero.com:puf:invoice_response:1.0` |
-| **Document Status** | Seller → Buyer | `urn:pagero.com:puf:document_status:1.0` |
+| **Invoice Response** | Receiver → Issuer | `urn:pagero.com:puf:invoice_response:1.0` |
+| **Document Status** | Issuer → Receiver | `urn:pagero.com:puf:document_status:1.0` |
 
 ### French CDAR Status Codes
 
@@ -21,22 +21,22 @@ Two types of messages are used:
 | `ISSUED_BY_PLATFORM` | 201 | Émise | Platform |
 | `RECEIVED_BY_PLATFORM` | 202 | Reçue | Platform |
 | `MADE_AVAILABLE` | 203 | Mise à disposition | Platform |
-| `IP` | 204 | Prise en charge | Buyer |
-| `AP` | 205 | Approuvée | Buyer |
-| `PARTIALLY_ACCEPTED` | 206 | Approuvée partiellement | Buyer |
-| `UQ` | 207 | Suspendue | Buyer |
-| `ON_HOLD` | 208 | Mise en attente | Buyer |
-| `INFORMATION_PROVIDED` | 209 | Complément d'informations | Buyer |
-| `RE` | 210 | Refusée | Buyer |
-| `PAYMENT_INITIATED` | 211 | Paiement Transmis | Buyer |
-| `PAYMENT_RECEIVED` | 212 | Encaissée | Seller |
+| `IP` | 204 | Prise en charge | Receiver |
+| `AP` | 205 | Approuvée | Receiver |
+| `PARTIALLY_ACCEPTED` | 206 | Approuvée partiellement | Receiver |
+| `UQ` | 207 | Suspendue | Receiver |
+| `ON_HOLD` | 208 | Mise en attente | Receiver |
+| `INFORMATION_PROVIDED` | 209 | Complément d'informations | Issuer |
+| `RE` | 210 | Refusée | Receiver |
+| `PAYMENT_INITIATED` | 211 | Paiement Transmis | Receiver |
+| `PAYMENT_RECEIVED` | 212 | Encaissée | Issuer |
 | `VF` | 213 | Rejetée | Platform |
-| `ENDORSED` | 214 | Visée | Lead Contractor |
-| `REQUEST_PAYMENT` | 224 | Demande de Paiement Direct | Subcontractor |
-| `FACTORED` | 225 | Affacturée | Seller |
-| `FACTORED_CONFIDENTIAL` | 226 | Affacturée Confidentiel | Seller/Factor |
-| `ACCOUNT_CHANGED` | 227 | Changement de Compte à payer | Seller/Factor |
-| `FACTORING_CANCELLED` | 228 | Non Affacturée | Seller |
+| `ENDORSED` | 214 | Visée | Issuer's or Receiver's Agent |
+| `REQUEST_PAYMENT` | 224 | Demande de Paiement Direct | Issuer (Subcontractor) |
+| `FACTORED` | 225 | Affacturée | Issuer |
+| `FACTORED_CONFIDENTIAL` | 226 | Affacturée Confidentiel | Issuer |
+| `ACCOUNT_CHANGED` | 227 | Changement de Compte à payer | Issuer |
+| `FACTORING_CANCELLED` | 228 | Non Affacturée | Issuer |
 
 > **Mandatory Tax Authority reporting:** The statuses Déposée (200), Rejetée (213),
 > Refusée (210) and **Encaissée (212)** must be reported to PPF. Encaissée is mandatory
