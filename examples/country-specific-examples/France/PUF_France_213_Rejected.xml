@@ -20,7 +20,7 @@
                      xmlns:puf="urn:pagero:ExtensionComponent:1.0">
     <cbc:CustomizationID>urn:pagero.com:puf:invoice_response:1.0</cbc:CustomizationID>
     <cbc:ProfileID>urn:pagero.com:puf:invoice_response:1.0</cbc:ProfileID>
-    <cbc:ID>FR-INV-2026-002_213_20260202103000#380_20260202</cbc:ID>
+    <cbc:ID>RESP-REJECTED-EXAMPLE</cbc:ID>
     <cbc:IssueDate>2026-02-02</cbc:IssueDate>
     <cbc:IssueTime>10:32:00</cbc:IssueTime>
     <cac:SenderParty>
