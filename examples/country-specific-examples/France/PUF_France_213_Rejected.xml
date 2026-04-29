@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    PUF Technical Acknowledgement — France
-    Use Case: Platform → Seller. Technical rejection of invoice (Rejetée) following schematron/validation check failures on issuance.
+    PUF Invoice Response — France
+    Use Case: Platform → Seller. Rejection of invoice (Rejetée) following schematron/validation check failures on issuance.
     French CDAR status code: 213 (Rejetée) — maps to PUF ResponseCode "RE" (Rejected).
 
     Reference invoice:  FR-INV-2026-002 (TechDistrib France SARL → Entreprise Client France SA)
