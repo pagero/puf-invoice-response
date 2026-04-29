@@ -153,7 +153,7 @@ that was already paid before emission. MEN = full invoice TTC (2,400.00 EUR).
 
 #### UC4: Partial Third-Party Payment (Insurance)
 
-##### 5. `PUF_France_UC4_PaymentReceived_Buyer.xml`
+##### 7. `PUF_France_UC4_PaymentReceived_Buyer.xml`
 
 **Encaissée (buyer portion) — Document Status (Seller → Buyer)**
 Reference: `PUF_France_UC4_PartialThirdPartyPayment_Invoice.xml` — invoice `REP-2026-0845`
@@ -161,7 +161,7 @@ Reference: `PUF_France_UC4_PartialThirdPartyPayment_Invoice.xml` — invoice `RE
 First of two Encaissée messages for a split-payment invoice (total 3,600.00 EUR):
 - MEN = **1,100.00 EUR TTC @ 20%** — buyer's deductible portion
 
-##### 6. `PUF_France_UC4_PaymentReceived_Insurer.xml`
+##### 8. `PUF_France_UC4_PaymentReceived_Insurer.xml`
 
 **Encaissée (insurer portion) — Document Status (Seller → Buyer)**
 Reference: `PUF_France_UC4_PartialThirdPartyPayment_Invoice.xml` — invoice `REP-2026-0845`
@@ -176,7 +176,7 @@ Second Encaissée for the same invoice:
 
 #### UC13: Subcontracting (Direct Payment Request)
 
-##### 7. `PUF_France_UC13_DirectPaymentRequest.xml`
+##### 9. `PUF_France_UC13_DirectPaymentRequest.xml`
 
 **Demande de Paiement Direct — Document Status (Subcontractor → Buyer + Main Contractor)**
 Reference: F1 invoice `UC13-ST-2026-0100` (Subcontractor → Main Contractor)
@@ -197,7 +197,7 @@ Demonstrates the French-specific CDAR status code `REQUEST_PAYMENT` (224 — Dem
 
 #### UC14: Co-Contracting (Lead Contractor Endorsement)
 
-##### 8. `PUF_France_UC14_Visee.xml`
+##### 10. `PUF_France_UC14_Visee.xml`
 
 **Visée — Document Status (Lead Contractor → Buyer)**
 Reference: F1 invoice `UC14-CC-2026-0050` (Co-contractor → Buyer)
@@ -214,7 +214,7 @@ Demonstrates the French-specific CDAR status code `ENDORSED` (214 — Visée):
 
 #### UC10: Post-Factoring
 
-##### 9. `PUF_France_UC10_Affacturee.xml`
+##### 11. `PUF_France_UC10_Affacturee.xml`
 
 **Affacturée — Document Status (Seller → Buyer)**
 Reference: `PUF_France_UC10_PostFactoring_Invoice.xml` — invoice `UC10-IND-2026-0345`
@@ -230,7 +230,7 @@ Demonstrates the French-specific factoring notification code `FACTORED` (225 —
 
 #### UC19b: Self-Billing
 
-##### 10. `PUF_France_UC19b_PaymentReceived.xml`
+##### 12. `PUF_France_UC19b_PaymentReceived.xml`
 
 **Encaissée — Document Status (Seller → Buyer)**
 Reference: `PUF_France_UC19b_SelfBilling_Invoice.xml` — invoice `SMBF-AF-2026-01234`
@@ -245,7 +245,7 @@ Demonstrates Encaissée for a self-billing scenario:
 
 #### UC22a: Early Payment Discount (Escompte)
 
-##### 11. `PUF_France_UC22a_PaymentReceived_Discount.xml`
+##### 13. `PUF_France_UC22a_PaymentReceived_Discount.xml`
 
 **Encaissée with Discount — Document Status (Seller → Buyer)**
 Reference: invoice `UC22A-CON-2026-0200` (consulting services, 12,000 EUR TTC @ 20%)
@@ -263,7 +263,7 @@ Demonstrates Encaissée when a 2% early payment discount (escompte) has been app
 
 #### UC26: Contractual Reservation Clause (Retenue de Garantie)
 
-##### 12. `PUF_France_UC26_PaymentReceived_Partial.xml`
+##### 14. `PUF_France_UC26_PaymentReceived_Partial.xml`
 
 **Encaissée (partial, 95%) — Document Status (Seller → Buyer)**
 Reference: invoice `UC26-REN-2026-0075` (construction services, 22,000 EUR TTC @ 10%)
@@ -282,11 +282,9 @@ Demonstrates the first Encaissée for a partial payment with retention guarantee
 
 ---
 
----
-
 #### UC34: Partial Payment and Payment Cancellation
 
-##### 14. `PUF_France_UC34_PartialPayment.xml`
+##### 15. `PUF_France_UC34_PartialPayment.xml`
 
 **Encaissée (partial) — Document Status (Seller → Buyer)**
 Reference: `FR-UC34-INV-2026-001` (TechDistrib France SARL → Entreprise Client France SA, 1,200.00 EUR TTC @ 20%)
@@ -298,7 +296,7 @@ Demonstrates a partial `PAYMENT_RECEIVED` where the buyer pays 50% of the invoic
 > Each partial payment must be declared separately. A second Encaissée for 600 EUR TTC must follow
 > when the balance is received. If the balance is written off, a credit note should be issued.
 
-##### 15. `PUF_France_UC34_PaymentCancellation.xml`
+##### 16. `PUF_France_UC34_PaymentCancellation.xml`
 
 **Encaissée (negative / cancellation) — Document Status (Seller → Buyer)**
 Reference: `FR-UC34-INV-2026-001` (same invoice as UC34_PartialPayment)
@@ -316,7 +314,7 @@ Demonstrates a correction Encaissée using a NEGATIVE MEN to cancel a previously
 
 #### UC40: Netting / Compensation
 
-##### 16. `PUF_France_UC40_PaymentReceived.xml`
+##### 17. `PUF_France_UC40_PaymentReceived.xml`
 
 **Encaissée — Document Status (Seller → Buyer)**
 Reference: `PUF_France_UC40_Netting_Invoice2_FarmerToCoop.xml` — invoice `EARL-2026-0089`
@@ -335,7 +333,7 @@ Demonstrates Encaissée when payment was settled via netting/compensation:
 
 #### UC41: Barter (Échange)
 
-##### 17. `PUF_France_UC41_Barter_Encaissee.xml`
+##### 18. `PUF_France_UC41_Barter_Encaissee.xml`
 
 **Encaissée (dual MEN — barter) — Document Status (Seller → Buyer)**
 Reference: `PUF_France_UC41_Barter_Invoice.xml` — invoice `PE-2026-0115`
