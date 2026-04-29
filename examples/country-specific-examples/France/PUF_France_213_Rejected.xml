@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Invoice Response — France
+    Use Case: Platform → Seller. Rejection of invoice (Rejetée) following schematron/validation check failures on issuance.
+    French CDAR status code: 213 (Rejetée) — maps to PUF ResponseCode "RE" (Rejected).
+
+    Reference invoice:  FR-INV-2026-002 (TechDistrib France SARL → Entreprise Client France SA)
+    Sender   (PA-E):    Thomson Reuters
+    Receiver (Seller):  TechDistrib France SARL — SIREN 987654321
+
+    Rejection reason   : REJ_SEMAN — Semantic rejection.
+    Example Rule failures:
+      • BR-FR-09 / BT-29 — SIRET / SIREN coherence on the seller party.
+      • BR-FR-05 / BT-22 — Mandatory legal mentions (#PMT#, #PMD#, #AAB#) missing in BG-3 notes.
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <cbc:CustomizationID>urn:pagero.com:puf:invoice_response:1.0</cbc:CustomizationID>
+    <cbc:ProfileID>urn:pagero.com:puf:invoice_response:1.0</cbc:ProfileID>
+    <cbc:ID>RESP-REJECTED-EXAMPLE</cbc:ID>
+    <cbc:IssueDate>2026-02-02</cbc:IssueDate>
+    <cbc:IssueTime>10:32:00</cbc:IssueTime>
+    <cac:SenderParty>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Thomson Reuters</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <cac:ReceiverParty>
+        <cbc:EndpointID schemeID="0002">987654321</cbc:EndpointID>
+        <cac:PartyIdentification>
+            <cbc:ID schemeID="0002">987654321</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>TechDistrib France SARL</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <cac:DocumentResponse>
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <!-- The interchange id of the referenced document. If sent by the issuer -->
+                                <puf:ReferencedDocumentInterchangeID>
+                                    <cbc:ID>333222111</cbc:ID>
+                                </puf:ReferencedDocumentInterchangeID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <cbc:ResponseCode>RE</cbc:ResponseCode>
+            <!-- Error 1 — BR-FR-09 / BT-29 (SIRET / SIREN coherence on the seller party) -->
+            <cac:Status>
+                <cbc:StatusReasonCode listID="OPStatusReason">REJ_SEMAN</cbc:StatusReasonCode>
+                <cbc:StatusReason>[BR-FR-09/BT-29] BR-FR-09 — Cohérence SIRET / SIREN du vendeur. Le SIRET doit contenir 14 chiffres et commencer par le SIREN. SIRET fourni : "98765432100099", SIREN fourni : "987654322". Les 9 premiers chiffres du SIRET ne correspondent pas au SIREN. Location : /ubl:Invoice/cac:AccountingSupplierParty/cac:Party/cac:PartyIdentification/cbc:ID</cbc:StatusReason>
+            </cac:Status>
+            <!-- Error 2 — BR-FR-05 / BT-22 (mandatory legal mentions missing in BG-3 notes) -->
+            <cac:Status>
+                <cbc:StatusReasonCode listID="OPStatusReason">REJ_SEMAN</cbc:StatusReasonCode>
+                <cbc:StatusReason>[BR-FR-05/BT-22] BR-FR-05 — Présence obligatoire des mentions légales (BG-3). Les mentions légales obligatoires sont absentes des notes (BG-3) : codes sujets attendus #PMT# (frais de recouvrement), #PMD# (pénalités de retard), #AAB# (escompte). Aucune des trois mentions n'a été détectée. Location : /ubl:Invoice/cbc:Note</cbc:StatusReason>
+            </cac:Status>
+        </cac:Response>
+        <cac:DocumentReference>
+            <cbc:ID>FR-INV-2026-002</cbc:ID>
+            <cbc:IssueDate>2026-02-02</cbc:IssueDate>
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>
