@@ -24,20 +24,20 @@ Two types of messages are used:
 | PUF ResponseCode | CDAR Code | French Name | Who Sends |
 |------------------|-----------|-------------|-----------|
 | `SUBMITTED` | 200 | Déposée | Platform |
-| `ISSUED_BY_PLATFORM` | 201 | Émise | Platform |
-| `RECEIVED_BY_PLATFORM` | 202 | Reçue | Platform |
+| `ISSUED_BY_PLATFORM` | 201 | Emise par la plateforme | Platform |
+| `RECEIVED_BY_PLATFORM` | 202 | Reçue de la plateforme | Platform |
 | `MADE_AVAILABLE` | 203 | Mise à disposition | Platform |
 | `IP` | 204 | Prise en charge | Buyer |
 | `AP` | 205 | Approuvée | Buyer |
 | `PARTIALLY_ACCEPTED` | 206 | Approuvée partiellement | Buyer |
-| `UQ` | 207 | Suspendue | Buyer |
-| `ON_HOLD` | 208 | Mise en attente | Buyer |
-| `INFORMATION_PROVIDED` | 209 | Complément d'informations | Seller |
+| `UQ` | 207 | En litige | Buyer |
+| `ON_HOLD` | 208 | Suspendue | Buyer |
+| `INFORMATION_PROVIDED` | 209 | Complétée | Seller |
 | `RE` | 210 | Refusée | Buyer |
 | `PAYMENT_INITIATED` | 211 | Paiement Transmis | Buyer |
 | `PAYMENT_RECEIVED` | 212 | Encaissée | Seller |
 | `VF` | 213 | Rejetée | Platform |
-| `ENDORSED` | 214 | Visée | Seller's or Buyer's Agent |
+| `SUPERSEDED` | 220 | Annulée | Seller or Buyer |
 | `REQUEST_PAYMENT` | 224 | Demande de Paiement Direct | Seller (Subcontractor) |
 | `FACTORED` | 225 | Affacturée | Seller |
 | `FACTORED_CONFIDENTIAL` | 226 | Affacturée Confidentiel | Seller |
