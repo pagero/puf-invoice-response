@@ -128,58 +128,27 @@
                         <ext:ExtensionContent>
                             <puf:PageroExtension>
                                 <puf:StatusExtension>
-                                    <puf:Amounts>
-                                        <!--
-                                            MEN ENTRY 1 — Full TTC settlement.
-                                            The barter exchange + VAT cash together constitute
-                                            full settlement of the invoice (EUR 12,000 TTC).
-                                            VAT rate = 20% (advertising services rate).
-                                            Date = date services were delivered under the barter.
-                                        -->
-                                        <puf:Amount>
-                                            <puf:AmountType>MEN</puf:AmountType>
-                                            <cbc:TaxExclusiveAmount currencyID="EUR">10000.00</cbc:TaxExclusiveAmount>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">12000.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>20</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                            <puf:Date>2026-02-28</puf:Date>
-                                        </puf:Amount>
-                                        <!--
-                                            MEN ENTRY 2 — NEGATIVE: in-kind compensation deduction.
-                                            Deducting the HT barter component (EUR -10,000) from
-                                            the total settlement. This component was settled in KIND
-                                            (not in cash) and therefore should NOT contribute to
-                                            VAT pre-filling of cash-basis income.
-
-                                            TaxInclusiveAmount = -10,000 (= -BT-113 from invoice)
-                                            Percent = 0 (no VAT applies to this deduction;
-                                                         the VAT on the barter component was already
-                                                         captured in Entry 1 @ 20%)
-                                            Date = same date as Entry 1 (same settlement event)
-                                        -->
-                                        <puf:Amount>
-                                            <puf:AmountType>MEN</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">-10000.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>0</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                            <puf:Date>2026-02-28</puf:Date>
-                                        </puf:Amount>
-                                    </puf:Amounts>
+                                    <puf:Clarifications>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>MEN</puf:TypeCode>
+                                            <puf:ValueDateTime>2026-02-28</puf:ValueDateTime>
+                                            <puf:ValuePercent>20</puf:ValuePercent>
+                                            <puf:ValueAmount>12000.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                        </puf:Clarification>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>MEN</puf:TypeCode>
+                                            <puf:ValueDateTime>2026-02-28</puf:ValueDateTime>
+                                            <puf:ValuePercent>0</puf:ValuePercent>
+                                            <puf:ValueAmount>-10000.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                        </puf:Clarification>
+                                    </puf:Clarifications>
                                 </puf:StatusExtension>
                             </puf:PageroExtension>
                         </ext:ExtensionContent>
                     </ext:UBLExtension>
                 </ext:UBLExtensions>
-                <!-- NON = no specific reason code -->
-                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
             </cac:Status>
         </cac:Response>
         <!-- Reference to the original barter invoice -->

@@ -12,6 +12,7 @@
     <!-- ===== Element Declarations ===== -->
     <xsd:element name="Amount" type="PUFAmountType"/>
     <xsd:element name="Amounts" type="PUFAmountsListType"/>
+    <xsd:element name="Clarifications" type="PUFClarificationsListType"/>
     <xsd:element name="IDType" type="PUFIDType"/>
     <xsd:element name="Code" type="PUFCodeType"/>
     <xsd:element name="Key" type="PUFCodeType"/>
@@ -54,6 +55,8 @@
                                     <xsd:sequence>
                                         <xsd:element ref="cbc:ID" minOccurs="0" maxOccurs="1"/>
                                         <xsd:element ref="cbc:UUID" minOccurs="0" maxOccurs="1"/>
+                                        <xsd:element name="senderDocumentUUID" type="PUFIDType" minOccurs="0" maxOccurs="1"/>
+                                        <xsd:element name="receiverDocumentUUID" type="PUFIDType" minOccurs="0" maxOccurs="1"/>
                                     </xsd:sequence>
                                 </xsd:complexType>
                             </xsd:element>
@@ -116,6 +119,13 @@
                                     </xsd:documentation>
                                 </xsd:annotation>
                             </xsd:element>
+                            <xsd:element ref="Clarifications" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                    <xsd:documentation>
+                                        Clarifications relating to the status: characteristics of the referenced document that the status clarifies (e.g. an invalid value and its expected value, with the field's identifier, name, location and typed value). This group can be repeated.
+                                    </xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
                         </xsd:sequence>
                     </xsd:complexType>
                 </xsd:element>
@@ -171,6 +181,72 @@
             <xsd:element name="ClassifiedTaxCategory" type="cac:TaxCategoryType" minOccurs="0" maxOccurs="1"/>
             <xsd:element ref="cbc:CurrencyCode" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="Date" type="PUFDateType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- ===== Status Extension Clarifications types ===== -->
+    <xsd:complexType name="PUFClarificationsListType">
+        <xsd:sequence>
+            <xsd:element name="Clarification" type="PUFClarificationEntryType" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PUFClarificationEntryType">
+        <xsd:sequence>
+            <xsd:element name="Code" type="PUFIDType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Identifier of the field or object being clarified (e.g. an EN 16931 business term such as BT-152).</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="TypeCode" type="PUFCodeType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Code qualifying the role of this clarification (e.g. an invalid value, an expected/valid value, a replacement value or a specific amount type). Code list is format/country-specific.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Name" type="PUFTextType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Human-readable name of the field or object.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Description" type="PUFTextType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Description related to the clarification.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Location" type="PUFTextType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Location of the field within the referenced document, e.g. an XPath.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ChangedIndicator" type="PUFIndicatorType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Indicates whether the value of the field has changed.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="AdjustmentDirectionCode" type="PUFCodeType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Code indicating the direction of an adjustment to the value.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Value" type="PUFTextType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Value of the field expressed as text. Use the value element matching the value's data type.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ValueCode" type="PUFCodeType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Value of the field expressed as a code.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ValueDateTime" type="PUFDateType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Value of the field expressed as a date/time.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ValueNumeric" type="PUFTextType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Value of the field expressed as a number.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ValuePercent" type="PUFTextType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Value of the field expressed as a percentage.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ValueAmount" type="PUFTextType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Value of the field expressed as a monetary amount.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ValueAmountCurrency" type="PUFCodeType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Currency code of ValueAmount.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ValueQuantity" type="PUFTextType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Value of the field expressed as a quantity.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ValueQuantityUnit" type="PUFCodeType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Unit of measure code for ValueQuantity.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ValueMeasure" type="PUFTextType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Value of the field expressed as a measure.</xsd:documentation></xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ValueMeasureUnit" type="PUFCodeType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Unit of measure code for ValueMeasure.</xsd:documentation></xsd:annotation>
+            </xsd:element>
         </xsd:sequence>
     </xsd:complexType>
 </xsd:schema>

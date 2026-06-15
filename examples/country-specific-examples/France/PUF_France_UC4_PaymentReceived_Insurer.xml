@@ -91,28 +91,19 @@
                         <ext:ExtensionContent>
                             <puf:PageroExtension>
                                 <puf:StatusExtension>
-                                    <puf:Amounts>
-                                        <puf:Amount>
-                                            <puf:AmountType>MEN</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">2500.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <!--
-                                                    0% VAT: the insurer's payment is an insurance
-                                                    indemnity (indemnité assurance), not subject to VAT.
-                                                -->
-                                                <cbc:Percent>0</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                        </puf:Amount>
-                                    </puf:Amounts>
+                                    <puf:Clarifications>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>MEN</puf:TypeCode>
+                                            <puf:ValuePercent>0</puf:ValuePercent>
+                                            <puf:ValueAmount>2500.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                        </puf:Clarification>
+                                    </puf:Clarifications>
                                 </puf:StatusExtension>
                             </puf:PageroExtension>
                         </ext:ExtensionContent>
                     </ext:UBLExtension>
                 </ext:UBLExtensions>
-                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
             </cac:Status>
         </cac:Response>
         <cac:DocumentReference>

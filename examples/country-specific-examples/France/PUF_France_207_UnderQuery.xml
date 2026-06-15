@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
     PUF Invoice Response — France
-    Use Case: Buyer → Seller. Notifying that payment has been initiated (Paiement Transmis).
-    French CDAR status code: 211 (Paiement Transmis)
+    Use Case: Buyer → Seller. Invoice placed under query / in dispute (En litige).
+    French CDAR status code: 207 (En litige) — maps to PUF ResponseCode "UQ" (Under Query).
 
     Reference invoice: PUF_France_Generic_Invoice.xml (FR-INV-2026-001)
-    Sender  (Buyer):  Entreprise Client France SA — SIREN 123456789
+    Sender   (Buyer):  Entreprise Client France SA — SIREN 123456789
     Receiver (Seller): TechDistrib France SARL — SIREN 987654321
 
-    The MPA amount type indicates the total amount the buyer has transferred.
-    Amount breakdown per VAT rate is optional for Paiement Transmis but recommended.
-    This status is sent by the buyer when payment has been issued (not yet confirmed
-    as received by the seller — that is reported via PAYMENT_RECEIVED/Encaissée).
+    Dispute reason   : TX_TVA_ERR — incorrect VAT rate. A French reason code valid for
+                       LITIGE/207 per the CDV schematron (BR-FR-CDV-CL-09/MDT-113_207).
+    Clarifications   : the disputed field (BT-152, line VAT rate) carried two characteristics —
+                       DIV (the current/invalid value, 10%) and DVA (the expected/valid value, 20%).
+    Requested action : CNF — create a full credit note.
+
+    Note: the data clarifications are carried in puf:StatusExtension/puf:Clarifications on the
+    reason status. See status-extension.adoc for the full element list.
 -->
 <ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
                      xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
@@ -23,11 +27,13 @@
     <!-- Business process type identifier -->
     <cbc:ProfileID>urn:pagero.com:puf:invoice_response:1.0</cbc:ProfileID>
     <!-- Response identifier (max 20 characters) -->
-    <cbc:ID>RESP-FR-2026-003</cbc:ID>
+    <cbc:ID>RESP-FR-2026-007</cbc:ID>
     <!-- Response issue date -->
-    <cbc:IssueDate>2026-03-03</cbc:IssueDate>
+    <cbc:IssueDate>2026-02-12</cbc:IssueDate>
     <!-- Response issue time (mandatory in France) -->
     <cbc:IssueTime>11:15:00</cbc:IssueTime>
+    <!-- Optional freetext note -->
+    <cbc:Note>Mise en litige de la facture FR-INV-2026-001 : taux de TVA erroné.</cbc:Note>
     <!-- Sender Party (Buyer — sends Invoice Response) -->
     <cac:SenderParty>
         <cac:PartyIdentification>
@@ -50,7 +56,6 @@
     </cac:ReceiverParty>
     <!-- Document Response -->
     <cac:DocumentResponse>
-        <!-- Response element containing the status code and amount details -->
         <cac:Response>
             <ext:UBLExtensions>
                 <ext:UBLExtension>
@@ -60,18 +65,21 @@
                             <puf:ResponseExtension>
                                 <!-- DocumentMatchingID links this response to the original transaction -->
                                 <puf:DocumentMatchingID>
-                                    <cbc:ID>10000000003</cbc:ID>
+                                    <cbc:ID>10000000007</cbc:ID>
                                 </puf:DocumentMatchingID>
                             </puf:ResponseExtension>
                         </puf:PageroExtension>
                     </ext:ExtensionContent>
                 </ext:UBLExtension>
             </ext:UBLExtensions>
-            <!-- Response Code: PAYMENT_INITIATED = Paiement Transmis (French code 211) -->
-            <cbc:ResponseCode>PAYMENT_INITIATED</cbc:ResponseCode>
+            <!-- Response Code: UQ = Under Query (French code 207, En litige) -->
+            <cbc:ResponseCode>UQ</cbc:ResponseCode>
             <!--
-                Status with MPA amount (amount paid/transferred by buyer).
-                Amount breakdown per VAT rate is optional but included here for completeness.
+                Status 1 — Reason code + the data clarifications.
+                listID="OPStatusReason" identifies this as a reason code status.
+                TX_TVA_ERR = incorrect VAT rate. Valid for response code UQ (207) per the CDV schematron.
+                The puf:Clarifications describe the disputed field: BT-152 (line VAT rate) with the
+                current/invalid value (DIV = 10%) and the expected/valid value (DVA = 20%).
             -->
             <cac:Status>
                 <ext:UBLExtensions>
@@ -82,10 +90,20 @@
                                 <puf:StatusExtension>
                                     <puf:Clarifications>
                                         <puf:Clarification>
-                                            <puf:TypeCode>MPA</puf:TypeCode>
-                                            <puf:ValuePercent>20</puf:ValuePercent>
-                                            <puf:ValueAmount>1200.00</puf:ValueAmount>
-                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                            <puf:Code>BT-152</puf:Code>
+                                            <puf:TypeCode>DIV</puf:TypeCode>
+                                            <puf:Name>Taux TVA</puf:Name>
+                                            <puf:Location>/Invoice/cac:InvoiceLine/cac:Item/cac:ClassifiedTaxCategory/cbc:Percent</puf:Location>
+                                            <puf:ChangedIndicator>true</puf:ChangedIndicator>
+                                            <puf:ValuePercent>10.00</puf:ValuePercent>
+                                        </puf:Clarification>
+                                        <puf:Clarification>
+                                            <puf:Code>BT-152</puf:Code>
+                                            <puf:TypeCode>DVA</puf:TypeCode>
+                                            <puf:Name>Taux TVA</puf:Name>
+                                            <puf:Location>/Invoice/cac:InvoiceLine/cac:Item/cac:ClassifiedTaxCategory/cbc:Percent</puf:Location>
+                                            <puf:ChangedIndicator>true</puf:ChangedIndicator>
+                                            <puf:ValuePercent>20.00</puf:ValuePercent>
                                         </puf:Clarification>
                                     </puf:Clarifications>
                                 </puf:StatusExtension>
@@ -93,11 +111,21 @@
                         </ext:ExtensionContent>
                     </ext:UBLExtension>
                 </ext:UBLExtensions>
+                <cbc:StatusReasonCode listID="OPStatusReason">TX_TVA_ERR</cbc:StatusReasonCode>
+                <cbc:StatusReason>Taux de TVA erroné (10 % appliqué au lieu de 20 %).</cbc:StatusReason>
+            </cac:Status>
+            <!--
+                Status 2 — Requested action (what the seller should do).
+                listID="OPStatusAction" identifies this as an action code status.
+                CNF = create a full credit note.
+            -->
+            <cac:Status>
+                <cbc:StatusReasonCode listID="OPStatusAction">CNF</cbc:StatusReasonCode>
+                <cbc:StatusReason>Créer un Avoir total.</cbc:StatusReason>
             </cac:Status>
         </cac:Response>
         <!-- Reference to the original invoice -->
         <cac:DocumentReference>
-            <!-- Invoice number of the referenced document -->
             <cbc:ID>FR-INV-2026-001</cbc:ID>
             <cbc:IssueDate>2026-02-01</cbc:IssueDate>
             <!-- Document type code: 380 = Invoice -->

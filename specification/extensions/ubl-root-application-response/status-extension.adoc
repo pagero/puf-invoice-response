@@ -1,39 +1,111 @@
 ==== puf:StatusExtension
 
-Below tables shows the definition of elements added to the extension `puf:PageroExtension/puf:StatusExtension`. 
+Below tables shows the definition of elements added to the extension `puf:PageroExtension/puf:StatusExtension`.
 
-.Elements added in puf:StatusExtension relating to amounts. 
+Status-level information is carried in `puf:Clarifications` (see below). The older `puf:Amounts` structure is *legacy* — it is retained for backwards compatibility but is **superseded by `puf:Clarifications`**; new producers should use `puf:Clarifications`, expressing a monetary amount with `puf:TypeCode` + `puf:ValueAmount`/`puf:ValueAmountCurrency` (+ `puf:ValuePercent` for the VAT rate).
+
+.Elements added in puf:StatusExtension relating to clarifications.
+[.status-extension-table]
+[%stretch,cols="1,1"]
+|===
+|Element |Description
+
+|`puf:Clarifications/puf:Clarification/puf:Code`
+|**Field code** +
+Identifier of the field or object being clarified, e.g. an EN 16931 business term (such as `BT-152`) or group.
+
+|`puf:Clarifications/puf:Clarification/puf:TypeCode`
+|**Clarification type code** +
+Code qualifying the role of this clarification, e.g. an invalid value, an expected/valid value, a replacement value, or an amount type (such as `MEN`, `RAP`). The code list is country-specific; see section <<_country_specifics>>.
+
+|`puf:Clarifications/puf:Clarification/puf:Name`
+|**Field name** +
+Human-readable name of the field or object.
+
+|`puf:Clarifications/puf:Clarification/puf:Description`
+|**Description** +
+Free-text description of the clarification.
+
+|`puf:Clarifications/puf:Clarification/puf:Location`
+|**Field location** +
+Location of the field within the referenced document, e.g. an XPath.
+
+|`puf:Clarifications/puf:Clarification/puf:ChangedIndicator`
+|**Changed indicator** +
+Indicates whether the value of the field has changed (`true`/`false`).
+
+|`puf:Clarifications/puf:Clarification/puf:AdjustmentDirectionCode`
+|**Adjustment direction code** +
+Code indicating the direction of an adjustment to the value.
+
+|`puf:Clarifications/puf:Clarification/puf:Value`
+|**Text value** +
+Value of the field expressed as text. Use the value element matching the value's data type.
+
+|`puf:Clarifications/puf:Clarification/puf:ValueCode`
+|**Coded value** +
+Value of the field expressed as a code.
+
+|`puf:Clarifications/puf:Clarification/puf:ValueDateTime`
+|**Date/time value** +
+Value of the field expressed as a date/time.
+
+|`puf:Clarifications/puf:Clarification/puf:ValueNumeric`
+|**Numeric value** +
+Value of the field expressed as a number.
+
+|`puf:Clarifications/puf:Clarification/puf:ValuePercent`
+|**Percentage value** +
+Value of the field expressed as a percentage (e.g. a VAT rate).
+
+|`puf:Clarifications/puf:Clarification/puf:ValueAmount +
+puf:Clarifications/puf:Clarification/puf:ValueAmountCurrency`
+|**Monetary value / currency** +
+Value of the field expressed as a monetary amount, and its currency code.
+
+|`puf:Clarifications/puf:Clarification/puf:ValueQuantity +
+puf:Clarifications/puf:Clarification/puf:ValueQuantityUnit`
+|**Quantity value / unit** +
+Value of the field expressed as a quantity, and its unit-of-measure code.
+
+|`puf:Clarifications/puf:Clarification/puf:ValueMeasure +
+puf:Clarifications/puf:Clarification/puf:ValueMeasureUnit`
+|**Measure value / unit** +
+Value of the field expressed as a measure, and its unit-of-measure code.
+|===
+
+.Elements added in puf:StatusExtension relating to amounts (*legacy* — superseded by puf:Clarifications).
 [.status-extension-table]
 [%stretch,cols="1,1"]
 |===
 |Element |Description
 
 |`puf:Amounts/puf:Amount/puf:AmountType`
-|**Amount type** +
+|**Amount type** (*legacy*) +
 The type of amount that is being specified. +
 AmountType code currently depend on country guidelines. See section <<_country_specifics>> for more details on how it's handled in each country.
 
 |`puf:Amounts/puf:Amount/cbc:TaxExclusiveAmount`
-|**Net amount** +
+|**Net amount** (*legacy*) +
 The net amount (excl. taxes) for the specified amount type.
 
 |`puf:Amounts/puf:Amount/cbc:TaxInclusiveAmount`
-|**Total amount** +
+|**Total amount** (*legacy*) +
 The total amount (incl. taxes) for the specified amount type.
 
 |`puf:Amounts/puf:Amount/cac:ClassifiedTaxCategory/cbc:Percent`
-|**Tax rate** +
+|**Tax rate** (*legacy*) +
 The tax rate applicable for the specified amount type.
 
 |`puf:Amounts/puf:Amount/puf:Date`
-|**Date** +
+|**Date** (*legacy*) +
 A date associated with the amount entry (e.g. payment collection date).
 |===
 
 See example below as well as the URI to be used for this extension.
 
 *Example* +
-_puf:StatusExtension with sample values. The example scenario illustrated below is an invoice for €1310 (incl. VAT) with two VAT rates (20 % and 10 %). The taxpayer reports that two amounts have been paid: €120 (incl. 20 % VAT) and €11 (incl. 10 % VAT). In addition to this, the taxpayer also informs the recipient that they have €1080 (incl. 20 % VAT) and €99 (incl. 10 % VAT) remaining to be paid (RAP)._
+_puf:StatusExtension with sample values. The example scenario illustrated below is an invoice for €1310 (incl. VAT) with two VAT rates (20 % and 10 %). The taxpayer reports that two amounts have been collected: €120 (incl. 20 % VAT) and €11 (incl. 10 % VAT). In addition to this, the taxpayer also informs the recipient that they have €1080 (incl. 20 % VAT) and €99 (incl. 10 % VAT) remaining to be paid (RAP)._
 [%nowrap]
 [source,xml]
 ----
@@ -50,49 +122,33 @@ _puf:StatusExtension with sample values. The example scenario illustrated below 
                             <puf:PageroExtension>
                                 <puf:StatusExtension>
                                     <!-- Code omitted for clarity -->
-                                    <puf:Amounts>
-                                        <puf:Amount>
-                                            <puf:AmountType>MEN</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">120.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>20</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                            <puf:Date>2026-01-15</puf:Date>
-                                        </puf:Amount>
-                                        <puf:Amount>
-                                            <puf:AmountType>MEN</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">11.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>10</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                        </puf:Amount>
-                                        <puf:Amount>
-                                            <puf:AmountType>RAP</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">1080.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>20</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                        </puf:Amount>
-                                        <puf:Amount>
-                                            <puf:AmountType>RAP</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">99.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>10</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                        </puf:Amount>
-                                    </puf:Amounts>
+                                    <puf:Clarifications>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>MEN</puf:TypeCode>
+                                            <puf:ValueAmount>120.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                            <puf:ValuePercent>20</puf:ValuePercent>
+                                            <puf:ValueDateTime>2026-01-15</puf:ValueDateTime>
+                                        </puf:Clarification>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>MEN</puf:TypeCode>
+                                            <puf:ValueAmount>11.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                            <puf:ValuePercent>10</puf:ValuePercent>
+                                        </puf:Clarification>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>RAP</puf:TypeCode>
+                                            <puf:ValueAmount>1080.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                            <puf:ValuePercent>20</puf:ValuePercent>
+                                        </puf:Clarification>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>RAP</puf:TypeCode>
+                                            <puf:ValueAmount>99.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                            <puf:ValuePercent>10</puf:ValuePercent>
+                                        </puf:Clarification>
+                                    </puf:Clarifications>
                                 </puf:StatusExtension>
                             </puf:PageroExtension>
                         </ext:ExtensionContent>

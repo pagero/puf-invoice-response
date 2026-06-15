@@ -11,7 +11,7 @@
     Refusal reason: CALCUL_ERR — Calculation error on invoice amounts.
     Requested action: NIN — Issue a corrected invoice.
 
-    Note: The reason code must be one of the 22 French-specific reason codes
+    Note: The reason code must be one of the French-specific reason codes
     defined in the PUF Invoice Response France country specifics specification.
     See france.adoc for the full list and applicability per response code.
 -->

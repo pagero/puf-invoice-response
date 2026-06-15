@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.23">
+<meta name="generator" content="Asciidoctor 2.0.26">
 <meta name="author" content="Copyright &copy; 2026, Pagero Group">
 <meta name="copyright" content="Pagero Group">
 <title>PUF Invoice Response 1.0</title>
@@ -1668,10 +1668,25 @@ Then this ID can be sent to facilitate a matching/connection between the respons
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:DocumentMatchingID/cbc:UUID</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Referenced API document matching identifier</strong><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Referenced API document matching identifier</strong> (<strong>DEPRECATED</strong>)<br>
+<strong>DEPRECATED — use <code>puf:DocumentMatchingID/puf:receiverDocumentUUID</code> instead.</strong><br>
 The unique Pagero UUID used to match the response to an Invoice.<br>
-This ID is applicable when you <strong><em>send a response</em></strong>.<br>
-The UUID is only availble via <strong>Document API</strong> when using <a href="https://pagero.github.io/document-api-doc/#tag/document" target="_blank" rel="noopener">GET</a> documents.</p></td>
+This ID is applicable when you send a response to a <strong><em>received document</em></strong>.<br>
+The UUID is only available via <strong>Document API</strong> when using <a href="https://pagero.github.io/document-api-doc/#tag/document" target="_blank" rel="noopener">GET</a> documents.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:DocumentMatchingID/puf:senderDocumentUUID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Sender document UUID</strong><br>
+The Pagero document UUID of the referenced document as generated on the <strong>sender&#8217;s</strong> side of the flow.<br>
+Available via <strong>Document API</strong> when using <a href="https://pagero.github.io/document-api-doc/#tag/document" target="_blank" rel="noopener">GET</a> documents.<br>
+<strong>Note</strong>: This field is specifically for <strong>Sent</strong> documents.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:DocumentMatchingID/puf:receiverDocumentUUID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Receiver document UUID</strong><br>
+The Pagero document UUID of the referenced document as generated on the <strong>receiver&#8217;s</strong> side of the flow, used to match the response to that document. Replaces the deprecated <code>puf:DocumentMatchingID/cbc:UUID</code>.<br>
+Available via <strong>Document API</strong> when using <a href="https://pagero.github.io/document-api-doc/#tag/document" target="_blank" rel="noopener">GET</a> documents.<br>
+<strong>Note</strong>: This field is specifically for <strong>Received</strong> documents.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1750,9 +1765,9 @@ The attached document embedded as binary object (Base64).</p></td>
                                     <span class="tag">&lt;cbc:ID&gt;</span>123456789<span class="tag">&lt;/cbc:ID&gt;</span>
                                 <span class="tag">&lt;/puf:ReferencedDocumentInterchangeID&gt;</span>
                                 <span class="tag">&lt;puf:DocumentMatchingID&gt;</span>
-                                    <span class="comment">&lt;!-- Either cbc:ID or cbc:UUID can be used, see Extensions documentation --&gt;</span>
+                                    <span class="comment">&lt;!-- cbc:ID and/or ONE document UUID matching the flow direction can be used: puf:receiverDocumentUUID when responding to a received document (shown here), puf:senderDocumentUUID when responding to a sent document — never both. cbc:UUID is deprecated in favour of puf:receiverDocumentUUID --&gt;</span>
                                     <span class="tag">&lt;cbc:ID&gt;</span>123456789<span class="tag">&lt;/cbc:ID&gt;</span>
-                                    <span class="tag">&lt;cbc:UUID&gt;</span>4408ca72-f3c0-11ed-a05b-0242ac120003<span class="tag">&lt;/cbc:UUID&gt;</span>
+                                    <span class="tag">&lt;puf:receiverDocumentUUID&gt;</span>5519db83-04d1-22fe-b16c-1353bd231114<span class="tag">&lt;/puf:receiverDocumentUUID&gt;</span>
                                 <span class="tag">&lt;/puf:DocumentMatchingID&gt;</span>
                                 <span class="tag">&lt;puf:AdditionalDocumentReference&gt;</span>
                                     <span class="tag">&lt;cbc:ID&gt;</span>1456123<span class="tag">&lt;/cbc:ID&gt;</span>
@@ -1784,8 +1799,104 @@ The attached document embedded as binary object (Base64).</p></td>
 <div class="paragraph">
 <p>Below tables shows the definition of elements added to the extension <code>puf:PageroExtension/puf:StatusExtension</code>.</p>
 </div>
+<div class="paragraph">
+<p>Status-level information is carried in <code>puf:Clarifications</code> (see below). The older <code>puf:Amounts</code> structure is <strong>legacy</strong> — it is retained for backwards compatibility but is <strong>superseded by <code>puf:Clarifications</code></strong>; new producers should use <code>puf:Clarifications</code>, expressing a monetary amount with <code>puf:TypeCode</code> + <code>puf:ValueAmount</code>/<code>puf:ValueAmountCurrency</code> (+ <code>puf:ValuePercent</code> for the VAT rate).</p>
+</div>
 <table class="tableblock frame-all grid-all stretch status-extension-table">
-<caption class="title">Table 9. Elements added in puf:StatusExtension relating to amounts.</caption>
+<caption class="title">Table 9. Elements added in puf:StatusExtension relating to clarifications.</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:Code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Field code</strong><br>
+Identifier of the field or object being clarified, e.g. an EN 16931 business term (such as <code>BT-152</code>) or group.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:TypeCode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Clarification type code</strong><br>
+Code qualifying the role of this clarification, e.g. an invalid value, an expected/valid value, a replacement value, or an amount type (such as <code>MEN</code>, <code>RAP</code>). The code list is country-specific; see section <a href="#_country_specifics">Country specifics</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:Name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Field name</strong><br>
+Human-readable name of the field or object.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:Description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong><br>
+Free-text description of the clarification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:Location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Field location</strong><br>
+Location of the field within the referenced document, e.g. an XPath.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:ChangedIndicator</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Changed indicator</strong><br>
+Indicates whether the value of the field has changed (<code>true</code>/<code>false</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:AdjustmentDirectionCode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Adjustment direction code</strong><br>
+Code indicating the direction of an adjustment to the value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:Value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Text value</strong><br>
+Value of the field expressed as text. Use the value element matching the value&#8217;s data type.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:ValueCode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Coded value</strong><br>
+Value of the field expressed as a code.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:ValueDateTime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Date/time value</strong><br>
+Value of the field expressed as a date/time.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:ValueNumeric</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Numeric value</strong><br>
+Value of the field expressed as a number.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:ValuePercent</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Percentage value</strong><br>
+Value of the field expressed as a percentage (e.g. a VAT rate).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:ValueAmount<br>
+puf:Clarifications/puf:Clarification/puf:ValueAmountCurrency</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Monetary value / currency</strong><br>
+Value of the field expressed as a monetary amount, and its currency code.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:ValueQuantity<br>
+puf:Clarifications/puf:Clarification/puf:ValueQuantityUnit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Quantity value / unit</strong><br>
+Value of the field expressed as a quantity, and its unit-of-measure code.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:ValueMeasure<br>
+puf:Clarifications/puf:Clarification/puf:ValueMeasureUnit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Measure value / unit</strong><br>
+Value of the field expressed as a measure, and its unit-of-measure code.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch status-extension-table">
+<caption class="title">Table 10. Elements added in puf:StatusExtension relating to amounts (<strong>legacy</strong> — superseded by puf:Clarifications).</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1799,28 +1910,28 @@ The attached document embedded as binary object (Base64).</p></td>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Amounts/puf:Amount/puf:AmountType</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Amount type</strong><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Amount type</strong> (<strong>legacy</strong>)<br>
 The type of amount that is being specified.<br>
 AmountType code currently depend on country guidelines. See section <a href="#_country_specifics">Country specifics</a> for more details on how it&#8217;s handled in each country.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Amounts/puf:Amount/cbc:TaxExclusiveAmount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Net amount</strong><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Net amount</strong> (<strong>legacy</strong>)<br>
 The net amount (excl. taxes) for the specified amount type.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Amounts/puf:Amount/cbc:TaxInclusiveAmount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Total amount</strong><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Total amount</strong> (<strong>legacy</strong>)<br>
 The total amount (incl. taxes) for the specified amount type.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Amounts/puf:Amount/cac:ClassifiedTaxCategory/cbc:Percent</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Tax rate</strong><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Tax rate</strong> (<strong>legacy</strong>)<br>
 The tax rate applicable for the specified amount type.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Amounts/puf:Amount/puf:Date</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Date</strong><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Date</strong> (<strong>legacy</strong>)<br>
 A date associated with the amount entry (e.g. payment collection date).</p></td>
 </tr>
 </tbody>
@@ -1830,7 +1941,7 @@ A date associated with the amount entry (e.g. payment collection date).</p></td>
 </div>
 <div class="paragraph">
 <p><strong>Example</strong><br>
-<em>puf:StatusExtension with sample values. The example scenario illustrated below is an invoice for €1310 (incl. VAT) with two VAT rates (20 % and 10 %). The taxpayer reports that two amounts have been paid: €120 (incl. 20 % VAT) and €11 (incl. 10 % VAT). In addition to this, the taxpayer also informs the recipient that they have €1080 (incl. 20 % VAT) and €99 (incl. 10 % VAT) remaining to be paid (RAP).</em></p>
+<em>puf:StatusExtension with sample values. The example scenario illustrated below is an invoice for €1310 (incl. VAT) with two VAT rates (20 % and 10 %). The taxpayer reports that two amounts have been collected: €120 (incl. 20 % VAT) and €11 (incl. 10 % VAT). In addition to this, the taxpayer also informs the recipient that they have €1080 (incl. 20 % VAT) and €99 (incl. 10 % VAT) remaining to be paid (RAP).</em></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1847,49 +1958,33 @@ A date associated with the amount entry (e.g. payment collection date).</p></td>
                             <span class="tag">&lt;puf:PageroExtension&gt;</span>
                                 <span class="tag">&lt;puf:StatusExtension&gt;</span>
                                     <span class="comment">&lt;!-- Code omitted for clarity --&gt;</span>
-                                    <span class="tag">&lt;puf:Amounts&gt;</span>
-                                        <span class="tag">&lt;puf:Amount&gt;</span>
-                                            <span class="tag">&lt;puf:AmountType&gt;</span>MEN<span class="tag">&lt;/puf:AmountType&gt;</span>
-                                            <span class="tag">&lt;cbc:TaxInclusiveAmount</span> <span class="attribute-name">currencyID</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">EUR</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>120.00<span class="tag">&lt;/cbc:TaxInclusiveAmount&gt;</span>
-                                            <span class="tag">&lt;puf:ClassifiedTaxCategory&gt;</span>
-                                                <span class="tag">&lt;cbc:Percent&gt;</span>20<span class="tag">&lt;/cbc:Percent&gt;</span>
-                                                <span class="tag">&lt;cac:TaxScheme&gt;</span>
-                                                    <span class="tag">&lt;cbc:ID&gt;</span>VAT<span class="tag">&lt;/cbc:ID&gt;</span>
-                                                <span class="tag">&lt;/cac:TaxScheme&gt;</span>
-                                            <span class="tag">&lt;/puf:ClassifiedTaxCategory&gt;</span>
-                                            <span class="tag">&lt;puf:Date&gt;</span>2026-01-15<span class="tag">&lt;/puf:Date&gt;</span>
-                                        <span class="tag">&lt;/puf:Amount&gt;</span>
-                                        <span class="tag">&lt;puf:Amount&gt;</span>
-                                            <span class="tag">&lt;puf:AmountType&gt;</span>MEN<span class="tag">&lt;/puf:AmountType&gt;</span>
-                                            <span class="tag">&lt;cbc:TaxInclusiveAmount</span> <span class="attribute-name">currencyID</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">EUR</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>11.00<span class="tag">&lt;/cbc:TaxInclusiveAmount&gt;</span>
-                                            <span class="tag">&lt;puf:ClassifiedTaxCategory&gt;</span>
-                                                <span class="tag">&lt;cbc:Percent&gt;</span>10<span class="tag">&lt;/cbc:Percent&gt;</span>
-                                                <span class="tag">&lt;cac:TaxScheme&gt;</span>
-                                                    <span class="tag">&lt;cbc:ID&gt;</span>VAT<span class="tag">&lt;/cbc:ID&gt;</span>
-                                                <span class="tag">&lt;/cac:TaxScheme&gt;</span>
-                                            <span class="tag">&lt;/puf:ClassifiedTaxCategory&gt;</span>
-                                        <span class="tag">&lt;/puf:Amount&gt;</span>
-                                        <span class="tag">&lt;puf:Amount&gt;</span>
-                                            <span class="tag">&lt;puf:AmountType&gt;</span>RAP<span class="tag">&lt;/puf:AmountType&gt;</span>
-                                            <span class="tag">&lt;cbc:TaxInclusiveAmount</span> <span class="attribute-name">currencyID</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">EUR</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>1080.00<span class="tag">&lt;/cbc:TaxInclusiveAmount&gt;</span>
-                                            <span class="tag">&lt;puf:ClassifiedTaxCategory&gt;</span>
-                                                <span class="tag">&lt;cbc:Percent&gt;</span>20<span class="tag">&lt;/cbc:Percent&gt;</span>
-                                                <span class="tag">&lt;cac:TaxScheme&gt;</span>
-                                                    <span class="tag">&lt;cbc:ID&gt;</span>VAT<span class="tag">&lt;/cbc:ID&gt;</span>
-                                                <span class="tag">&lt;/cac:TaxScheme&gt;</span>
-                                            <span class="tag">&lt;/puf:ClassifiedTaxCategory&gt;</span>
-                                        <span class="tag">&lt;/puf:Amount&gt;</span>
-                                        <span class="tag">&lt;puf:Amount&gt;</span>
-                                            <span class="tag">&lt;puf:AmountType&gt;</span>RAP<span class="tag">&lt;/puf:AmountType&gt;</span>
-                                            <span class="tag">&lt;cbc:TaxInclusiveAmount</span> <span class="attribute-name">currencyID</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">EUR</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>99.00<span class="tag">&lt;/cbc:TaxInclusiveAmount&gt;</span>
-                                            <span class="tag">&lt;puf:ClassifiedTaxCategory&gt;</span>
-                                                <span class="tag">&lt;cbc:Percent&gt;</span>10<span class="tag">&lt;/cbc:Percent&gt;</span>
-                                                <span class="tag">&lt;cac:TaxScheme&gt;</span>
-                                                    <span class="tag">&lt;cbc:ID&gt;</span>VAT<span class="tag">&lt;/cbc:ID&gt;</span>
-                                                <span class="tag">&lt;/cac:TaxScheme&gt;</span>
-                                            <span class="tag">&lt;/puf:ClassifiedTaxCategory&gt;</span>
-                                        <span class="tag">&lt;/puf:Amount&gt;</span>
-                                    <span class="tag">&lt;/puf:Amounts&gt;</span>
+                                    <span class="tag">&lt;puf:Clarifications&gt;</span>
+                                        <span class="tag">&lt;puf:Clarification&gt;</span>
+                                            <span class="tag">&lt;puf:TypeCode&gt;</span>MEN<span class="tag">&lt;/puf:TypeCode&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmount&gt;</span>120.00<span class="tag">&lt;/puf:ValueAmount&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmountCurrency&gt;</span>EUR<span class="tag">&lt;/puf:ValueAmountCurrency&gt;</span>
+                                            <span class="tag">&lt;puf:ValuePercent&gt;</span>20<span class="tag">&lt;/puf:ValuePercent&gt;</span>
+                                            <span class="tag">&lt;puf:ValueDateTime&gt;</span>2026-01-15<span class="tag">&lt;/puf:ValueDateTime&gt;</span>
+                                        <span class="tag">&lt;/puf:Clarification&gt;</span>
+                                        <span class="tag">&lt;puf:Clarification&gt;</span>
+                                            <span class="tag">&lt;puf:TypeCode&gt;</span>MEN<span class="tag">&lt;/puf:TypeCode&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmount&gt;</span>11.00<span class="tag">&lt;/puf:ValueAmount&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmountCurrency&gt;</span>EUR<span class="tag">&lt;/puf:ValueAmountCurrency&gt;</span>
+                                            <span class="tag">&lt;puf:ValuePercent&gt;</span>10<span class="tag">&lt;/puf:ValuePercent&gt;</span>
+                                        <span class="tag">&lt;/puf:Clarification&gt;</span>
+                                        <span class="tag">&lt;puf:Clarification&gt;</span>
+                                            <span class="tag">&lt;puf:TypeCode&gt;</span>RAP<span class="tag">&lt;/puf:TypeCode&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmount&gt;</span>1080.00<span class="tag">&lt;/puf:ValueAmount&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmountCurrency&gt;</span>EUR<span class="tag">&lt;/puf:ValueAmountCurrency&gt;</span>
+                                            <span class="tag">&lt;puf:ValuePercent&gt;</span>20<span class="tag">&lt;/puf:ValuePercent&gt;</span>
+                                        <span class="tag">&lt;/puf:Clarification&gt;</span>
+                                        <span class="tag">&lt;puf:Clarification&gt;</span>
+                                            <span class="tag">&lt;puf:TypeCode&gt;</span>RAP<span class="tag">&lt;/puf:TypeCode&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmount&gt;</span>99.00<span class="tag">&lt;/puf:ValueAmount&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmountCurrency&gt;</span>EUR<span class="tag">&lt;/puf:ValueAmountCurrency&gt;</span>
+                                            <span class="tag">&lt;puf:ValuePercent&gt;</span>10<span class="tag">&lt;/puf:ValuePercent&gt;</span>
+                                        <span class="tag">&lt;/puf:Clarification&gt;</span>
+                                    <span class="tag">&lt;/puf:Clarifications&gt;</span>
                                 <span class="tag">&lt;/puf:StatusExtension&gt;</span>
                             <span class="tag">&lt;/puf:PageroExtension&gt;</span>
                         <span class="tag">&lt;/ext:ExtensionContent&gt;</span>
@@ -1924,10 +2019,10 @@ A date associated with the amount entry (e.g. payment collection date).</p></td>
 <div class="sect4">
 <h5 id="_amount_type"><a class="anchor" href="#_amount_type"></a><a class="link" href="#_amount_type">Amount Type</a></h5>
 <div class="paragraph">
-<p>The <code>&lt;puf:AmountType&gt;</code> element is used to indicate what the specified amounts mean. In France, the following list is applicable:</p>
+<p>The clarification type code (<code>puf:Clarification/puf:TypeCode</code>; legacy: <code>puf:AmountType</code>) is used to indicate what the specified amounts mean. In France, the following list is applicable:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. puf:AmountType values applicable in France</caption>
+<caption class="title">Table 11. puf:TypeCode (amount type) values applicable in France</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1988,7 +2083,7 @@ A date associated with the amount entry (e.g. payment collection date).</p></td>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<strong>MEN</strong> (with accompanying <code>cbc:TaxInclusiveAmount</code> and <code>cbc:Percent</code>) is the only type <strong>required</strong> by the Tax Authority, but the other Amount Types (<code>puf:AmountType</code>) and related data fields (<code>cbc:TaxExclusiveAmount</code>) are useful to convey additional information to the receiving party and can be used <strong>in addition to</strong> MEN.
+<strong>MEN</strong> (with accompanying <code>puf:ValueAmount</code>/<code>puf:ValueAmountCurrency</code> and <code>puf:ValuePercent</code>) is the only type <strong>required</strong> by the Tax Authority, but the other type codes (<code>puf:TypeCode</code>) and their values are useful to convey additional information to the receiving party and can be used <strong>in addition to</strong> MEN.
 </td>
 </tr>
 </table>
@@ -2000,7 +2095,7 @@ A date associated with the amount entry (e.g. payment collection date).</p></td>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Generally, only one "amount" per <code>puf:Amount</code> should be sent, i.e. choose to use either <code>cbc:TaxExclusiveAmount</code> or <code>cbc:TaxInclusiveAmount</code>, <strong>not</strong> both.
+Each <code>puf:Clarification</code> carries a single <code>puf:ValueAmount</code>; whether it represents a net (excl. tax) or gross (incl. tax) amount is conveyed by the <code>puf:TypeCode</code> (e.g. <strong>MAP</strong>/<strong>MNA</strong> are net, <strong>MEN</strong>/<strong>MAPTTC</strong>/<strong>MNATTC</strong> are gross).
 </td>
 </tr>
 </table>
@@ -2023,48 +2118,32 @@ Generally, only one "amount" per <code>puf:Amount</code> should be sent, i.e. ch
                             <span class="tag">&lt;puf:PageroExtension&gt;</span>
                                 <span class="tag">&lt;puf:StatusExtension&gt;</span>
                                     <span class="comment">&lt;!-- Code omitted for clarity --&gt;</span>
-                                    <span class="tag">&lt;puf:Amounts&gt;</span>
-                                        <span class="tag">&lt;puf:Amount&gt;</span>
-                                            <span class="tag">&lt;puf:AmountType&gt;</span>MEN<span class="tag">&lt;/puf:AmountType&gt;</span>
-                                            <span class="tag">&lt;cbc:TaxInclusiveAmount</span> <span class="attribute-name">currencyID</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">EUR</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>120.00<span class="tag">&lt;/cbc:TaxInclusiveAmount&gt;</span>
-                                            <span class="tag">&lt;puf:ClassifiedTaxCategory&gt;</span>
-                                                <span class="tag">&lt;cbc:Percent&gt;</span>20<span class="tag">&lt;/cbc:Percent&gt;</span>
-                                                <span class="tag">&lt;cac:TaxScheme&gt;</span>
-                                                    <span class="tag">&lt;cbc:ID&gt;</span>VAT<span class="tag">&lt;/cbc:ID&gt;</span>
-                                                <span class="tag">&lt;/cac:TaxScheme&gt;</span>
-                                            <span class="tag">&lt;/puf:ClassifiedTaxCategory&gt;</span>
-                                        <span class="tag">&lt;/puf:Amount&gt;</span>
-                                        <span class="tag">&lt;puf:Amount&gt;</span>
-                                            <span class="tag">&lt;puf:AmountType&gt;</span>MEN<span class="tag">&lt;/puf:AmountType&gt;</span>
-                                            <span class="tag">&lt;cbc:TaxInclusiveAmount</span> <span class="attribute-name">currencyID</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">EUR</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>11.00<span class="tag">&lt;/cbc:TaxInclusiveAmount&gt;</span>
-                                            <span class="tag">&lt;puf:ClassifiedTaxCategory&gt;</span>
-                                                <span class="tag">&lt;cbc:Percent&gt;</span>20<span class="tag">&lt;/cbc:Percent&gt;</span>
-                                                <span class="tag">&lt;cac:TaxScheme&gt;</span>
-                                                    <span class="tag">&lt;cbc:ID&gt;</span>VAT<span class="tag">&lt;/cbc:ID&gt;</span>
-                                                <span class="tag">&lt;/cac:TaxScheme&gt;</span>
-                                            <span class="tag">&lt;/puf:ClassifiedTaxCategory&gt;</span>
-                                        <span class="tag">&lt;/puf:Amount&gt;</span>
-                                        <span class="tag">&lt;puf:Amount&gt;</span>
-                                            <span class="tag">&lt;puf:AmountType&gt;</span>RAP<span class="tag">&lt;/puf:AmountType&gt;</span>
-                                            <span class="tag">&lt;cbc:TaxInclusiveAmount</span> <span class="attribute-name">currencyID</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">EUR</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>1080.00<span class="tag">&lt;/cbc:TaxInclusiveAmount&gt;</span><i class="conum" data-value="1"></i><b>(1)</b>
-                                            <span class="tag">&lt;puf:ClassifiedTaxCategory&gt;</span>
-                                                <span class="tag">&lt;cbc:Percent&gt;</span>20<span class="tag">&lt;/cbc:Percent&gt;</span><i class="conum" data-value="2"></i><b>(2)</b>
-                                                <span class="tag">&lt;cac:TaxScheme&gt;</span>
-                                                    <span class="tag">&lt;cbc:ID&gt;</span>VAT<span class="tag">&lt;/cbc:ID&gt;</span>
-                                                <span class="tag">&lt;/cac:TaxScheme&gt;</span>
-                                            <span class="tag">&lt;/puf:ClassifiedTaxCategory&gt;</span>
-                                        <span class="tag">&lt;/puf:Amount&gt;</span>
-                                        <span class="tag">&lt;puf:Amount&gt;</span>
-                                            <span class="tag">&lt;puf:AmountType&gt;</span>RAP<span class="tag">&lt;/puf:AmountType&gt;</span>
-                                            <span class="tag">&lt;cbc:TaxInclusiveAmount</span> <span class="attribute-name">currencyID</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">EUR</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>99.00<span class="tag">&lt;/cbc:TaxInclusiveAmount&gt;</span>
-                                            <span class="tag">&lt;puf:ClassifiedTaxCategory&gt;</span>
-                                                <span class="tag">&lt;cbc:Percent&gt;</span>10<span class="tag">&lt;/cbc:Percent&gt;</span>
-                                                <span class="tag">&lt;cac:TaxScheme&gt;</span>
-                                                    <span class="tag">&lt;cbc:ID&gt;</span>VAT<span class="tag">&lt;/cbc:ID&gt;</span>
-                                                <span class="tag">&lt;/cac:TaxScheme&gt;</span>
-                                            <span class="tag">&lt;/puf:ClassifiedTaxCategory&gt;</span>
-                                        <span class="tag">&lt;/puf:Amount&gt;</span>
-                                    <span class="tag">&lt;/puf:Amounts&gt;</span>
+                                    <span class="tag">&lt;puf:Clarifications&gt;</span>
+                                        <span class="tag">&lt;puf:Clarification&gt;</span>
+                                            <span class="tag">&lt;puf:TypeCode&gt;</span>MEN<span class="tag">&lt;/puf:TypeCode&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmount&gt;</span>120.00<span class="tag">&lt;/puf:ValueAmount&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmountCurrency&gt;</span>EUR<span class="tag">&lt;/puf:ValueAmountCurrency&gt;</span>
+                                            <span class="tag">&lt;puf:ValuePercent&gt;</span>20<span class="tag">&lt;/puf:ValuePercent&gt;</span>
+                                        <span class="tag">&lt;/puf:Clarification&gt;</span>
+                                        <span class="tag">&lt;puf:Clarification&gt;</span>
+                                            <span class="tag">&lt;puf:TypeCode&gt;</span>MEN<span class="tag">&lt;/puf:TypeCode&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmount&gt;</span>11.00<span class="tag">&lt;/puf:ValueAmount&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmountCurrency&gt;</span>EUR<span class="tag">&lt;/puf:ValueAmountCurrency&gt;</span>
+                                            <span class="tag">&lt;puf:ValuePercent&gt;</span>10<span class="tag">&lt;/puf:ValuePercent&gt;</span>
+                                        <span class="tag">&lt;/puf:Clarification&gt;</span>
+                                        <span class="tag">&lt;puf:Clarification&gt;</span>
+                                            <span class="tag">&lt;puf:TypeCode&gt;</span>RAP<span class="tag">&lt;/puf:TypeCode&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmount&gt;</span>1080.00<span class="tag">&lt;/puf:ValueAmount&gt;</span><i class="conum" data-value="1"></i><b>(1)</b>
+                                            <span class="tag">&lt;puf:ValueAmountCurrency&gt;</span>EUR<span class="tag">&lt;/puf:ValueAmountCurrency&gt;</span>
+                                            <span class="tag">&lt;puf:ValuePercent&gt;</span>20<span class="tag">&lt;/puf:ValuePercent&gt;</span><i class="conum" data-value="2"></i><b>(2)</b>
+                                        <span class="tag">&lt;/puf:Clarification&gt;</span>
+                                        <span class="tag">&lt;puf:Clarification&gt;</span>
+                                            <span class="tag">&lt;puf:TypeCode&gt;</span>RAP<span class="tag">&lt;/puf:TypeCode&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmount&gt;</span>99.00<span class="tag">&lt;/puf:ValueAmount&gt;</span>
+                                            <span class="tag">&lt;puf:ValueAmountCurrency&gt;</span>EUR<span class="tag">&lt;/puf:ValueAmountCurrency&gt;</span>
+                                            <span class="tag">&lt;puf:ValuePercent&gt;</span>10<span class="tag">&lt;/puf:ValuePercent&gt;</span>
+                                        <span class="tag">&lt;/puf:Clarification&gt;</span>
+                                    <span class="tag">&lt;/puf:Clarifications&gt;</span>
                                 <span class="tag">&lt;/puf:StatusExtension&gt;</span>
                             <span class="tag">&lt;/puf:PageroExtension&gt;</span>
                         <span class="tag">&lt;/ext:ExtensionContent&gt;</span>
@@ -2080,11 +2159,11 @@ Generally, only one "amount" per <code>puf:Amount</code> should be sent, i.e. ch
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Either of <code>cbc:TaxExclusiveAmount</code> and <code>cbc:TaxInclusiveAmount</code> may be relevant for some Amount Types. Here <code>cbc:TaxInclusiveAmount</code> is used to show total (incl. VAT) amount remaining to be paid.</td>
+<td>The amount is carried in <code>puf:ValueAmount</code> (with its <code>puf:ValueAmountCurrency</code>). Here it shows the total (incl. VAT) amount remaining to be paid.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td><code>cbc:Percent</code> may also be relevant for some Amount Types. In this example the "amount remaining to be paid" (RAP) has been split per VAT rate.</td>
+<td><code>puf:ValuePercent</code> may also be relevant for some type codes. In this example the "amount remaining to be paid" (RAP) has been split per VAT rate.</td>
 </tr>
 </table>
 </div>
@@ -2102,7 +2181,7 @@ Generally, only one "amount" per <code>puf:Amount</code> should be sent, i.e. ch
 <p>In France, the reason codes are unique and defined in the table below. The table also indicates for which response codes (<code>cbc:ResponseCode</code>) each reason code is applicable.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. French reason codes and applicability per response code</caption>
+<caption class="title">Table 12. French reason codes and applicability per response code</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 21.4285%;">
@@ -2221,7 +2300,7 @@ Generally, only one "amount" per <code>puf:Amount</code> should be sent, i.e. ch
 <td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">✅</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">✅</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>SIRET_ERR</code></p></td>
@@ -2322,8 +2401,56 @@ Generally, only one "amount" per <code>puf:Amount</code> should be sent, i.e. ch
 <td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TX_TVA_ERR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Incorrect VAT rate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A VAT rate applied on the invoice is incorrect (e.g. BT-119 category rate or BT-152 line rate).</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">✅</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">✅</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COORD_BANC_ERR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Incorrect bank details</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The bank details on the invoice do not match those registered for the payer / buyer.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">✅</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">✅</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JUSTIF_ABS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Missing or insufficient supporting document</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Attachments required to process the invoice are missing. The invoice is suspended (208); the issuer subsequently moves it to Completed once the missing attachment(s) are supplied.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">✅</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AUTRE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Other reason</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any other reason not covered by a specific code. The free-text <code>cbc:StatusReason</code> should describe the motive.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">✅</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">✅</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">❌</p></td>
+</tr>
 </tbody>
 </table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+These reason codes, their labels and their applicability per status are defined by AFNOR XP Z12-012 Annexe A (tab "Tableau des motifs de STATUTS"). The table above covers the buyer-facing dispute statuses — APPROUVÉE PARTIELLEMENT (206), EN LITIGE (207), SUSPENDUE (208) and REFUSÉE B2B (210). Other reason codes are scoped to platform / technical statuses and are out of scope here.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p><strong>Example</strong><br>
 <em>cac:Response with response code RE (EN: Rejected/Refused, FR: 210) and reason code <code>MONTANTTOTAL_ERR</code> (Incorrect Total Amount).</em></p>
@@ -2391,7 +2518,7 @@ Generally, only one "amount" per <code>puf:Amount</code> should be sent, i.e. ch
 <div class="sect2">
 <h3 id="_code_lists_for_coded_elements"><a class="anchor" href="#_code_lists_for_coded_elements"></a><a class="link" href="#_code_lists_for_coded_elements">6.1. Code lists for coded elements</a></h3>
 <table class="tableblock frame-all grid-all fit-content stretch">
-<caption class="title">Table 12. Table of the code lists used</caption>
+<caption class="title">Table 13. Table of the code lists used</caption>
 <colgroup>
 <col>
 <col>

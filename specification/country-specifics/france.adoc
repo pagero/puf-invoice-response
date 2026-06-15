@@ -7,9 +7,9 @@ In France it is a requirement to report received payments for certain transactio
 
 ===== Amount Type
 
-The ``<puf:AmountType>`` element is used to indicate what the specified amounts mean. In France, the following list is applicable:
+The clarification type code (``puf:Clarification/puf:TypeCode``; legacy: ``puf:AmountType``) is used to indicate what the specified amounts mean. In France, the following list is applicable:
 
-.puf:AmountType values applicable in France
+.puf:TypeCode (amount type) values applicable in France
 |===
 |Code |Definition
 
@@ -44,9 +44,9 @@ The ``<puf:AmountType>`` element is used to indicate what the specified amounts 
 |Gross Amount NOT Approved (incl. tax)
 |===
 
-NOTE: *MEN* (with accompanying ``cbc:TaxInclusiveAmount`` and ``cbc:Percent``) is the only type *required* by the Tax Authority, but the other Amount Types (``puf:AmountType``) and related data fields (``cbc:TaxExclusiveAmount``) are useful to convey additional information to the receiving party and can be used *in addition to* MEN.
+NOTE: *MEN* (with accompanying ``puf:ValueAmount``/``puf:ValueAmountCurrency`` and ``puf:ValuePercent``) is the only type *required* by the Tax Authority, but the other type codes (``puf:TypeCode``) and their values are useful to convey additional information to the receiving party and can be used *in addition to* MEN.
 
-NOTE: Generally, only one "amount" per ``puf:Amount`` should be sent, i.e. choose to use either ``cbc:TaxExclusiveAmount`` or ``cbc:TaxInclusiveAmount``, *not* both. 
+NOTE: Each ``puf:Clarification`` carries a single ``puf:ValueAmount``; whether it represents a net (excl. tax) or gross (incl. tax) amount is conveyed by the ``puf:TypeCode`` (e.g. *MAP*/*MNA* are net, *MEN*/*MAPTTC*/*MNATTC* are gross).
 
 
 *Example* +
@@ -66,48 +66,32 @@ _puf:StatusExtension with sample values. The example scenario illustrated below 
                             <puf:PageroExtension>
                                 <puf:StatusExtension>
                                     <!-- Code omitted for clarity -->
-                                    <puf:Amounts>
-                                        <puf:Amount>
-                                            <puf:AmountType>MEN</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">120.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>20</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                        </puf:Amount>
-                                        <puf:Amount>
-                                            <puf:AmountType>MEN</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">11.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>20</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                        </puf:Amount>
-                                        <puf:Amount>
-                                            <puf:AmountType>RAP</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">1080.00</cbc:TaxInclusiveAmount><!--.-->
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>20</cbc:Percent><!--.-->
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                        </puf:Amount>
-                                        <puf:Amount>
-                                            <puf:AmountType>RAP</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">99.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>10</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                        </puf:Amount>
-                                    </puf:Amounts>
+                                    <puf:Clarifications>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>MEN</puf:TypeCode>
+                                            <puf:ValueAmount>120.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                            <puf:ValuePercent>20</puf:ValuePercent>
+                                        </puf:Clarification>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>MEN</puf:TypeCode>
+                                            <puf:ValueAmount>11.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                            <puf:ValuePercent>10</puf:ValuePercent>
+                                        </puf:Clarification>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>RAP</puf:TypeCode>
+                                            <puf:ValueAmount>1080.00</puf:ValueAmount><!--.-->
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                            <puf:ValuePercent>20</puf:ValuePercent><!--.-->
+                                        </puf:Clarification>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>RAP</puf:TypeCode>
+                                            <puf:ValueAmount>99.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                            <puf:ValuePercent>10</puf:ValuePercent>
+                                        </puf:Clarification>
+                                    </puf:Clarifications>
                                 </puf:StatusExtension>
                             </puf:PageroExtension>
                         </ext:ExtensionContent>
@@ -118,8 +102,8 @@ _puf:StatusExtension with sample values. The example scenario illustrated below 
         <!-- Code omitted for clarity -->
 </ApplicationResponse>
 ----
-<.> Either of ``cbc:TaxExclusiveAmount`` and ``cbc:TaxInclusiveAmount`` may be relevant for some Amount Types. Here ``cbc:TaxInclusiveAmount`` is used to show total (incl. VAT) amount remaining to be paid.
-<.> ``cbc:Percent`` may also be relevant for some Amount Types. In this example the "amount remaining to be paid" (RAP) has been split per VAT rate. 
+<.> The amount is carried in ``puf:ValueAmount`` (with its ``puf:ValueAmountCurrency``). Here it shows the total (incl. VAT) amount remaining to be paid.
+<.> ``puf:ValuePercent`` may also be relevant for some type codes. In this example the "amount remaining to be paid" (RAP) has been split per VAT rate. 
 
 ==== Status Reason
 
@@ -187,7 +171,7 @@ In France, the reason codes are unique and defined in the table below. The table
 |`ADR_ERR`
 |Incorrect electronic billing address
 |The recipient's electronic billing address (BT-49 or BT-34) is absent or incorrect
-^|❌ ^|✅ ^|❌ ^|❌
+^|❌ ^|✅ ^|❌ ^|✅
 
 |`SIRET_ERR`
 |Incorrect or missing SIRET
@@ -244,7 +228,29 @@ In France, the reason codes are unique and defined in the table below. The table
 |Incomplete or non-compliant delivery
 ^|✅ ^|✅ ^|❌ ^|❌
 
+|`TX_TVA_ERR`
+|Incorrect VAT rate
+|A VAT rate applied on the invoice is incorrect (e.g. BT-119 category rate or BT-152 line rate).
+^|❌ ^|✅ ^|❌ ^|✅
+
+|`COORD_BANC_ERR`
+|Incorrect bank details
+|The bank details on the invoice do not match those registered for the payer / buyer.
+^|❌ ^|✅ ^|✅ ^|❌
+
+|`JUSTIF_ABS`
+|Missing or insufficient supporting document
+|Attachments required to process the invoice are missing. The invoice is suspended (208); the issuer subsequently moves it to Completed once the missing attachment(s) are supplied.
+^|❌ ^|❌ ^|✅ ^|❌
+
+|`AUTRE`
+|Other reason
+|Any other reason not covered by a specific code. The free-text `cbc:StatusReason` should describe the motive.
+^|✅ ^|✅ ^|❌ ^|❌
+
 |===
+
+NOTE: These reason codes, their labels and their applicability per status are defined by AFNOR XP Z12-012 Annexe A (tab "Tableau des motifs de STATUTS"). The table above covers the buyer-facing dispute statuses — APPROUVÉE PARTIELLEMENT (206), EN LITIGE (207), SUSPENDUE (208) and REFUSÉE B2B (210). Other reason codes are scoped to platform / technical statuses and are out of scope here.
 
 *Example* +
 _cac:Response with response code RE (EN: Rejected/Refused, FR: 210) and reason code `MONTANTTOTAL_ERR` (Incorrect Total Amount)._
