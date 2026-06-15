@@ -77,6 +77,11 @@
                             <puf:PageroExtension>
                                 <puf:StatusExtension>
                                     <puf:Clarifications>
+                                        <!--
+                                        MEN = Amount collected (incl. tax).
+                                        Required by French Tax Authority.
+                                        One entry per VAT rate present on the invoice.
+                                        -->
                                         <puf:Clarification>
                                             <puf:TypeCode>MEN</puf:TypeCode>
                                             <puf:ValueDateTime>2026-03-01</puf:ValueDateTime>
