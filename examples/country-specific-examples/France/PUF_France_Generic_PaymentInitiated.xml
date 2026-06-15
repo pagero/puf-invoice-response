@@ -82,6 +82,10 @@
                                 <puf:StatusExtension>
                                     <puf:Clarifications>
                                         <puf:Clarification>
+                                            <!--
+                                            MPA = Amount paid (incl. tax).
+                                            Represents the total payment amount sent by the buyer.
+                                            -->
                                             <puf:TypeCode>MPA</puf:TypeCode>
                                             <puf:ValuePercent>20</puf:ValuePercent>
                                             <puf:ValueAmount>1200.00</puf:ValueAmount>
