@@ -191,7 +191,7 @@ Demonstrates the French-specific CDAR status code `REQUEST_PAYMENT` (224 — Dem
 > **Dual distribution**: This CDAR message must be sent simultaneously to **both** the BUYER
 > (PA-R) and the MAIN CONTRACTOR (PA-TR). The `cac:ReceiverParty` shows the BUYER; the
 > MAIN CONTRACTOR also receives the same message.
-
+>
 > Optional in B2B private markets, mandatory in B2G public procurement.
 
 ---
@@ -358,7 +358,7 @@ Net declared amount for VAT pre-filling: +12,000 − 10,000 = **+2,000 EUR** (VA
 
 #### 207: Under Query / Dispute (En litige) with Clarifications
 
-##### 19. `PUF_France_207_UnderQuery.xml`
+##### 19. `PUF_France_Generic_UnderQuery.xml`
 
 **En litige — Invoice Response (Buyer → Seller)**
 Reference invoice: `FR-INV-2026-001` (TechDistrib France SARL → Entreprise Client France SA)
@@ -379,6 +379,58 @@ alongside a reason and a requested action:
 > codes (`DIV` current value, `DVA` expected value, `MAJ` replacement, `CBB`) describe
 > *non-monetary* field-level discrepancies. To report both the current and expected value of a
 > field, send two clarifications (DIV + DVA) sharing the same `puf:Code`/`puf:Location`.
+
+---
+
+## Complete CDAR Lifecycle Coverage
+
+The examples below complete coverage of all 21 French CDAR status codes. The generic lifecycle statuses
+reference invoice `FR-INV-2026-001` (TechDistrib France SARL → Entreprise Client France SA); the factoring
+statuses reference invoice `UC10-IND-2026-0345` (IndustrialTech Lyon SA → Automotive Suppliers Network SAS).
+
+### Platform Routing Statuses (Platform → Seller, Invoice Response)
+
+| File | Code | Status | ResponseCode |
+|------|------|--------|--------------|
+| `PUF_France_201_Issued.xml` | 201 | Émise par la plateforme | `ISSUED_BY_PLATFORM` |
+| `PUF_France_202_Received.xml` | 202 | Reçue par la plateforme | `RECEIVED_BY_PLATFORM` |
+| `PUF_France_203_MadeAvailable.xml` | 203 | Mise à disposition | `MADE_AVAILABLE` |
+
+These mirror `PUF_France_200_Submitted.xml`: the platform (Thomson Reuters) is the sender, the seller is the
+receiver, and `puf:ReferencedDocumentInterchangeID` carries the platform interchange ID. No `cac:Status` block.
+
+### Buyer Processing Statuses (Buyer → Seller, Invoice Response)
+
+| File | Code | Status | ResponseCode | Notes |
+|------|------|--------|--------------|-------|
+| `PUF_France_204_Acknowledged.xml` | 204 | Prise en charge | `IP` | Informational; processing started. |
+| `PUF_France_205_Approved.xml` | 205 | Approuvée | `AP` | Final approval; next step is payment. |
+| `PUF_France_206_PartiallyApproved.xml` | 206 | Approuvée partiellement | `PARTIALLY_ACCEPTED` | `MAPTTC` (approved) + `MNATTC` (not approved) amounts per VAT rate via `puf:Clarifications`; reason `QTE_ERR`. |
+| `PUF_France_Generic_UnderQuery.xml` | 207 | En litige | `UQ` | Reason `TX_TVA_ERR` + `puf:Clarifications` (DIV/DVA) + action `CNF`; detailed in §19 above. |
+| `PUF_France_208_Suspended.xml` | 208 | Suspendue | `ON_HOLD` | Reason `REF_CT_ABSENT` (missing contractual reference). |
+
+> A reason code is mandatory for **206, 207 and 208** (BR-FR-CDV-15). 207 additionally carries an
+> `OPStatusAction` block. The official AFNOR CDAR schematron confirms **207 = En litige (Litige)** and
+> **208 = Suspendue** (not the inverse some internal pages list).
+
+### Seller Statuses (Seller → Buyer, Document Status)
+
+| File | Code | Status | ResponseCode | Notes |
+|------|------|--------|--------------|-------|
+| `PUF_France_209_InformationProvided.xml` | 209 | Complétée | `INFORMATION_PROVIDED` | Fulfils a prior buyer query (e.g. after a 207 En litige). |
+| `PUF_France_220_Cancelled.xml` | 220 | Annulée | `SUPERSEDED` | Invoice annulled and superseded by a corrective invoice. |
+
+### Factoring Statuses (Document Status) — extends `PUF_France_UC10_Affacturee.xml` (225)
+
+| File | Code | Status | ResponseCode | Receiver |
+|------|------|--------|--------------|----------|
+| `PUF_France_UC10_AffactureeConfidentiel.xml` | 226 | Affacturée Confidentiel | `FACTORED_CONFIDENTIAL` | **Factor only** (not the buyer) |
+| `PUF_France_UC10_ChangementDeCompte.xml` | 227 | Changement de Compte à payer | `ACCOUNT_CHANGED` | Buyer |
+| `PUF_France_UC10_NonAffacturee.xml` | 228 | Non Affacturée | `FACTORING_CANCELLED` | Buyer |
+
+> Per XP Z12-014 (Annexe A, confidential factoring): the **226** status is shared between the seller and the
+> factor only and must **not** be transmitted to the buyer (nor the buyer's PA-R). **227** communicates the new
+> IBAN/BIC (beneficiary unchanged); **228** reverts payment to the seller's own account.
 
 ---
 
