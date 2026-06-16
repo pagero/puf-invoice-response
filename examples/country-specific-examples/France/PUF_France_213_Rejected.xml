@@ -5,7 +5,7 @@
     French CDAR status code: 213 (Rejetée) — maps to PUF ResponseCode "RE" (Rejected).
 
     Reference invoice:  FR-INV-2026-002 (TechDistrib France SARL → Entreprise Client France SA)
-    Sender   (PA-E):    Thomson Reuters
+    Sender   (PA-E):    Pagero
     Receiver (Seller):  TechDistrib France SARL — SIREN 987654321
 
     Rejection reason   : REJ_SEMAN — Semantic rejection.
@@ -25,7 +25,7 @@
     <cbc:IssueTime>10:32:00</cbc:IssueTime>
     <cac:SenderParty>
         <cac:PartyLegalEntity>
-            <cbc:RegistrationName>Thomson Reuters</cbc:RegistrationName>
+            <cbc:RegistrationName>Pagero</cbc:RegistrationName>
         </cac:PartyLegalEntity>
     </cac:SenderParty>
     <cac:ReceiverParty>

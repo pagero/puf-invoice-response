@@ -5,7 +5,7 @@
     French CDAR status code: 200 (Déposée)
 
     Reference invoice: PUF_France_Generic_Invoice.xml (FR-INV-2026-001)
-    Sender  (PA):  PA generated status (Thomson Reuters)
+    Sender  (PA):  PA generated status (Pagero)
     Receiver (Seller): TechDistrib France SARL — SIREN 987654321
 -->
 <ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
@@ -26,7 +26,7 @@
     <!-- Sender Party (PA — sends SUBMITTED/DEPOSEE status) -->
     <cac:SenderParty>
         <cac:PartyLegalEntity>
-            <cbc:RegistrationName>Thomson Reuters</cbc:RegistrationName>
+            <cbc:RegistrationName>Pagero</cbc:RegistrationName>
         </cac:PartyLegalEntity>
     </cac:SenderParty>
     <!-- Receiver Party (Seller — receives SUBMITTED/DEPOSEE status) -->
