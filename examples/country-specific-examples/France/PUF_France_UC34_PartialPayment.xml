@@ -106,51 +106,26 @@
                         <ext:ExtensionContent>
                             <puf:PageroExtension>
                                 <puf:StatusExtension>
-                                    <puf:Amounts>
-                                        <!--
-                                            MEN = Montant Encaissé (amount actually received).
-                                            EUR 600 TTC @ 20% VAT = EUR 500 HT + EUR 100 VAT.
-                                            This is the ONLY amount reported for VAT pre-filling
-                                            in this billing period.
-                                            Date = actual date of receipt (bank credit date).
-                                        -->
-                                        <puf:Amount>
-                                            <puf:AmountType>MEN</puf:AmountType>
-                                            <cbc:TaxExclusiveAmount currencyID="EUR">500.00</cbc:TaxExclusiveAmount>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">600.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>20</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                            <puf:Date>2026-02-15</puf:Date>
-                                        </puf:Amount>
-                                        <!--
-                                            RAP = Reste À Payer (remaining outstanding balance).
-                                            EUR 600 TTC @ 20% VAT = balance after first partial payment.
-                                            Informational: signals to tax authority that invoice is
-                                            not fully paid. A second Encaissée must follow.
-                                            No Date element on RAP (future payment, date unknown).
-                                        -->
-                                        <puf:Amount>
-                                            <puf:AmountType>RAP</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">600.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>20</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                        </puf:Amount>
-                                    </puf:Amounts>
+                                    <puf:Clarifications>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>MEN</puf:TypeCode>
+                                            <puf:ValueDateTime>2026-02-15</puf:ValueDateTime>
+                                            <puf:ValuePercent>20</puf:ValuePercent>
+                                            <puf:ValueAmount>600.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                        </puf:Clarification>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>RAP</puf:TypeCode>
+                                            <puf:ValuePercent>20</puf:ValuePercent>
+                                            <puf:ValueAmount>600.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                        </puf:Clarification>
+                                    </puf:Clarifications>
                                 </puf:StatusExtension>
                             </puf:PageroExtension>
                         </ext:ExtensionContent>
                     </ext:UBLExtension>
                 </ext:UBLExtensions>
-                <!-- NON = no specific reason code; informational status -->
-                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
             </cac:Status>
         </cac:Response>
         <!-- Reference to the original invoice -->

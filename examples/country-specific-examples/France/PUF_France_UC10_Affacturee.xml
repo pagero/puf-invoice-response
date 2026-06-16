@@ -91,7 +91,6 @@
                 The factor's identity and bank details are communicated in cbc:Note above.
             -->
             <cac:Status>
-                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
                 <cbc:StatusReason>Cession de créance à France Capital Factoring SA en vertu de la loi Dailly.</cbc:StatusReason>
             </cac:Status>
         </cac:Response>

@@ -33,10 +33,23 @@ This ID is applicable when you **_send a response_**. +
 Then this ID can be sent to facilitate a matching/connection between the response to the Invoice in Pagero Online.
 
 |`puf:DocumentMatchingID/cbc:UUID`
-|**Referenced API document matching identifier** +
+|**Referenced API document matching identifier** (*DEPRECATED*) +
+*DEPRECATED — use `puf:DocumentMatchingID/puf:receiverDocumentUUID` instead.* +
 The unique Pagero UUID used to match the response to an Invoice. +
-This ID is applicable when you **_send a response_**. +
-The UUID is only availble via **Document API** when using https://pagero.github.io/document-api-doc/#tag/document[GET^] documents.
+This ID is applicable when you send a response to a **_received document_**. +
+The UUID is only available via **Document API** when using https://pagero.github.io/document-api-doc/#tag/document[GET^] documents.
+
+|`puf:DocumentMatchingID/puf:senderDocumentUUID`
+|**Sender document UUID** +
+The Pagero document UUID of the referenced document as generated on the **sender's** side of the flow. +
+Available via **Document API** when using https://pagero.github.io/document-api-doc/#tag/document[GET^] documents. +
+**Note**: This field is specifically for **Sent** documents. 
+
+|`puf:DocumentMatchingID/puf:receiverDocumentUUID`
+|**Receiver document UUID** +
+The Pagero document UUID of the referenced document as generated on the **receiver's** side of the flow, used to match the response to that document. Replaces the deprecated `puf:DocumentMatchingID/cbc:UUID`. +
+Available via **Document API** when using https://pagero.github.io/document-api-doc/#tag/document[GET^] documents. +
+**Note**: This field is specifically for **Received** documents. 
 
 |===
 
@@ -100,9 +113,9 @@ _puf:ResponseExtension with sample values._
                                     <cbc:ID>123456789</cbc:ID>
                                 </puf:ReferencedDocumentInterchangeID>
                                 <puf:DocumentMatchingID>
-                                    <!-- Either cbc:ID or cbc:UUID can be used, see Extensions documentation -->
+                                    <!-- cbc:ID and/or ONE document UUID matching the flow direction can be used: puf:receiverDocumentUUID when responding to a received document (shown here), puf:senderDocumentUUID when responding to a sent document — never both. cbc:UUID is deprecated in favour of puf:receiverDocumentUUID -->
                                     <cbc:ID>123456789</cbc:ID>
-                                    <cbc:UUID>4408ca72-f3c0-11ed-a05b-0242ac120003</cbc:UUID>
+                                    <puf:receiverDocumentUUID>5519db83-04d1-22fe-b16c-1353bd231114</puf:receiverDocumentUUID>
                                 </puf:DocumentMatchingID>
                                 <puf:AdditionalDocumentReference>
                                     <cbc:ID>1456123</cbc:ID>

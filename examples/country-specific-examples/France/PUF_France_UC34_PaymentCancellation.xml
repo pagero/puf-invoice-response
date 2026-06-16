@@ -119,39 +119,20 @@
                         <ext:ExtensionContent>
                             <puf:PageroExtension>
                                 <puf:StatusExtension>
-                                    <puf:Amounts>
-                                        <!--
-                                            NEGATIVE MEN = cancellation of previously declared receipt.
-                                            Must equal the exact amount of the prior positive Encaissée.
-                                            EUR -1,200 TTC @ 20% cancels the EUR +1,200 TTC declared
-                                            in the prior Document Status (RESP-UC34-FULL-001).
-
-                                            TaxExclusiveAmount = -1,000 EUR (= -1,200 / 1.20)
-                                            TaxInclusiveAmount = -1,200 EUR (total TTC reversed)
-                                            Percent = 20 (same VAT rate as original declaration)
-                                            Date = date the bank reversal was confirmed
-                                        -->
-                                        <puf:Amount>
-                                            <puf:AmountType>MEN</puf:AmountType>
-                                            <cbc:TaxExclusiveAmount currencyID="EUR">-1000.00</cbc:TaxExclusiveAmount>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">-1200.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>20</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                            <!-- Date of the bank reversal confirmation -->
-                                            <puf:Date>2026-03-01</puf:Date>
-                                        </puf:Amount>
-                                    </puf:Amounts>
+                                    <puf:Clarifications>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>MEN</puf:TypeCode>
+                                            <puf:ValueDateTime>2026-03-01</puf:ValueDateTime>
+                                            <puf:ValuePercent>20</puf:ValuePercent>
+                                            <puf:ValueAmount>-1200.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                        </puf:Clarification>
+                                    </puf:Clarifications>
                                 </puf:StatusExtension>
                             </puf:PageroExtension>
                         </ext:ExtensionContent>
                     </ext:UBLExtension>
                 </ext:UBLExtensions>
-                <!-- NON = no specific reason code (correction is implicit from negative amount) -->
-                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
             </cac:Status>
         </cac:Response>
         <!-- Reference to the original invoice (same as the corrected Encaissée) -->

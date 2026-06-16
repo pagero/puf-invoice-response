@@ -101,45 +101,26 @@
                         <ext:ExtensionContent>
                             <puf:PageroExtension>
                                 <puf:StatusExtension>
-                                    <puf:Amounts>
-                                        <!--
-                                            MEN = Amount collected (incl. tax) after discount.
-                                            Required by French Tax Authority.
-                                            11,760 EUR = 12,000 TTC - 240 discount.
-                                        -->
-                                        <puf:Amount>
-                                            <puf:AmountType>MEN</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">11760.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>20</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                            <puf:Date>2026-03-18</puf:Date>
-                                        </puf:Amount>
-                                        <!--
-                                            ESC = Discount applied (escompte).
-                                            Informational — communicates the discount amount NOT collected.
-                                            240 EUR = 2% of 12,000 TTC.
-                                        -->
-                                        <puf:Amount>
-                                            <puf:AmountType>ESC</puf:AmountType>
-                                            <cbc:TaxInclusiveAmount currencyID="EUR">240.00</cbc:TaxInclusiveAmount>
-                                            <puf:ClassifiedTaxCategory>
-                                                <cbc:Percent>20</cbc:Percent>
-                                                <cac:TaxScheme>
-                                                    <cbc:ID>VAT</cbc:ID>
-                                                </cac:TaxScheme>
-                                            </puf:ClassifiedTaxCategory>
-                                        </puf:Amount>
-                                    </puf:Amounts>
+                                    <puf:Clarifications>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>MEN</puf:TypeCode>
+                                            <puf:ValueDateTime>2026-03-18</puf:ValueDateTime>
+                                            <puf:ValuePercent>20</puf:ValuePercent>
+                                            <puf:ValueAmount>11760.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                        </puf:Clarification>
+                                        <puf:Clarification>
+                                            <puf:TypeCode>ESC</puf:TypeCode>
+                                            <puf:ValuePercent>20</puf:ValuePercent>
+                                            <puf:ValueAmount>240.00</puf:ValueAmount>
+                                            <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                                        </puf:Clarification>
+                                    </puf:Clarifications>
                                 </puf:StatusExtension>
                             </puf:PageroExtension>
                         </ext:ExtensionContent>
                     </ext:UBLExtension>
                 </ext:UBLExtensions>
-                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
             </cac:Status>
         </cac:Response>
         <!-- Reference to the original invoice -->

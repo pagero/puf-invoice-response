@@ -95,7 +95,6 @@
             -->
             <cbc:ResponseCode>ENDORSED</cbc:ResponseCode>
             <cac:Status>
-                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
                 <cbc:StatusReason>Facture visée par le chef de file conformément au contrat de co-traitance.</cbc:StatusReason>
             </cac:Status>
         </cac:Response>

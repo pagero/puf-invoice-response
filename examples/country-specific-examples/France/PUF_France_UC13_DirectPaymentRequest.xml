@@ -97,7 +97,6 @@
             -->
             <cbc:ResponseCode>REQUEST_PAYMENT</cbc:ResponseCode>
             <cac:Status>
-                <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
                 <cbc:StatusReason>Demande de paiement direct du sous-traitant conformément au contrat de sous-traitance accepté par le maître d'ouvrage.</cbc:StatusReason>
             </cac:Status>
         </cac:Response>

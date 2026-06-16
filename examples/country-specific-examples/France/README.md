@@ -76,7 +76,7 @@ Demonstrates the standard `PAYMENT_RECEIVED` (212) lifecycle message with:
 **Refusée — Invoice Response (Buyer → Seller)**
 
 Demonstrates the `RE` (210) refusal with:
-- French reason code `CALCUL_ERR` (calculation error) — one of the 22 French-specific reason codes
+- French reason code `CALCUL_ERR` (calculation error) — one of the French-specific reason codes
 - Action code `NIN` (OPStatusAction — issue a corrected invoice)
 - Two `cac:Status` blocks: one for reason (`listID=OPStatusReason`), one for action (`listID=OPStatusAction`)
 
@@ -304,11 +304,11 @@ Reference: `FR-UC34-INV-2026-001` (same invoice as UC34_PartialPayment)
 
 Demonstrates a correction Encaissée using a NEGATIVE MEN to cancel a previously-declared payment receipt:
 - MEN = **-1,200.00 EUR TTC @ 20%** — reversal of a full payment previously declared in error
-- TaxExclusiveAmount = -1,000.00 EUR; TaxInclusiveAmount = -1,200.00 EUR
-- Date = date the bank reversal was confirmed (2026-03-01)
+- `puf:ValueAmount` = -1,200.00 EUR (gross / TTC), `puf:ValueAmountCurrency` = EUR
+- `puf:ValueDateTime` = date the bank reversal was confirmed (2026-03-01)
 
-> The response code remains `PAYMENT_RECEIVED`. Only the TaxInclusiveAmount (and TaxExclusiveAmount)
-> become negative to signal the reversal. Net effect: the prior positive declaration is cancelled.
+> The response code remains `PAYMENT_RECEIVED`. Only the `puf:ValueAmount`
+> becomes negative to signal the reversal. Net effect: the prior positive declaration is cancelled.
 > Used for: bank reversals, recalled transfers, error corrections, or mutual payment cancellations.
 
 ---
@@ -341,8 +341,8 @@ Reference: `PUF_France_UC41_Barter_Invoice.xml` — invoice `PE-2026-0115`
 (Publicité Express SAS → Troc & Co SARL, 10,000 EUR HT + 20% VAT = 12,000 EUR TTC)
 
 Demonstrates the dual-MEN pattern required when payment is partly settled in kind (barter exchange):
-- **MEN Entry 1** (POSITIVE @ 20%): TaxInclusiveAmount = **+12,000.00 EUR** — full TTC "received" (in-kind + VAT cash)
-- **MEN Entry 2** (NEGATIVE @ 0%): TaxInclusiveAmount = **-10,000.00 EUR** — deducting the HT barter component (no cash)
+- **MEN Entry 1** (POSITIVE @ 20%): `puf:ValueAmount` = **+12,000.00 EUR** — full TTC "received" (in-kind + VAT cash)
+- **MEN Entry 2** (NEGATIVE @ 0%): `puf:ValueAmount` = **-10,000.00 EUR** — deducting the HT barter component (no cash)
 
 Net declared amount for VAT pre-filling: +12,000 − 10,000 = **+2,000 EUR** (VAT cash only)
 
@@ -353,6 +353,32 @@ Net declared amount for VAT pre-filling: +12,000 − 10,000 = **+2,000 EUR** (VA
 >
 > The 0% percent on Entry 2 signals that the deduction is not reducing a VAT-bearing receipt.
 > Companion invoice: BT-113 (PrepaidAmount) on `PUF_France_UC41_Barter_Invoice.xml` = EUR 10,000 HT.
+
+---
+
+#### 207: Under Query / Dispute (En litige) with Clarifications
+
+##### 19. `PUF_France_207_UnderQuery.xml`
+
+**En litige — Invoice Response (Buyer → Seller)**
+Reference invoice: `FR-INV-2026-001` (TechDistrib France SARL → Entreprise Client France SA)
+
+Demonstrates the `UQ` (207 — En litige) dispute response, showcasing **data clarifications**
+alongside a reason and a requested action:
+
+- Reason: French code `TX_TVA_ERR` (incorrect VAT rate, `listID=OPStatusReason`) — valid for
+  LITIGE/207 per the CDV schematron (`BR-FR-CDV-CL-09/MDT-113_207`)
+- `puf:Clarifications` on the reason status pinpoints the disputed field — BT-152 (line VAT rate):
+  - `DIV` clarification = the current/invalid value (`puf:ValuePercent` 10.00)
+  - `DVA` clarification = the expected/valid value (`puf:ValuePercent` 20.00)
+  - `puf:Location` = XPath to the offending element; `puf:ChangedIndicator` = true
+- Requested action: `CNF` (`listID=OPStatusAction`) — create a full credit note
+- Two `cac:Status` blocks: one for reason (carrying the clarifications), one for action
+
+> Unlike the monetary `puf:Clarifications` used for Encaissée (MEN/MPA/…), the dispute data
+> codes (`DIV` current value, `DVA` expected value, `MAJ` replacement, `CBB`) describe
+> *non-monetary* field-level discrepancies. To report both the current and expected value of a
+> field, send two clarifications (DIV + DVA) sharing the same `puf:Code`/`puf:Location`.
 
 ---
 
@@ -374,8 +400,9 @@ Always wrap `puf:DocumentMatchingID` inside `puf:ResponseExtension`:
 
 ### Encaissée (PAYMENT_RECEIVED) Amount Requirements
 
-The `puf:StatusExtension` with `MEN` amounts is **mandatory** for Encaissée. Amounts must be
-broken down by VAT rate:
+A `puf:StatusExtension` with a `MEN` clarification is **mandatory** for Encaissée, broken down by
+VAT rate. (The `MEN` amount is carried in `puf:ValueAmount`/`puf:ValueAmountCurrency`, the VAT rate
+in `puf:ValuePercent`. The legacy `puf:Amounts` structure is superseded by `puf:Clarifications`.)
 
 ```xml
 <cac:Status>
@@ -385,28 +412,25 @@ broken down by VAT rate:
             <ext:ExtensionContent>
                 <puf:PageroExtension>
                     <puf:StatusExtension>
-                        <puf:Amounts>
-                            <puf:Amount>
-                                <puf:AmountType>MEN</puf:AmountType>
-                                <cbc:TaxExclusiveAmount currencyID="EUR">1000.00</cbc:TaxExclusiveAmount>
-                                <cbc:TaxInclusiveAmount currencyID="EUR">1200.00</cbc:TaxInclusiveAmount>
-                                <cac:ClassifiedTaxCategory>
-                                    <cbc:Percent>20</cbc:Percent>
-                                </cac:ClassifiedTaxCategory>
-                            </puf:Amount>
-                        </puf:Amounts>
+                        <puf:Clarifications>
+                            <puf:Clarification>
+                                <puf:TypeCode>MEN</puf:TypeCode>
+                                <puf:ValuePercent>20</puf:ValuePercent>
+                                <puf:ValueAmount>1200.00</puf:ValueAmount>
+                                <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
+                            </puf:Clarification>
+                        </puf:Clarifications>
                     </puf:StatusExtension>
                 </puf:PageroExtension>
             </ext:ExtensionContent>
         </ext:UBLExtension>
     </ext:UBLExtensions>
-    <cbc:StatusReasonCode>NON</cbc:StatusReasonCode>
 </cac:Status>
 ```
 
 ### French Reason Codes (Refusée / RE)
 
-Reason codes must use one of the 22 French-specific codes defined in the specification.
+Reason codes must use one of the French-specific codes defined in the specification.
 Two `cac:Status` blocks are expected for a refusal: one for the reason, one for the action:
 
 ```xml
