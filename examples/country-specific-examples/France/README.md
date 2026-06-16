@@ -390,9 +390,9 @@ statuses reference invoice `UC10-IND-2026-0345` (IndustrialTech Lyon SA → Auto
 
 ### Platform Routing Statuses (received from the counterpart platform, relayed to the Seller)
 
-> **As a PDP, Pagero generates only `200` Déposée and `213` Rejetée.** The platform-routing statuses
+> **As a PA, Pagero generates only `200` Déposée and `213` Rejetée.** The platform-routing statuses
 > below are **received from the counterpart platform** and relayed to the Seller — we do not generate
-> them. In the AFNOR CDV source the issuing platform is identified only by role code `WK` (PDP) with no
+> them. In the AFNOR CDV source the issuing platform is identified only by role code `WK` (PA) with no
 > name or ID, so these examples use a generic placeholder for the sender party.
 
 | File | Code | Status | ResponseCode |
