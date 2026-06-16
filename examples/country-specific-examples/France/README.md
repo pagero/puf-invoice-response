@@ -424,7 +424,7 @@ statuses reference invoice `UC10-IND-2026-0345` (IndustrialTech Lyon SA → Auto
 | File | Code | Status | ResponseCode | Notes |
 |------|------|--------|--------------|-------|
 | `PUF_France_209_InformationProvided.xml` | 209 | Complétée | `INFORMATION_PROVIDED` | Fulfils a prior buyer query (e.g. after a 207 En litige). |
-| `PUF_France_220_Cancelled.xml` | 220 | Annulée | `SUPERSEDED` | Invoice annulled and superseded by a corrective invoice. |
+| `PUF_France_220_Superseded.xml` | 220 | Annulée | `SUPERSEDED` | Invoice annulled and superseded by a corrective invoice. |
 
 ### Factoring Statuses (Document Status) — extends `PUF_France_UC10_Affacturee.xml` (225)
 
