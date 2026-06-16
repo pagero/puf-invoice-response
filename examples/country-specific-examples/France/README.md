@@ -388,7 +388,12 @@ The examples below complete coverage of all 21 French CDAR status codes. The gen
 reference invoice `FR-INV-2026-001` (TechDistrib France SARL → Entreprise Client France SA); the factoring
 statuses reference invoice `UC10-IND-2026-0345` (IndustrialTech Lyon SA → Automotive Suppliers Network SAS).
 
-### Platform Routing Statuses (Platform → Seller, Invoice Response)
+### Platform Routing Statuses (received from the counterpart platform, relayed to the Seller)
+
+> **As a PDP, Pagero generates only `200` Déposée and `213` Rejetée.** The platform-routing statuses
+> below are **received from the counterpart platform** and relayed to the Seller — we do not generate
+> them. In the AFNOR CDV source the issuing platform is identified only by role code `WK` (PDP) with no
+> name or ID, so these examples use a generic placeholder for the sender party.
 
 | File | Code | Status | ResponseCode |
 |------|------|--------|--------------|
@@ -396,8 +401,9 @@ statuses reference invoice `UC10-IND-2026-0345` (IndustrialTech Lyon SA → Auto
 | `PUF_France_202_Received.xml` | 202 | Reçue par la plateforme | `RECEIVED_BY_PLATFORM` |
 | `PUF_France_203_MadeAvailable.xml` | 203 | Mise à disposition | `MADE_AVAILABLE` |
 
-These mirror `PUF_France_200_Submitted.xml`: the platform (Thomson Reuters) is the sender, the seller is the
-receiver, and `puf:ReferencedDocumentInterchangeID` carries the platform interchange ID. No `cac:Status` block.
+`puf:ReferencedDocumentInterchangeID` carries the platform interchange ID; no `cac:Status` block. By contrast,
+`PUF_France_200_Submitted.xml` (Déposée) and `PUF_France_213_Rejected.xml` (Rejetée) are the two statuses Pagero
+**generates** itself, with Pagero (Thomson Reuters) as the sender.
 
 ### Buyer Processing Statuses (Buyer → Seller, Invoice Response)
 
