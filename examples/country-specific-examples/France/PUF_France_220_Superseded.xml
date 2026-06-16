@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Document Status - France
+    Use Case: Seller -> Buyer. The seller (issuer) cancels the invoice following the creation of a corrective credit note (avoir).
+    French CDAR status code: 220 (Annulée) - PUF ResponseCode "SUPERSEDED".
+    Reference invoice: FR-INV-2026-001 (TechDistrib France SARL -> Entreprise Client France SA)
+    Sender   (Seller): TechDistrib France SARL + SIREN 987654321
+    Receiver (Buyer): Entreprise Client France SA + SIREN 123456789
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:document_status:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:document_status:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-220-CANCEL</cbc:ID>
+    <!-- Response issue date -->
+    <cbc:IssueDate>2026-02-20</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>10:00:00</cbc:IssueTime>
+    <!--
+        Note explaining the cancellation.
+        The invoice is cancelled following the issuance of a corrective credit note (avoir).
+    -->
+    <cbc:Note>Facture FR-INV-2026-001 annulée suite à l'émission de l'avoir FR-CN-2026-001. Une facture rectificative la remplacera.</cbc:Note>
+    <!-- Sender Party (Seller - issuer cancels the invoice) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">987654321</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>TechDistrib France SARL</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Buyer - receives the cancellation status) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">123456789</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Entreprise Client France SA</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <!-- Response element containing the status code and reason -->
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <!-- DocumentMatchingID links this response to the original transaction -->
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>10000000220</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!-- Response Code: SUPERSEDED = Annulée (French code 220) -->
+            <cbc:ResponseCode>SUPERSEDED</cbc:ResponseCode>
+            <!-- Informational status: no reason code applies; the cancellation context is given in cbc:StatusReason. -->
+            <cac:Status>
+                <cbc:StatusReason>Facture annulée par l'émetteur suite à l'émission d'une facture corrective (avoir).</cbc:StatusReason>
+            </cac:Status>
+        </cac:Response>
+        <!-- Reference to the original invoice -->
+        <cac:DocumentReference>
+            <!-- Invoice number of the referenced document -->
+            <cbc:ID>FR-INV-2026-001</cbc:ID>
+            <cbc:IssueDate>2026-02-01</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>

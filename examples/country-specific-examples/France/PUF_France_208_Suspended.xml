@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
     PUF Invoice Response — France
-    Use Case: PA → Seller. Invoice has been validated by PA.
-    French CDAR status code: 200 (Déposée)
-
-    Reference invoice: PUF_France_Generic_Invoice.xml (FR-INV-2026-001)
-    Sender  (PA):  PA generated status (Pagero)
+    Use Case: Buyer → Seller. The buyer suspends processing (Suspendue) pending a mandatory contractual reference that is missing.
+    French CDAR status code: 208 (Suspendue) - PUF ResponseCode "ON_HOLD".
+    Reference invoice: FR-INV-2026-001 (TechDistrib France SARL → Entreprise Client France SA)
+    Sender   (Buyer):  Entreprise Client France SA — SIREN 123456789
     Receiver (Seller): TechDistrib France SARL — SIREN 987654321
 -->
 <ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
@@ -18,18 +17,22 @@
     <!-- Business process type identifier -->
     <cbc:ProfileID>urn:pagero.com:puf:invoice_response:1.0</cbc:ProfileID>
     <!-- Response identifier (max 20 characters) -->
-    <cbc:ID>RESP-DEPOSEE-EXAMPLE</cbc:ID>
+    <cbc:ID>RESP-208-SUSPEND</cbc:ID>
     <!-- Response issue date -->
-    <cbc:IssueDate>2026-02-10</cbc:IssueDate>
+    <cbc:IssueDate>2026-02-11</cbc:IssueDate>
     <!-- Response issue time (mandatory in France) -->
-    <cbc:IssueTime>09:30:00</cbc:IssueTime>
-    <!-- Sender Party (PA — sends SUBMITTED/DEPOSEE status) -->
+    <cbc:IssueTime>16:30:00</cbc:IssueTime>
+    <!-- Sender Party (Buyer — sends Invoice Response) -->
     <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">123456789</cbc:ID>
+        </cac:PartyIdentification>
         <cac:PartyLegalEntity>
-            <cbc:RegistrationName>Pagero</cbc:RegistrationName>
+            <cbc:RegistrationName>Entreprise Client France SA</cbc:RegistrationName>
         </cac:PartyLegalEntity>
     </cac:SenderParty>
-    <!-- Receiver Party (Seller — receives SUBMITTED/DEPOSEE status) -->
+    <!-- Receiver Party (Seller — receives Invoice Response) -->
     <cac:ReceiverParty>
         <cac:PartyIdentification>
             <!-- SIREN identifier (scheme 0002) -->
@@ -41,7 +44,7 @@
     </cac:ReceiverParty>
     <!-- Document Response -->
     <cac:DocumentResponse>
-        <!-- Response element containing the status code and reason/action -->
+        <!-- Response element containing the status code and reason -->
         <cac:Response>
             <ext:UBLExtensions>
                 <ext:UBLExtension>
@@ -49,17 +52,27 @@
                     <ext:ExtensionContent>
                         <puf:PageroExtension>
                             <puf:ResponseExtension>
-                                <!-- The interchange id of the referenced document. If sent by the issuer -->
-                                <puf:ReferencedDocumentInterchangeID>
-                                    <cbc:ID>111222333</cbc:ID>
-                                </puf:ReferencedDocumentInterchangeID>
+                                <!-- DocumentMatchingID links this response to the original transaction -->
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>10000000208</cbc:ID>
+                                </puf:DocumentMatchingID>
                             </puf:ResponseExtension>
                         </puf:PageroExtension>
                     </ext:ExtensionContent>
                 </ext:UBLExtension>
             </ext:UBLExtensions>
-            <!-- Response Code: SUBMITTED = Déposée (French code 200) -->
-            <cbc:ResponseCode>SUBMITTED</cbc:ResponseCode>       
+            <!-- Response Code: ON_HOLD = Suspendue (French code 208) -->
+            <cbc:ResponseCode>ON_HOLD</cbc:ResponseCode>
+            <!--
+                Status — Reason code (why processing is suspended).
+                listID="OPStatusReason" identifies this as a reason code status.
+                REF_CT_ABSENT = mandatory contractual reference is missing.
+                Reason code is mandatory for response code ON_HOLD (208) per French spec.
+            -->
+            <cac:Status>
+                <cbc:StatusReasonCode listID="OPStatusReason">REF_CT_ABSENT</cbc:StatusReasonCode>
+                <cbc:StatusReason>Référence contractuelle obligatoire absente : le numéro de contrat (BT-12) est requis pour le traitement. Traitement suspendu dans l'attente de cette référence.</cbc:StatusReason>
+            </cac:Status>
         </cac:Response>
         <!-- Reference to the original invoice -->
         <cac:DocumentReference>

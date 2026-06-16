@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUF Document Status - France
+    Use Case: Seller -> Buyer. The seller notifies the buyer of a change of payment account (new IBAN/BIC), e.g. following a confidential factoring arrangement; the beneficiary stays the seller.
+    French CDAR status code: 227 (Changement de Compte a payer) - PUF ResponseCode "ACCOUNT_CHANGED".
+    Reference invoice: UC10-IND-2026-0345 (IndustrialTech Lyon SA -> Automotive Suppliers Network SAS)
+    Sender   (Seller): IndustrialTech Lyon SA + SIREN 111222333
+    Receiver (Buyer): Automotive Suppliers Network SAS + SIREN 777888999
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+                     xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                     xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+                     xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+                     xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+    <!-- Specification Identifier -->
+    <cbc:CustomizationID>urn:pagero.com:puf:document_status:1.0</cbc:CustomizationID>
+    <!-- Business process type identifier -->
+    <cbc:ProfileID>urn:pagero.com:puf:document_status:1.0</cbc:ProfileID>
+    <!-- Response identifier (max 20 characters) -->
+    <cbc:ID>RESP-227-ACCCHG</cbc:ID>
+    <!-- Response issue date -->
+    <cbc:IssueDate>2026-02-02</cbc:IssueDate>
+    <!-- Response issue time (mandatory in France) -->
+    <cbc:IssueTime>08:00:00</cbc:IssueTime>
+    <!--
+        Note communicating the new payment account details.
+        The beneficiary remains the seller; only the bank account changes.
+    -->
+    <cbc:Note>Changement de compte a payer : veuillez regler cette facture sur le nouveau compte IBAN FR76 3000 4000 5000 6000 7000 123 / BIC BNPAFRPPXXX. Le beneficiaire reste IndustrialTech Lyon SA.</cbc:Note>
+    <!-- Sender Party (Seller - notifies buyer of the change of payment account) -->
+    <cac:SenderParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">111222333</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>IndustrialTech Lyon SA</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:SenderParty>
+    <!-- Receiver Party (Buyer - must pay to the new bank account) -->
+    <cac:ReceiverParty>
+        <cac:PartyIdentification>
+            <!-- SIREN identifier (scheme 0002) -->
+            <cbc:ID schemeID="0002">777888999</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyLegalEntity>
+            <cbc:RegistrationName>Automotive Suppliers Network SAS</cbc:RegistrationName>
+        </cac:PartyLegalEntity>
+    </cac:ReceiverParty>
+    <!-- Document Response -->
+    <cac:DocumentResponse>
+        <cac:Response>
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+                    <ext:ExtensionContent>
+                        <puf:PageroExtension>
+                            <puf:ResponseExtension>
+                                <puf:DocumentMatchingID>
+                                    <cbc:ID>10100000003</cbc:ID>
+                                </puf:DocumentMatchingID>
+                            </puf:ResponseExtension>
+                        </puf:PageroExtension>
+                    </ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <!--
+                Response Code: ACCOUNT_CHANGED = Changement de Compte a payer (CDAR code 227).
+                Update to the payment bank account; the beneficiary remains the seller.
+            -->
+            <cbc:ResponseCode>ACCOUNT_CHANGED</cbc:ResponseCode>
+            <!--
+                Informational status - no reason or action codes required.
+                The new bank account details are communicated in cbc:Note above.
+            -->
+            <cac:Status>
+                <cbc:StatusReason>Modification des coordonnees bancaires de reglement (BT-84 IBAN, BT-85 nom du compte, BT-86 BIC).</cbc:StatusReason>
+            </cac:Status>
+        </cac:Response>
+        <cac:DocumentReference>
+            <cbc:ID>UC10-IND-2026-0345</cbc:ID>
+            <cbc:IssueDate>2026-01-30</cbc:IssueDate>
+            <!-- Document type code: 380 = Invoice -->
+            <cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+        </cac:DocumentReference>
+    </cac:DocumentResponse>
+</ApplicationResponse>
