@@ -2,7 +2,7 @@
 
 Below tables shows the definition of elements added to the extension `puf:PageroExtension/puf:StatusExtension`.
 
-Status-level information is carried in `puf:Clarifications` (see below). The older `puf:Amounts` structure is *legacy* — it is retained for backwards compatibility but is **superseded by `puf:Clarifications`**; new producers should use `puf:Clarifications`, expressing a monetary amount with `puf:TypeCode` + `puf:ValueAmount`/`puf:ValueAmountCurrency` (+ `puf:ValuePercent` for the VAT rate).
+Status-level information is carried in `puf:Clarifications` (see below). Express a monetary amount with `puf:TypeCode` + `puf:ValueAmount`/`puf:ValueAmountCurrency` (+ `puf:ValuePercent` for the VAT rate).
 
 .Elements added in puf:StatusExtension relating to clarifications.
 [.status-extension-table]
@@ -46,9 +46,9 @@ Value of the field expressed as text. Use the value element matching the value's
 |**Coded value** +
 Value of the field expressed as a code.
 
-|`puf:Clarifications/puf:Clarification/puf:ValueDateTime`
-|**Date/time value** +
-Value of the field expressed as a date/time.
+|`puf:Clarifications/puf:Clarification/puf:ValueDate`
+|**Date value** +
+Value of the field expressed as a date.
 
 |`puf:Clarifications/puf:Clarification/puf:ValueNumeric`
 |**Numeric value** +
@@ -72,34 +72,6 @@ Value of the field expressed as a quantity, and its unit-of-measure code.
 puf:Clarifications/puf:Clarification/puf:ValueMeasureUnit`
 |**Measure value / unit** +
 Value of the field expressed as a measure, and its unit-of-measure code.
-|===
-
-.Elements added in puf:StatusExtension relating to amounts (*legacy* — superseded by puf:Clarifications).
-[.status-extension-table]
-[%stretch,cols="1,1"]
-|===
-|Element |Description
-
-|`puf:Amounts/puf:Amount/puf:AmountType`
-|**Amount type** (*legacy*) +
-The type of amount that is being specified. +
-AmountType code currently depend on country guidelines. See section <<_country_specifics>> for more details on how it's handled in each country.
-
-|`puf:Amounts/puf:Amount/cbc:TaxExclusiveAmount`
-|**Net amount** (*legacy*) +
-The net amount (excl. taxes) for the specified amount type.
-
-|`puf:Amounts/puf:Amount/cbc:TaxInclusiveAmount`
-|**Total amount** (*legacy*) +
-The total amount (incl. taxes) for the specified amount type.
-
-|`puf:Amounts/puf:Amount/cac:ClassifiedTaxCategory/cbc:Percent`
-|**Tax rate** (*legacy*) +
-The tax rate applicable for the specified amount type.
-
-|`puf:Amounts/puf:Amount/puf:Date`
-|**Date** (*legacy*) +
-A date associated with the amount entry (e.g. payment collection date).
 |===
 
 See example below as well as the URI to be used for this extension.
@@ -128,7 +100,7 @@ _puf:StatusExtension with sample values. The example scenario illustrated below 
                                             <puf:ValueAmount>120.00</puf:ValueAmount>
                                             <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
                                             <puf:ValuePercent>20</puf:ValuePercent>
-                                            <puf:ValueDateTime>2026-01-15</puf:ValueDateTime>
+                                            <puf:ValueDate>2026-01-15</puf:ValueDate>
                                         </puf:Clarification>
                                         <puf:Clarification>
                                             <puf:TypeCode>MEN</puf:TypeCode>

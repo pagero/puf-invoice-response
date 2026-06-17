@@ -220,8 +220,8 @@
             <xsd:element name="ValueCode" type="PUFCodeType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation><xsd:documentation>Value of the field expressed as a code.</xsd:documentation></xsd:annotation>
             </xsd:element>
-            <xsd:element name="ValueDateTime" type="PUFDateType" minOccurs="0" maxOccurs="1">
-                <xsd:annotation><xsd:documentation>Value of the field expressed as a date/time.</xsd:documentation></xsd:annotation>
+            <xsd:element name="ValueDate" type="PUFDateType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation><xsd:documentation>Value of the field expressed as a date.</xsd:documentation></xsd:annotation>
             </xsd:element>
             <xsd:element name="ValueNumeric" type="PUFTextType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation><xsd:documentation>Value of the field expressed as a number.</xsd:documentation></xsd:annotation>

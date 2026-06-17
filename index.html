@@ -1800,7 +1800,7 @@ The attached document embedded as binary object (Base64).</p></td>
 <p>Below tables shows the definition of elements added to the extension <code>puf:PageroExtension/puf:StatusExtension</code>.</p>
 </div>
 <div class="paragraph">
-<p>Status-level information is carried in <code>puf:Clarifications</code> (see below). The older <code>puf:Amounts</code> structure is <strong>legacy</strong> — it is retained for backwards compatibility but is <strong>superseded by <code>puf:Clarifications</code></strong>; new producers should use <code>puf:Clarifications</code>, expressing a monetary amount with <code>puf:TypeCode</code> + <code>puf:ValueAmount</code>/<code>puf:ValueAmountCurrency</code> (+ <code>puf:ValuePercent</code> for the VAT rate).</p>
+<p>Status-level information is carried in <code>puf:Clarifications</code> (see below). Express a monetary amount with <code>puf:TypeCode</code> + <code>puf:ValueAmount</code>/<code>puf:ValueAmountCurrency</code> (+ <code>puf:ValuePercent</code> for the VAT rate).</p>
 </div>
 <table class="tableblock frame-all grid-all stretch status-extension-table">
 <caption class="title">Table 9. Elements added in puf:StatusExtension relating to clarifications.</caption>
@@ -1861,9 +1861,9 @@ Value of the field expressed as text. Use the value element matching the value&#
 Value of the field expressed as a code.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:ValueDateTime</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Date/time value</strong><br>
-Value of the field expressed as a date/time.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:ValueDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Date value</strong><br>
+Value of the field expressed as a date.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Clarifications/puf:Clarification/puf:ValueNumeric</code></p></td>
@@ -1895,47 +1895,6 @@ Value of the field expressed as a measure, and its unit-of-measure code.</p></td
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all stretch status-extension-table">
-<caption class="title">Table 10. Elements added in puf:StatusExtension relating to amounts (<strong>legacy</strong> — superseded by puf:Clarifications).</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Element</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Amounts/puf:Amount/puf:AmountType</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Amount type</strong> (<strong>legacy</strong>)<br>
-The type of amount that is being specified.<br>
-AmountType code currently depend on country guidelines. See section <a href="#_country_specifics">Country specifics</a> for more details on how it&#8217;s handled in each country.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Amounts/puf:Amount/cbc:TaxExclusiveAmount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Net amount</strong> (<strong>legacy</strong>)<br>
-The net amount (excl. taxes) for the specified amount type.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Amounts/puf:Amount/cbc:TaxInclusiveAmount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Total amount</strong> (<strong>legacy</strong>)<br>
-The total amount (incl. taxes) for the specified amount type.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Amounts/puf:Amount/cac:ClassifiedTaxCategory/cbc:Percent</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Tax rate</strong> (<strong>legacy</strong>)<br>
-The tax rate applicable for the specified amount type.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:Amounts/puf:Amount/puf:Date</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Date</strong> (<strong>legacy</strong>)<br>
-A date associated with the amount entry (e.g. payment collection date).</p></td>
-</tr>
-</tbody>
-</table>
 <div class="paragraph">
 <p>See example below as well as the URI to be used for this extension.</p>
 </div>
@@ -1964,7 +1923,7 @@ A date associated with the amount entry (e.g. payment collection date).</p></td>
                                             <span class="tag">&lt;puf:ValueAmount&gt;</span>120.00<span class="tag">&lt;/puf:ValueAmount&gt;</span>
                                             <span class="tag">&lt;puf:ValueAmountCurrency&gt;</span>EUR<span class="tag">&lt;/puf:ValueAmountCurrency&gt;</span>
                                             <span class="tag">&lt;puf:ValuePercent&gt;</span>20<span class="tag">&lt;/puf:ValuePercent&gt;</span>
-                                            <span class="tag">&lt;puf:ValueDateTime&gt;</span>2026-01-15<span class="tag">&lt;/puf:ValueDateTime&gt;</span>
+                                            <span class="tag">&lt;puf:ValueDate&gt;</span>2026-01-15<span class="tag">&lt;/puf:ValueDate&gt;</span>
                                         <span class="tag">&lt;/puf:Clarification&gt;</span>
                                         <span class="tag">&lt;puf:Clarification&gt;</span>
                                             <span class="tag">&lt;puf:TypeCode&gt;</span>MEN<span class="tag">&lt;/puf:TypeCode&gt;</span>
@@ -2019,10 +1978,10 @@ A date associated with the amount entry (e.g. payment collection date).</p></td>
 <div class="sect4">
 <h5 id="_amount_type"><a class="anchor" href="#_amount_type"></a><a class="link" href="#_amount_type">Amount Type</a></h5>
 <div class="paragraph">
-<p>The clarification type code (<code>puf:Clarification/puf:TypeCode</code>; legacy: <code>puf:AmountType</code>) is used to indicate what the specified amounts mean. In France, the following list is applicable:</p>
+<p>The clarification type code (<code>puf:Clarification/puf:TypeCode</code>) is used to indicate what the specified amounts mean. In France, the following list is applicable:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. puf:TypeCode (amount type) values applicable in France</caption>
+<caption class="title">Table 10. puf:TypeCode (amount type) values applicable in France</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2181,7 +2140,7 @@ Each <code>puf:Clarification</code> carries a single <code>puf:ValueAmount</code
 <p>In France, the reason codes are unique and defined in the table below. The table also indicates for which response codes (<code>cbc:ResponseCode</code>) each reason code is applicable.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. French reason codes and applicability per response code</caption>
+<caption class="title">Table 11. French reason codes and applicability per response code</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 21.4285%;">
@@ -2518,7 +2477,7 @@ These reason codes, their labels and their applicability per status are defined 
 <div class="sect2">
 <h3 id="_code_lists_for_coded_elements"><a class="anchor" href="#_code_lists_for_coded_elements"></a><a class="link" href="#_code_lists_for_coded_elements">6.1. Code lists for coded elements</a></h3>
 <table class="tableblock frame-all grid-all fit-content stretch">
-<caption class="title">Table 13. Table of the code lists used</caption>
+<caption class="title">Table 12. Table of the code lists used</caption>
 <colgroup>
 <col>
 <col>
