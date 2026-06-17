@@ -305,7 +305,7 @@ Reference: `FR-UC34-INV-2026-001` (same invoice as UC34_PartialPayment)
 Demonstrates a correction Encaissée using a NEGATIVE MEN to cancel a previously-declared payment receipt:
 - MEN = **-1,200.00 EUR TTC @ 20%** — reversal of a full payment previously declared in error
 - `puf:ValueAmount` = -1,200.00 EUR (gross / TTC), `puf:ValueAmountCurrency` = EUR
-- `puf:ValueDateTime` = date the bank reversal was confirmed (2026-03-01)
+- `puf:ValueDate` = date the bank reversal was confirmed (2026-03-01)
 
 > The response code remains `PAYMENT_RECEIVED`. Only the `puf:ValueAmount`
 > becomes negative to signal the reversal. Net effect: the prior positive declaration is cancelled.
@@ -460,7 +460,7 @@ Always wrap `puf:DocumentMatchingID` inside `puf:ResponseExtension`:
 
 A `puf:StatusExtension` with a `MEN` clarification is **mandatory** for Encaissée, broken down by
 VAT rate. (The `MEN` amount is carried in `puf:ValueAmount`/`puf:ValueAmountCurrency`, the VAT rate
-in `puf:ValuePercent`. The legacy `puf:Amounts` structure is superseded by `puf:Clarifications`.)
+in `puf:ValuePercent`.)
 
 ```xml
 <cac:Status>

@@ -7,7 +7,7 @@ In France it is a requirement to report received payments for certain transactio
 
 ===== Amount Type
 
-The clarification type code (``puf:Clarification/puf:TypeCode``; legacy: ``puf:AmountType``) is used to indicate what the specified amounts mean. In France, the following list is applicable:
+The clarification type code (``puf:Clarification/puf:TypeCode``) is used to indicate what the specified amounts mean. In France, the following list is applicable:
 
 .puf:TypeCode (amount type) values applicable in France
 |===

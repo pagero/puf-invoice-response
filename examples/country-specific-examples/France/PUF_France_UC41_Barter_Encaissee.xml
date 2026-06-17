@@ -131,14 +131,14 @@
                                     <puf:Clarifications>
                                         <puf:Clarification>
                                             <puf:TypeCode>MEN</puf:TypeCode>
-                                            <puf:ValueDateTime>2026-02-28</puf:ValueDateTime>
+                                            <puf:ValueDate>2026-02-28</puf:ValueDate>
                                             <puf:ValuePercent>20</puf:ValuePercent>
                                             <puf:ValueAmount>12000.00</puf:ValueAmount>
                                             <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
                                         </puf:Clarification>
                                         <puf:Clarification>
                                             <puf:TypeCode>MEN</puf:TypeCode>
-                                            <puf:ValueDateTime>2026-02-28</puf:ValueDateTime>
+                                            <puf:ValueDate>2026-02-28</puf:ValueDate>
                                             <puf:ValuePercent>0</puf:ValuePercent>
                                             <puf:ValueAmount>-10000.00</puf:ValueAmount>
                                             <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>

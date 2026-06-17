@@ -112,7 +112,7 @@
                                     <puf:Clarifications>
                                         <puf:Clarification>
                                             <puf:TypeCode>MEN</puf:TypeCode>
-                                            <puf:ValueDateTime>2026-06-15</puf:ValueDateTime>
+                                            <puf:ValueDate>2026-06-15</puf:ValueDate>
                                             <puf:ValuePercent>10</puf:ValuePercent>
                                             <puf:ValueAmount>20900.00</puf:ValueAmount>
                                             <puf:ValueAmountCurrency>EUR</puf:ValueAmountCurrency>
