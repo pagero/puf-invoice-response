@@ -165,6 +165,21 @@
             <xsd:extension base="ccts-cct:TextType"/>
         </xsd:simpleContent>
     </xsd:complexType>
+    <xsd:complexType name="PUFNumericType">
+        <xsd:simpleContent>
+            <xsd:extension base="ccts-cct:NumericType"/>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="PUFQuantityType">
+        <xsd:simpleContent>
+            <xsd:extension base="ccts-cct:QuantityType"/>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="PUFMeasureType">
+        <xsd:simpleContent>
+            <xsd:extension base="ccts-cct:MeasureType"/>
+        </xsd:simpleContent>
+    </xsd:complexType>
 
     <!-- ===== Response Extension Amounts types ===== -->
     <xsd:complexType name="PUFAmountsListType">
@@ -223,10 +238,10 @@
             <xsd:element name="ValueDate" type="PUFDateType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation><xsd:documentation>Value of the field expressed as a date.</xsd:documentation></xsd:annotation>
             </xsd:element>
-            <xsd:element name="ValueNumeric" type="ccts-cct:NumericType" minOccurs="0" maxOccurs="1">
+            <xsd:element name="ValueNumeric" type="PUFNumericType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation><xsd:documentation>Value of the field expressed as a number.</xsd:documentation></xsd:annotation>
             </xsd:element>
-            <xsd:element name="ValuePercent" type="ccts-cct:NumericType" minOccurs="0" maxOccurs="1">
+            <xsd:element name="ValuePercent" type="PUFNumericType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation><xsd:documentation>Value of the field expressed as a percentage.</xsd:documentation></xsd:annotation>
             </xsd:element>
             <xsd:element name="ValueAmount" type="PUFAmountType" minOccurs="0" maxOccurs="1">
@@ -235,13 +250,13 @@
             <xsd:element name="ValueAmountCurrency" type="PUFCodeType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation><xsd:documentation>Currency code of ValueAmount.</xsd:documentation></xsd:annotation>
             </xsd:element>
-            <xsd:element name="ValueQuantity" type="ccts-cct:QuantityType" minOccurs="0" maxOccurs="1">
+            <xsd:element name="ValueQuantity" type="PUFQuantityType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation><xsd:documentation>Value of the field expressed as a quantity.</xsd:documentation></xsd:annotation>
             </xsd:element>
             <xsd:element name="ValueQuantityUnit" type="PUFCodeType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation><xsd:documentation>Unit of measure code for ValueQuantity.</xsd:documentation></xsd:annotation>
             </xsd:element>
-            <xsd:element name="ValueMeasure" type="ccts-cct:MeasureType" minOccurs="0" maxOccurs="1">
+            <xsd:element name="ValueMeasure" type="PUFMeasureType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation><xsd:documentation>Value of the field expressed as a measure.</xsd:documentation></xsd:annotation>
             </xsd:element>
             <xsd:element name="ValueMeasureUnit" type="PUFCodeType" minOccurs="0" maxOccurs="1">
