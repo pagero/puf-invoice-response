@@ -9,3 +9,15 @@ include::extensions/ubl-root-application-response/response-extension.adoc[]
 Below chapter describes the elements added in `puf:PageroExtension/puf:StatusExtension`.
 
 include::extensions/ubl-root-application-response/status-extension.adoc[]
+
+=== Compliance extension
+
+Below chapter describes the elements added in `puf:PageroExtension/puf:ComplianceExtension`, placed in the document-level `ext:UBLExtensions` on the `ApplicationResponse` root element.
+
+include::extensions/ubl-root-application-response/compliance-extension.adoc[]
+
+=== External delivery type
+
+Below chapter describes the element added in `puf:PageroExtension/puf:ExternalDeliveryType`, placed in the document-level `ext:UBLExtensions` on the `ApplicationResponse` root element.
+
+include::extensions/ubl-root-application-response/external-delivery-type.adoc[]

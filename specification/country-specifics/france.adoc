@@ -282,3 +282,38 @@ In France, the action codes will follow the Peppol list https://docs.peppol.eu/p
 
 NOTE: *Only* the Action Code list follows Peppol. The Reason code list is unique to France and can be found in the <<_status_reason, Status Reason section above>>.
 
+==== Compliance and clearance handling extensions
+
+The document-level extensions `puf:ComplianceExtension` (`puf:ComplianceActivatedIndicator`, `puf:SkipClearanceIndicator`) and `puf:ExternalDeliveryType`, described in the Extensions chapter, are generic but are currently used in France as described below.
+
+===== Skipping clearance for optional statuses (`puf:SkipClearanceIndicator`)
+
+The most important use case in France is the *Payment Received* status (_Encaissée_, French CDAR code 212, response code `PAYMENT_RECEIVED`). As a rule, these statuses are also transmitted to the Clearance Authority (PPF) for approval. In certain situations, however, the supplier has *no regulatory obligation* to report this status — yet may still wish to send it for *business* reasons, for example because the buyer asks for it.
+
+To support this, set `puf:SkipClearanceIndicator` to `true`. Pagero Online then processes the document as usual but *skips the clearance / PPF transmission step*.
+
+*Example* +
+_Payment Received (Encaissée) status that should be processed but not sent to clearance._
+[source,xml]
+----
+<ApplicationResponse>
+    <ext:UBLExtensions>
+        <ext:UBLExtension>
+            <ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ComplianceExtension</ext:ExtensionURI>
+            <ext:ExtensionContent>
+                <puf:PageroExtension>
+                    <puf:ComplianceExtension>
+                        <puf:SkipClearanceIndicator>true</puf:SkipClearanceIndicator>
+                    </puf:ComplianceExtension>
+                </puf:PageroExtension>
+            </ext:ExtensionContent>
+        </ext:UBLExtension>
+    </ext:UBLExtensions>
+    <!-- Code omitted for clarity; e.g. a PAYMENT_RECEIVED (212) document status -->
+</ApplicationResponse>
+----
+
+===== `puf:ComplianceActivatedIndicator` and `puf:ExternalDeliveryType`
+
+`puf:ComplianceActivatedIndicator` indicates whether the document is processed within the French reform: `true` means Pagero (as PDP/PA) applies the stricter compliance checks. For lifecycle statuses this value is carried in the CDAR _cadre de facturation_ field (AFNOR MDT-2, the same field as the invoice's BT-23), which France repurposes to carry the document treatment type (rule BR-FR-CDV-CL-01): `REGULATED` activates compliance, while the other values (`NON_REGULATED`, `B2C`, `B2BINT`, `OUTOFSCOPE`) leave it `false`. `puf:ExternalDeliveryType` (`PROCESS_WITHOUT_DELIVERY` / `PROCESS_WITHOUT_ROUTING`) requests processing without onward routing or delivery. Where a header `#BAR#` note and an explicit `puf:ComplianceActivatedIndicator` are both present, the explicit indicator takes precedence.
+
