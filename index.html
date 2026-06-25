@@ -611,6 +611,16 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#_pufstatusextension">4.2.1. puf:StatusExtension</a></li>
 </ul>
 </li>
+<li><a href="#_compliance_extension">4.3. Compliance extension</a>
+<ul class="sectlevel3">
+<li><a href="#_pufcomplianceextension">4.3.1. puf:ComplianceExtension</a></li>
+</ul>
+</li>
+<li><a href="#_external_delivery_type">4.4. External delivery type</a>
+<ul class="sectlevel3">
+<li><a href="#_pufexternaldeliverytype">4.4.1. puf:ExternalDeliveryType</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_country_specifics">5. Country specifics</a>
@@ -620,6 +630,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#_payment_reporting">5.1.1. Payment reporting</a></li>
 <li><a href="#_status_reason">5.1.2. Status Reason</a></li>
 <li><a href="#_requested_action">5.1.3. Requested Action</a></li>
+<li><a href="#_compliance_and_clearance_handling_extensions">5.1.4. Compliance and clearance handling extensions</a></li>
 </ul>
 </li>
 </ul>
@@ -1474,6 +1485,11 @@ Extension is added to provide additional information in the <code>cac:Status</co
 <a href="#_status_extension">Status extension</a>.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:Status/cbc:Description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Status note</strong><br>
+A free-text note or comment about the status, providing additional information alongside any status reason or requested action.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:Status/cbc:StatusReasonCode</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Status reason code</strong><br>
 A code defining a clarification given for the status.<br></p>
@@ -1535,6 +1551,7 @@ A free-text explanation of the clarification or requested action given for the s
             <span class="tag">&lt;/ext:UBLExtensions&gt;</span>
             <span class="tag">&lt;cbc:ResponseCode&gt;</span>APPROVED<span class="tag">&lt;/cbc:ResponseCode&gt;</span>
             <span class="tag">&lt;cac:Status&gt;</span>
+                <span class="tag">&lt;cbc:Description&gt;</span>Invoice received and currently under review<span class="tag">&lt;/cbc:Description&gt;</span>
                 <span class="tag">&lt;cbc:StatusReasonCode&gt;</span>XSD_ZATCA_VALID<span class="tag">&lt;/cbc:StatusReasonCode&gt;</span>
                 <span class="tag">&lt;cbc:StatusReason&gt;</span>Complied with UBL 2.1 standards in line with ZATCA specifications<span class="tag">&lt;/cbc:StatusReason&gt;</span>
             <span class="tag">&lt;/cac:Status&gt;</span>
@@ -1957,6 +1974,170 @@ Value of the field expressed as a measure, and its unit-of-measure code.</p></td
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_compliance_extension"><a class="anchor" href="#_compliance_extension"></a><a class="link" href="#_compliance_extension">4.3. Compliance extension</a></h3>
+<div class="paragraph">
+<p>Below chapter describes the elements added in <code>puf:PageroExtension/puf:ComplianceExtension</code>, placed in the document-level <code>ext:UBLExtensions</code> on the <code>ApplicationResponse</code> root element.</p>
+</div>
+<div class="sect3">
+<h4 id="_pufcomplianceextension"><a class="anchor" href="#_pufcomplianceextension"></a><a class="link" href="#_pufcomplianceextension">4.3.1. puf:ComplianceExtension</a></h4>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This extension is provided for specific integration scenarios; most integrations producing PUF for Pagero Online will not need it. Only use it if you are aware of the consequences for how Pagero Online processes, validates, clears, routes and delivers the document. If you are uncertain whether or how to use it, contact Pagero / Thomson Reuters before doing so.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Below table shows the definition of elements added to the extension <code>puf:PageroExtension/puf:ComplianceExtension</code>. This extension is placed in the document-level <code>ext:UBLExtensions</code> on the <code>ApplicationResponse</code> root element.</p>
+</div>
+<div class="paragraph">
+<p>These indicators are generic and may apply to any market where compliance or clearance processing is relevant.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. Elements added in puf:ComplianceExtension.</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:ComplianceActivatedIndicator</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Compliance activated indicator</strong><br>
+When set to <code>true</code>, triggers additional regulatory compliance checks on the document (where applicable), applied according to the rules defined for the specific flow it belongs to. Can be <code>true</code> or <code>false</code>; if the element is missing it is treated as <code>false</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:SkipClearanceIndicator</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Skip clearance indicator</strong><br>
+When set to <code>true</code>, the document must not be sent to a clearance authority, even if it would otherwise be eligible for the clearance process. Can be <code>true</code> or <code>false</code>; if the element is missing it is treated as <code>false</code>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>puf:ComplianceActivatedIndicator</code> is a generic indicator, intended to be reused across markets and expected to be expanded for additional markets over time. It is <strong>currently only applied in France</strong>, where it signals whether the document is processed <strong>within</strong> or <strong>outside</strong> the French e-invoicing reform: when <code>true</code>, Pagero — acting as the accredited platform (PDP/PA) — applies the stricter compliance checks and validations the reform requires; when <code>false</code>, the document is processed outside that stricter regime. See the France country-specifics for how these extensions are used (notably <code>puf:SkipClearanceIndicator</code>).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>See example below as well as the URI to be used for this extension.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;ApplicationResponse&gt;</span>
+    <span class="tag">&lt;ext:UBLExtensions&gt;</span>
+        <span class="tag">&lt;ext:UBLExtension&gt;</span>
+            <span class="tag">&lt;ext:ExtensionURI&gt;</span>urn:pagero:ExtensionComponent:1.0:PageroExtension:ComplianceExtension<span class="tag">&lt;/ext:ExtensionURI&gt;</span>
+            <span class="tag">&lt;ext:ExtensionContent&gt;</span>
+                <span class="tag">&lt;puf:PageroExtension&gt;</span>
+                    <span class="tag">&lt;puf:ComplianceExtension&gt;</span>
+                        <span class="tag">&lt;puf:ComplianceActivatedIndicator&gt;</span>true<span class="tag">&lt;/puf:ComplianceActivatedIndicator&gt;</span>
+                        <span class="tag">&lt;puf:SkipClearanceIndicator&gt;</span>true<span class="tag">&lt;/puf:SkipClearanceIndicator&gt;</span>
+                    <span class="tag">&lt;/puf:ComplianceExtension&gt;</span>
+                <span class="tag">&lt;/puf:PageroExtension&gt;</span>
+            <span class="tag">&lt;/ext:ExtensionContent&gt;</span>
+        <span class="tag">&lt;/ext:UBLExtension&gt;</span>
+    <span class="tag">&lt;/ext:UBLExtensions&gt;</span>
+    <span class="comment">&lt;!-- Code omitted for clarity --&gt;</span>
+<span class="tag">&lt;/ApplicationResponse&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_external_delivery_type"><a class="anchor" href="#_external_delivery_type"></a><a class="link" href="#_external_delivery_type">4.4. External delivery type</a></h3>
+<div class="paragraph">
+<p>Below chapter describes the element added in <code>puf:PageroExtension/puf:ExternalDeliveryType</code>, placed in the document-level <code>ext:UBLExtensions</code> on the <code>ApplicationResponse</code> root element.</p>
+</div>
+<div class="sect3">
+<h4 id="_pufexternaldeliverytype"><a class="anchor" href="#_pufexternaldeliverytype"></a><a class="link" href="#_pufexternaldeliverytype">4.4.1. puf:ExternalDeliveryType</a></h4>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This extension is provided for specific integration scenarios; most integrations producing PUF for Pagero Online will not need it. Only use it if you are aware of the consequences for how Pagero Online processes, validates, clears, routes and delivers the document. If you are uncertain whether or how to use it, contact Pagero / Thomson Reuters before doing so.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Below table shows the definition of the element added to the extension <code>puf:PageroExtension/puf:ExternalDeliveryType</code>. This extension is placed in the document-level <code>ext:UBLExtensions</code> on the <code>ApplicationResponse</code> root element.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. Element added in puf:ExternalDeliveryType.</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:ExternalDeliveryType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>External delivery type</strong><br>
+Indicates that the document should be processed without standard Pagero routing and/or delivery.<br>
+<strong>One of:</strong> <code>PROCESS_WITHOUT_DELIVERY</code> (the document is processed but not delivered by Pagero) or <code>PROCESS_WITHOUT_ROUTING</code> (the document is processed but neither routed nor delivered by Pagero).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>See example below as well as the URI to be used for this extension.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;ApplicationResponse&gt;</span>
+    <span class="tag">&lt;ext:UBLExtensions&gt;</span>
+        <span class="tag">&lt;ext:UBLExtension&gt;</span>
+            <span class="tag">&lt;ext:ExtensionURI&gt;</span>urn:pagero:ExtensionComponent:1.0:PageroExtension:ExternalDeliveryType<span class="tag">&lt;/ext:ExtensionURI&gt;</span>
+            <span class="tag">&lt;ext:ExtensionContent&gt;</span>
+                <span class="tag">&lt;puf:PageroExtension&gt;</span>
+                    <span class="tag">&lt;puf:ExternalDeliveryType&gt;</span>PROCESS_WITHOUT_DELIVERY<span class="tag">&lt;/puf:ExternalDeliveryType&gt;</span>
+                <span class="tag">&lt;/puf:PageroExtension&gt;</span>
+            <span class="tag">&lt;/ext:ExtensionContent&gt;</span>
+        <span class="tag">&lt;/ext:UBLExtension&gt;</span>
+    <span class="tag">&lt;/ext:UBLExtensions&gt;</span>
+    <span class="comment">&lt;!-- Code omitted for clarity --&gt;</span>
+<span class="tag">&lt;/ApplicationResponse&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1981,7 +2162,7 @@ Value of the field expressed as a measure, and its unit-of-measure code.</p></td
 <p>The clarification type code (<code>puf:Clarification/puf:TypeCode</code>) is used to indicate what the specified amounts mean. In France, the following list is applicable:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. puf:TypeCode (amount type) values applicable in France</caption>
+<caption class="title">Table 12. puf:TypeCode (amount type) values applicable in France</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2140,7 +2321,7 @@ Each <code>puf:Clarification</code> carries a single <code>puf:ValueAmount</code
 <p>In France, the reason codes are unique and defined in the table below. The table also indicates for which response codes (<code>cbc:ResponseCode</code>) each reason code is applicable.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. French reason codes and applicability per response code</caption>
+<caption class="title">Table 13. French reason codes and applicability per response code</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 21.4285%;">
@@ -2456,6 +2637,50 @@ These reason codes, their labels and their applicability per status are defined 
 </table>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_compliance_and_clearance_handling_extensions"><a class="anchor" href="#_compliance_and_clearance_handling_extensions"></a><a class="link" href="#_compliance_and_clearance_handling_extensions">5.1.4. Compliance and clearance handling extensions</a></h4>
+<div class="paragraph">
+<p>The document-level extensions <code>puf:ComplianceExtension</code> (<code>puf:ComplianceActivatedIndicator</code>, <code>puf:SkipClearanceIndicator</code>) and <code>puf:ExternalDeliveryType</code>, described in the Extensions chapter, are generic but are currently used in France as described below.</p>
+</div>
+<div class="sect4">
+<h5 id="_skipping_clearance_for_optional_statuses_pufskipclearanceindicator"><a class="anchor" href="#_skipping_clearance_for_optional_statuses_pufskipclearanceindicator"></a><a class="link" href="#_skipping_clearance_for_optional_statuses_pufskipclearanceindicator">Skipping clearance for optional statuses (<code>puf:SkipClearanceIndicator</code>)</a></h5>
+<div class="paragraph">
+<p>The most important use case in France is the <strong>Payment Received</strong> status (<em>Encaissée</em>, French CDAR code 212, response code <code>PAYMENT_RECEIVED</code>). As a rule, these statuses are also transmitted to the Clearance Authority (PPF) for approval. In certain situations, however, the supplier has <strong>no regulatory obligation</strong> to report this status — yet may still wish to send it for <strong>business</strong> reasons, for example because the buyer asks for it.</p>
+</div>
+<div class="paragraph">
+<p>To support this, set <code>puf:SkipClearanceIndicator</code> to <code>true</code>. Pagero Online then processes the document as usual but <strong>skips the clearance / PPF transmission step</strong>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example</strong><br>
+<em>Payment Received (Encaissée) status that should be processed but not sent to clearance.</em></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;ApplicationResponse&gt;</span>
+    <span class="tag">&lt;ext:UBLExtensions&gt;</span>
+        <span class="tag">&lt;ext:UBLExtension&gt;</span>
+            <span class="tag">&lt;ext:ExtensionURI&gt;</span>urn:pagero:ExtensionComponent:1.0:PageroExtension:ComplianceExtension<span class="tag">&lt;/ext:ExtensionURI&gt;</span>
+            <span class="tag">&lt;ext:ExtensionContent&gt;</span>
+                <span class="tag">&lt;puf:PageroExtension&gt;</span>
+                    <span class="tag">&lt;puf:ComplianceExtension&gt;</span>
+                        <span class="tag">&lt;puf:SkipClearanceIndicator&gt;</span>true<span class="tag">&lt;/puf:SkipClearanceIndicator&gt;</span>
+                    <span class="tag">&lt;/puf:ComplianceExtension&gt;</span>
+                <span class="tag">&lt;/puf:PageroExtension&gt;</span>
+            <span class="tag">&lt;/ext:ExtensionContent&gt;</span>
+        <span class="tag">&lt;/ext:UBLExtension&gt;</span>
+    <span class="tag">&lt;/ext:UBLExtensions&gt;</span>
+    <span class="comment">&lt;!-- Code omitted for clarity; e.g. a PAYMENT_RECEIVED (212) document status --&gt;</span>
+<span class="tag">&lt;/ApplicationResponse&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_pufcomplianceactivatedindicator_and_pufexternaldeliverytype"><a class="anchor" href="#_pufcomplianceactivatedindicator_and_pufexternaldeliverytype"></a><a class="link" href="#_pufcomplianceactivatedindicator_and_pufexternaldeliverytype"><code>puf:ComplianceActivatedIndicator</code> and <code>puf:ExternalDeliveryType</code></a></h5>
+<div class="paragraph">
+<p><code>puf:ComplianceActivatedIndicator</code> indicates whether the document is processed within the French reform: <code>true</code> means Pagero (as PDP/PA) applies the stricter compliance checks. For lifecycle statuses this value is carried in the CDAR <em>cadre de facturation</em> field (AFNOR MDT-2, the same field as the invoice&#8217;s BT-23), which France repurposes to carry the document treatment type (rule BR-FR-CDV-CL-01): <code>REGULATED</code> activates compliance, while the other values (<code>NON_REGULATED</code>, <code>B2C</code>, <code>B2BINT</code>, <code>OUTOFSCOPE</code>) leave it <code>false</code>. <code>puf:ExternalDeliveryType</code> (<code>PROCESS_WITHOUT_DELIVERY</code> / <code>PROCESS_WITHOUT_ROUTING</code>) requests processing without onward routing or delivery. Where a header <code><mark>BAR</mark></code> note and an explicit <code>puf:ComplianceActivatedIndicator</code> are both present, the explicit indicator takes precedence.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2477,7 +2702,7 @@ These reason codes, their labels and their applicability per status are defined 
 <div class="sect2">
 <h3 id="_code_lists_for_coded_elements"><a class="anchor" href="#_code_lists_for_coded_elements"></a><a class="link" href="#_code_lists_for_coded_elements">6.1. Code lists for coded elements</a></h3>
 <table class="tableblock frame-all grid-all fit-content stretch">
-<caption class="title">Table 12. Table of the code lists used</caption>
+<caption class="title">Table 14. Table of the code lists used</caption>
 <colgroup>
 <col>
 <col>
