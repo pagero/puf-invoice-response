@@ -18,6 +18,10 @@ https://pagero.github.io/puf-code-lists/#_puf_016_invoicestatuscode[PUF-016-INVO
 Extension is added to provide additional information in the `cac:Status` element, added elements in regards to `ext:UBLExtensions` for `cac:Status` can be found below: +
 <<_status_extension>>.
 
+|`cac:Status/cbc:Description`
+|**Status note** +
+A free-text note or comment about the status, providing additional information alongside any status reason or requested action.
+
 |`cac:Status/cbc:StatusReasonCode`
 |**Status reason code** +
 A code defining a clarification given for the status. +
