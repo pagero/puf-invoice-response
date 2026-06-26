@@ -1551,7 +1551,6 @@ A free-text explanation of the clarification or requested action given for the s
             <span class="tag">&lt;/ext:UBLExtensions&gt;</span>
             <span class="tag">&lt;cbc:ResponseCode&gt;</span>APPROVED<span class="tag">&lt;/cbc:ResponseCode&gt;</span>
             <span class="tag">&lt;cac:Status&gt;</span>
-                <span class="tag">&lt;cbc:Description&gt;</span>Invoice received and currently under review<span class="tag">&lt;/cbc:Description&gt;</span>
                 <span class="tag">&lt;cbc:StatusReasonCode&gt;</span>XSD_ZATCA_VALID<span class="tag">&lt;/cbc:StatusReasonCode&gt;</span>
                 <span class="tag">&lt;cbc:StatusReason&gt;</span>Complied with UBL 2.1 standards in line with ZATCA specifications<span class="tag">&lt;/cbc:StatusReason&gt;</span>
             <span class="tag">&lt;/cac:Status&gt;</span>
@@ -2034,7 +2033,7 @@ When set to <code>true</code>, the document must not be sent to a clearance auth
 </td>
 <td class="content">
 <div class="paragraph">
-<p><code>puf:ComplianceActivatedIndicator</code> is a generic indicator, intended to be reused across markets and expected to be expanded for additional markets over time. It is <strong>currently only applied in France</strong>, where it signals whether the document is processed <strong>within</strong> or <strong>outside</strong> the French e-invoicing reform: when <code>true</code>, Pagero — acting as the accredited platform (PDP/PA) — applies the stricter compliance checks and validations the reform requires; when <code>false</code>, the document is processed outside that stricter regime. See the France country-specifics for how these extensions are used (notably <code>puf:SkipClearanceIndicator</code>).</p>
+<p><code>puf:ComplianceActivatedIndicator</code> is a generic indicator, intended to be reused across markets and expected to be expanded for additional markets over time. It is <strong>currently only applied in France</strong>, where it signals whether the document is processed <strong>within</strong> or <strong>outside</strong> the French e-invoicing reform: when <code>true</code>, Pagero — acting as the accredited platform (PA) — applies the stricter compliance checks and validations the reform requires; when <code>false</code>, the document is processed outside that stricter regime. See the France country-specifics for how these extensions are used (notably <code>puf:SkipClearanceIndicator</code>).</p>
 </div>
 </td>
 </tr>
@@ -2677,7 +2676,10 @@ These reason codes, their labels and their applicability per status are defined 
 <div class="sect4">
 <h5 id="_pufcomplianceactivatedindicator_and_pufexternaldeliverytype"><a class="anchor" href="#_pufcomplianceactivatedindicator_and_pufexternaldeliverytype"></a><a class="link" href="#_pufcomplianceactivatedindicator_and_pufexternaldeliverytype"><code>puf:ComplianceActivatedIndicator</code> and <code>puf:ExternalDeliveryType</code></a></h5>
 <div class="paragraph">
-<p><code>puf:ComplianceActivatedIndicator</code> indicates whether the document is processed within the French reform: <code>true</code> means Pagero (as PDP/PA) applies the stricter compliance checks. For lifecycle statuses this value is carried in the CDAR <em>cadre de facturation</em> field (AFNOR MDT-2, the same field as the invoice&#8217;s BT-23), which France repurposes to carry the document treatment type (rule BR-FR-CDV-CL-01): <code>REGULATED</code> activates compliance, while the other values (<code>NON_REGULATED</code>, <code>B2C</code>, <code>B2BINT</code>, <code>OUTOFSCOPE</code>) leave it <code>false</code>. <code>puf:ExternalDeliveryType</code> (<code>PROCESS_WITHOUT_DELIVERY</code> / <code>PROCESS_WITHOUT_ROUTING</code>) requests processing without onward routing or delivery. Where a header <code><mark>BAR</mark></code> note and an explicit <code>puf:ComplianceActivatedIndicator</code> are both present, the explicit indicator takes precedence.</p>
+<p><code>puf:ComplianceActivatedIndicator</code> controls whether the document is processed within the French e-invoicing reform. When <code>true</code>, Pagero — acting as the accredited platform (PA) — applies the stricter compliance checks and validations the reform requires; when <code>false</code> or absent, the document is processed outside that regime and those checks are not applied. Primarily used for e.g. B2C or cross-border documents.</p>
+</div>
+<div class="paragraph">
+<p><code>puf:ExternalDeliveryType</code> requests that Pagero Online process the document without sending it onward: <code>PROCESS_WITHOUT_DELIVERY</code> processes the document but does not deliver it, while <code>PROCESS_WITHOUT_ROUTING</code> processes it but neither routes nor delivers it. Primarily used when you want Pagero to archive a file but not distribute it.</p>
 </div>
 </div>
 </div>

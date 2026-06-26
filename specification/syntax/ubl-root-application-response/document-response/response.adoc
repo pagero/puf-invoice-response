@@ -84,7 +84,6 @@ _cac:Response with example values_
             </ext:UBLExtensions>
             <cbc:ResponseCode>APPROVED</cbc:ResponseCode>
             <cac:Status>
-                <cbc:Description>Invoice received and currently under review</cbc:Description>
                 <cbc:StatusReasonCode>XSD_ZATCA_VALID</cbc:StatusReasonCode>
                 <cbc:StatusReason>Complied with UBL 2.1 standards in line with ZATCA specifications</cbc:StatusReason>
             </cac:Status>

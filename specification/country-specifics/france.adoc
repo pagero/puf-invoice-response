@@ -315,5 +315,7 @@ _Payment Received (Encaissée) status that should be processed but not sent to c
 
 ===== `puf:ComplianceActivatedIndicator` and `puf:ExternalDeliveryType`
 
-`puf:ComplianceActivatedIndicator` indicates whether the document is processed within the French reform: `true` means Pagero (as PDP/PA) applies the stricter compliance checks. For lifecycle statuses this value is carried in the CDAR _cadre de facturation_ field (AFNOR MDT-2, the same field as the invoice's BT-23), which France repurposes to carry the document treatment type (rule BR-FR-CDV-CL-01): `REGULATED` activates compliance, while the other values (`NON_REGULATED`, `B2C`, `B2BINT`, `OUTOFSCOPE`) leave it `false`. `puf:ExternalDeliveryType` (`PROCESS_WITHOUT_DELIVERY` / `PROCESS_WITHOUT_ROUTING`) requests processing without onward routing or delivery. Where a header `#BAR#` note and an explicit `puf:ComplianceActivatedIndicator` are both present, the explicit indicator takes precedence.
+`puf:ComplianceActivatedIndicator` controls whether the document is processed within the French e-invoicing reform. When `true`, Pagero — acting as the accredited platform (PA) — applies the stricter compliance checks and validations the reform requires; when `false` or absent, the document is processed outside that regime and those checks are not applied. Primarily used for e.g. B2C or cross-border documents.
+
+`puf:ExternalDeliveryType` requests that Pagero Online process the document without sending it onward: `PROCESS_WITHOUT_DELIVERY` processes the document but does not deliver it, while `PROCESS_WITHOUT_ROUTING` processes it but neither routes nor delivers it. Primarily used when you want Pagero to archive a file but not distribute it. 
 
