@@ -54,7 +54,7 @@
                     </ext:ExtensionContent>
                 </ext:UBLExtension>
             </ext:UBLExtensions>
-            <cbc:ResponseCode>RE</cbc:ResponseCode>
+            <cbc:ResponseCode>VF</cbc:ResponseCode>
             <!-- Error 1 — BR-FR-09 / BT-29 (SIRET / SIREN coherence on the seller party) -->
             <cac:Status>
                 <cbc:StatusReasonCode listID="OPStatusReason">REJ_SEMAN</cbc:StatusReasonCode>
