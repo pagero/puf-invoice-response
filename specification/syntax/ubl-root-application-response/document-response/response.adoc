@@ -7,6 +7,12 @@
 Extension is added to provide additional information in the `cac:Response` element, added elements in regards to `ext:UBLExtensions` for `cac:Response` can be found below: +
 <<_response_extension>>.
 
+|`cbc:ReferenceID`
+|**Response identifier** +
+An identifier for the response itself, assigned by the party issuing it. +
+Optional in PUF, but required by some target formats. In Turkey, UBL-TR makes
+`cac:Response/cbc:ReferenceID` mandatory in an Uygulama Yanıtı.
+
 |`cbc:ResponseCode`
 |**Invoice status** +
 A code stating the status of the invoice in the process. +
@@ -82,6 +88,7 @@ _cac:Response with example values_
                     </ext:ExtensionContent>
                 </ext:UBLExtension>
             </ext:UBLExtensions>
+            <cbc:ReferenceID>123456789</cbc:ReferenceID>
             <cbc:ResponseCode>APPROVED</cbc:ResponseCode>
             <cac:Status>
                 <cbc:StatusReasonCode>XSD_ZATCA_VALID</cbc:StatusReasonCode>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EXAMPLE FILE PUF Invoice Response. Türkiye. Use Case: response sent Buyer -> Pagero -> QNB eSolutions -> GİB -> Supplier.
+	Accepting a TİCARİ e-Fatura. Pagero maps this to a UBL-TR 1.2 uygulama yanıtı with cbc:ResponseCode KABUL. -->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+	xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+	xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+	xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+	xmlns:puf="urn:pagero:ExtensionComponent:1.0">
+	<!-- Specification Identifier -->
+	<cbc:CustomizationID>urn:pagero.com:puf:invoice_response:1.0</cbc:CustomizationID>
+	<!-- Business process type identifier -->
+	<cbc:ProfileID>urn:pagero.com:puf:invoice_response:1.0</cbc:ProfileID>
+	<!-- Response identifier. GİB requires a three letter unit code followed by a 13 digit serial number,
+		whose first four digits are the year the response was issued. -->
+	<cbc:ID>BBB2026000000002</cbc:ID>
+	<!-- Response issue date -->
+	<cbc:IssueDate>2026-09-21</cbc:IssueDate>
+	<!-- Response issue time -->
+	<cbc:IssueTime>14:42:00</cbc:IssueTime>
+	<!-- General note. Delivered as cbc:Note of the UBL-TR uygulama yanıtı. -->
+	<cbc:Note>Fatura Kabul Edilmiştir.</cbc:Note>
+	<!-- Sender Party. The buyer, who issues the uygulama yanıtı. -->
+	<cac:SenderParty>
+		<!-- Vergi Kimlik Numarası of the buyer. Reaches the UBL-TR target as
+			cac:PartyIdentification/cbc:ID with schemeID "VKN". -->
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="TR:VKN">9205121120</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyLegalEntity>
+			<!-- Party name -->
+			<cbc:RegistrationName>BBB Limited Şirketi</cbc:RegistrationName>
+		</cac:PartyLegalEntity>
+		<!-- Contact information -->
+		<cac:Contact>
+			<cbc:Name>Muhasebe</cbc:Name>
+			<cbc:Telephone>(312) 621 1111</cbc:Telephone>
+			<cbc:ElectronicMail>bb@bbb.com.tr</cbc:ElectronicMail>
+		</cac:Contact>
+	</cac:SenderParty>
+	<!-- Receiver Party. The supplier that issued the invoice being responded to. -->
+	<cac:ReceiverParty>
+		<!-- Vergi Kimlik Numarası of the supplier -->
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="TR:VKN">1288331521</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyLegalEntity>
+			<!-- Party name -->
+			<cbc:RegistrationName>AAA Anonim Şirketi</cbc:RegistrationName>
+		</cac:PartyLegalEntity>
+	</cac:ReceiverParty>
+	<!-- Document Response -->
+	<cac:DocumentResponse>
+		<!-- Response -->
+		<cac:Response>
+			<ext:UBLExtensions>
+				<ext:UBLExtension>
+					<ext:ExtensionURI>urn:pagero:ExtensionComponent:1.0:PageroExtension:ResponseExtension</ext:ExtensionURI>
+					<ext:ExtensionContent>
+						<puf:PageroExtension>
+							<puf:ResponseExtension>
+								<!-- The unique Pagero ID of the invoice this response answers. Sent by the buyer so that
+									Pagero Online can match the response to the received e-Fatura and resolve the ETTN
+									that GİB expects in the UBL-TR cac:DocumentReference. -->
+								<puf:DocumentMatchingID>
+									<cbc:ID>111222333</cbc:ID>
+								</puf:DocumentMatchingID>
+							</puf:ResponseExtension>
+						</puf:PageroExtension>
+					</ext:ExtensionContent>
+				</ext:UBLExtension>
+			</ext:UBLExtensions>
+			<!-- Identifier of this response entry. UBL-TR makes cac:Response/cbc:ReferenceID mandatory. -->
+			<cbc:ReferenceID>BBB2026000000002-1</cbc:ReferenceID>
+			<!-- Response code. AP maps to the UBL-TR value KABUL. Only KABUL and RED are supported; the third UBL-TR value
+				IADE belongs to the return invoice process and has no PUF equivalent. -->
+			<cbc:ResponseCode>AP</cbc:ResponseCode>
+		</cac:Response>
+		<!-- Document Reference -->
+		<cac:DocumentReference>
+			<!-- Invoice number of the referenced e-Fatura -->
+			<cbc:ID>AAA2026000000011</cbc:ID>
+			<!-- Issue date of the referenced e-Fatura -->
+			<cbc:IssueDate>2026-09-18</cbc:IssueDate>
+			<!-- Identifier type code of the referenced document -->
+			<cbc:DocumentTypeCode>380</cbc:DocumentTypeCode>
+		</cac:DocumentReference>
+	</cac:DocumentResponse>
+</ApplicationResponse>

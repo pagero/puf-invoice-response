@@ -633,6 +633,15 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#_compliance_and_clearance_handling_extensions">5.1.4. Compliance and clearance handling extensions</a></li>
 </ul>
 </li>
+<li><a href="#_türkiye">5.2. Türkiye</a>
+<ul class="sectlevel3">
+<li><a href="#_scope">5.2.1. Scope</a></li>
+<li><a href="#_response_code">5.2.2. Response code</a></li>
+<li><a href="#_rejection_reason">5.2.3. Rejection reason</a></li>
+<li><a href="#_party_identification">5.2.4. Party identification</a></li>
+<li><a href="#_identifiers">5.2.5. Identifiers</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_code_lists">6. Code lists</a>
@@ -1472,6 +1481,13 @@ Extension is added to provide additional information in the <code>cac:Response</
 <a href="#_response_extension">Response extension</a>.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbc:ReferenceID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Response identifier</strong><br>
+An identifier for the response itself, assigned by the party issuing it.<br>
+Optional in PUF, but required by some target formats. In Turkey, UBL-TR makes
+<code>cac:Response/cbc:ReferenceID</code> mandatory in an Uygulama Yanıtı.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbc:ResponseCode</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Invoice status</strong><br>
 A code stating the status of the invoice in the process.<br>
@@ -1549,6 +1565,7 @@ A free-text explanation of the clarification or requested action given for the s
                     <span class="tag">&lt;/ext:ExtensionContent&gt;</span>
                 <span class="tag">&lt;/ext:UBLExtension&gt;</span>
             <span class="tag">&lt;/ext:UBLExtensions&gt;</span>
+            <span class="tag">&lt;cbc:ReferenceID&gt;</span>123456789<span class="tag">&lt;/cbc:ReferenceID&gt;</span>
             <span class="tag">&lt;cbc:ResponseCode&gt;</span>APPROVED<span class="tag">&lt;/cbc:ResponseCode&gt;</span>
             <span class="tag">&lt;cac:Status&gt;</span>
                 <span class="tag">&lt;cbc:StatusReasonCode&gt;</span>XSD_ZATCA_VALID<span class="tag">&lt;/cbc:StatusReasonCode&gt;</span>
@@ -2684,6 +2701,142 @@ These reason codes, their labels and their applicability per status are defined 
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_türkiye"><a class="anchor" href="#_türkiye"></a><a class="link" href="#_türkiye">5.2. Türkiye</a></h3>
+<div class="paragraph">
+<p>This section contains requirements and other information concerning the use of PUF Invoice Response in Türkiye.</p>
+</div>
+<div class="sect3">
+<h4 id="_scope"><a class="anchor" href="#_scope"></a><a class="link" href="#_scope">5.2.1. Scope</a></h4>
+<div class="paragraph">
+<p>An invoice response is used in Türkiye only for invoices sent under the <strong>TİCARİ</strong> (commercial) e-Fatura scenario. The buyer answers the invoice with an <strong>uygulama yanıtı</strong> (application response), which GİB routes to the supplier. Invoices sent under the TEMEL (basic) scenario and e-Arşiv invoices are not answered this way.</p>
+</div>
+<div class="paragraph">
+<p>The response has to reach GİB within <strong>8 days</strong> of the invoice being sent.</p>
+</div>
+<div class="paragraph">
+<p>Pagero maps a PUF Invoice Response to and from UBL-TR 1.2 ApplicationResponse in both directions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the buyer sends a PUF Invoice Response, which Pagero converts to an uygulama yanıtı for GİB;</p>
+</li>
+<li>
+<p>the supplier receives an uygulama yanıtı as a PUF Invoice Response.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_code"><a class="anchor" href="#_response_code"></a><a class="link" href="#_response_code">5.2.2. Response code</a></h4>
+<div class="paragraph">
+<p>UBL-TR defines three values for <code>cbc:ResponseCode</code>. Two of them have a PUF equivalent:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 14. UBL-TR response codes</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">UBL-TR value</th>
+<th class="tableblock halign-left valign-top">PUF-016 value</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>KABUL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The buyer accepts the invoice.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RED</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The buyer rejects the invoice. The reason has to be stated, see <a href="#_rejection_reason">Rejection reason</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>IADE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>not supported</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Issued together with a return invoice (<code>InvoiceTypeCode</code> IADE) after the invoice has been entered in the legal books. The return invoice itself is a PUF Billing document; the accompanying IADE response is not supported.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A return invoice cannot be answered with KABUL or RED. Once an invoice has been rejected, the supplier cannot counter-reject; objections are settled outside the e-Fatura application.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_rejection_reason"><a class="anchor" href="#_rejection_reason"></a><a class="link" href="#_rejection_reason">5.2.3. Rejection reason</a></h4>
+<div class="paragraph">
+<p>When the invoice is rejected, the reason has to be stated in the general notes of the uygulama yanıtı. Put it in <code>cbc:Note</code> at document level. Any <code>cac:Status/cbc:StatusReason</code> is carried separately as <code>cac:Response/cbc:Description</code>, and does not replace the note.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_party_identification"><a class="anchor" href="#_party_identification"></a><a class="link" href="#_party_identification">5.2.4. Party identification</a></h4>
+<div class="paragraph">
+<p>Both parties are identified by their tax number, which UBL-TR carries as <code>cac:PartyIdentification/cbc:ID</code> with <code>schemeID</code> VKN for a legal person or TCKN for a natural person. In PUF, use <code>TR:VKN</code> or <code>TR:TCKN</code> from
+<a href="https://pagero.github.io/puf-code-lists/#_puf_008_identificationscheme" target="_blank" rel="noopener">PUF-008-IDENTIFICATIONSCHEME</a>.</p>
+</div>
+<div class="paragraph">
+<p>Pagero derives the UBL-TR scheme from the length of the number: 11 characters is a TC Kimlik Numarası, anything else a Vergi Kimlik Numarası.</p>
+</div>
+<div class="paragraph">
+<p>The sender of the response is the buyer, the receiver is the supplier that issued the invoice.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_identifiers"><a class="anchor" href="#_identifiers"></a><a class="link" href="#_identifiers">5.2.5. Identifiers</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 15. Identifiers in a Turkish invoice response</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cbc:ID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of the response. GİB requires a three letter unit code followed by a 13 digit serial number, whose first four digits are the year the response was issued, for example <code>BBB2026000000002</code>. The number has to be unique within the issuing party.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:DocumentResponse/cac:Response/cbc:ReferenceID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identifier of the response entry. Mandatory in UBL-TR.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cac:DocumentResponse/cac:DocumentReference/cbc:ID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invoice number of the e-Fatura being answered.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>puf:DocumentMatchingID/cbc:ID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sent by the buyer so that Pagero Online can match the response to the received invoice. Pagero resolves the invoice ETTN from that match.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Examples</strong><br>
+<em>Türkiye specific example files are available in the</em>
+<a href="https://github.com/pagero/puf-invoice-response/tree/master/examples/country-specific-examples/Turkey" target="_blank" rel="noopener">Turkey example folder</a>.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -2704,7 +2857,7 @@ These reason codes, their labels and their applicability per status are defined 
 <div class="sect2">
 <h3 id="_code_lists_for_coded_elements"><a class="anchor" href="#_code_lists_for_coded_elements"></a><a class="link" href="#_code_lists_for_coded_elements">6.1. Code lists for coded elements</a></h3>
 <table class="tableblock frame-all grid-all fit-content stretch">
-<caption class="title">Table 14. Table of the code lists used</caption>
+<caption class="title">Table 16. Table of the code lists used</caption>
 <colgroup>
 <col>
 <col>

@@ -1,0 +1,77 @@
+This section contains requirements and other information concerning the use of PUF Invoice Response in Türkiye.
+
+==== Scope
+
+An invoice response is used in Türkiye only for invoices sent under the *TİCARİ* (commercial) e-Fatura scenario. The buyer answers the invoice with an *uygulama yanıtı* (application response), which GİB routes to the supplier. Invoices sent under the TEMEL (basic) scenario and e-Arşiv invoices are not answered this way.
+
+The response has to reach GİB within *8 days* of the invoice being sent.
+
+Pagero maps a PUF Invoice Response to and from UBL-TR 1.2 ApplicationResponse in both directions:
+
+* the buyer sends a PUF Invoice Response, which Pagero converts to an uygulama yanıtı for GİB;
+* the supplier receives an uygulama yanıtı as a PUF Invoice Response.
+
+
+==== Response code
+
+UBL-TR defines three values for ``cbc:ResponseCode``. Two of them have a PUF equivalent:
+
+.UBL-TR response codes
+|===
+|UBL-TR value |PUF-016 value |Meaning
+
+|`KABUL`
+|`AP`
+|The buyer accepts the invoice.
+
+|`RED`
+|`RE`
+|The buyer rejects the invoice. The reason has to be stated, see <<_rejection_reason>>.
+
+|`IADE`
+|_not supported_
+|Issued together with a return invoice (``InvoiceTypeCode`` IADE) after the invoice has been entered in the legal books. The return invoice itself is a PUF Billing document; the accompanying IADE response is not supported.
+|===
+
+NOTE: A return invoice cannot be answered with KABUL or RED. Once an invoice has been rejected, the supplier cannot counter-reject; objections are settled outside the e-Fatura application.
+
+
+[#_rejection_reason]
+==== Rejection reason
+
+When the invoice is rejected, the reason has to be stated in the general notes of the uygulama yanıtı. Put it in ``cbc:Note`` at document level. Any ``cac:Status/cbc:StatusReason`` is carried separately as ``cac:Response/cbc:Description``, and does not replace the note.
+
+
+==== Party identification
+
+Both parties are identified by their tax number, which UBL-TR carries as ``cac:PartyIdentification/cbc:ID`` with ``schemeID`` VKN for a legal person or TCKN for a natural person. In PUF, use ``TR:VKN`` or ``TR:TCKN`` from
+https://pagero.github.io/puf-code-lists/#_puf_008_identificationscheme[PUF-008-IDENTIFICATIONSCHEME^].
+
+Pagero derives the UBL-TR scheme from the length of the number: 11 characters is a TC Kimlik Numarası, anything else a Vergi Kimlik Numarası.
+
+The sender of the response is the buyer, the receiver is the supplier that issued the invoice.
+
+
+==== Identifiers
+
+.Identifiers in a Turkish invoice response
+|===
+|Path |Description
+
+|`cbc:ID`
+|Number of the response. GİB requires a three letter unit code followed by a 13 digit serial number, whose first four digits are the year the response was issued, for example `BBB2026000000002`. The number has to be unique within the issuing party.
+
+|`cac:DocumentResponse/cac:Response/cbc:ReferenceID`
+|Identifier of the response entry. Mandatory in UBL-TR.
+
+|`cac:DocumentResponse/cac:DocumentReference/cbc:ID`
+|Invoice number of the e-Fatura being answered.
+
+|`puf:DocumentMatchingID/cbc:ID`
+|Sent by the buyer so that Pagero Online can match the response to the received invoice. Pagero resolves the invoice ETTN from that match.
+|===
+
+
+*Examples* +
+_Türkiye specific example files are available in the_
+https://github.com/pagero/puf-invoice-response/tree/master/examples/country-specific-examples/Turkey[Turkey example folder^].

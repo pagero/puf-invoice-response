@@ -3,3 +3,7 @@ This section will provide information on how common country specific data in PUF
 === France
 
 include::country-specifics/france.adoc[]
+
+=== Türkiye
+
+include::country-specifics/turkey.adoc[]
