@@ -8,7 +8,7 @@
     <!-- ===== Imports ===== -->
     <xsd:import namespace="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" schemaLocation="../common/UBL-CommonBasicComponents-2.3.xsd"/>
     <xsd:import namespace="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" schemaLocation="../common/UBL-CommonAggregateComponents-2.3.xsd"/>
-    <xsd:import namespace="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2" schemaLocation="../common/BDNDR-UnqualifiedDataTypes-1.1.xsd"/>
+    <xsd:import namespace="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2" schemaLocation="../common/BDNDR-CCTS_CCT_SchemaModule-1.1.xsd"/>
     <!-- ===== Element Declarations ===== -->
     <xsd:element name="Amount" type="PUFAmountType"/>
     <xsd:element name="Amounts" type="PUFAmountsListType"/>
