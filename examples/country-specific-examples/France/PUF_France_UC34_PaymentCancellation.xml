@@ -32,6 +32,8 @@
       - The seller now sends a NEGATIVE Encaissée: MEN = EUR -1,200 TTC
       - NET effect on tax authority records: EUR 0 (the previous declaration is cancelled)
       - Invoice reverts to "outstanding" status from tax authority perspective
+      - The status note (cbc:Description) gives the reason for the cancellation,
+        required for a negative Encaissée (rule P1.17)
 
     After sending this cancellation:
       - The seller must await actual receipt before sending a new positive Encaissée
@@ -111,6 +113,10 @@
 
                 NOTE: The Date field carries the date of the bank reversal (not the original
                       payment date). This is the date the reversal was received/confirmed.
+
+                cbc:Description is the status note: the reason for cancelling the payment,
+                required in France for a negative Encaissée, rule P1.17. It follows
+                ext:UBLExtensions in the UBL element order.
             -->
             <cac:Status>
                 <ext:UBLExtensions>
@@ -133,6 +139,7 @@
                         </ext:ExtensionContent>
                     </ext:UBLExtension>
                 </ext:UBLExtensions>
+                <cbc:Description>Annulation de l'encaissement du 25/02/2026 : virement rejeté par la banque du client le 01/03/2026.</cbc:Description>
             </cac:Status>
         </cac:Response>
         <!-- Reference to the original invoice (same as the corrected Encaissée) -->

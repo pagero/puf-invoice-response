@@ -253,7 +253,7 @@ In France, the reason codes are unique and defined in the table below. The table
 NOTE: These reason codes, their labels and their applicability per status are defined by AFNOR XP Z12-012 Annexe A (tab "Tableau des motifs de STATUTS"). The table above covers the buyer-facing dispute statuses — APPROUVÉE PARTIELLEMENT (206), EN LITIGE (207), SUSPENDUE (208) and REFUSÉE B2B (210). Other reason codes are scoped to platform / technical statuses and are out of scope here.
 
 *Example* +
-_cac:Response with response code RE (EN: Rejected/Refused, FR: 210) and reason code `MONTANTTOTAL_ERR` (Incorrect Total Amount)._
+_cac:Response with response code RE (EN: Rejected/Refused, FR: 210), reason code `MONTANTTOTAL_ERR` (Incorrect Total Amount) and the status note required for a refusal (see <<_status_note>>)._
 [%nowrap]
 [source,xml]
 ----
@@ -263,6 +263,7 @@ _cac:Response with response code RE (EN: Rejected/Refused, FR: 210) and reason c
         <cac:Response>
             <cbc:ResponseCode>RE</cbc:ResponseCode>
             <cac:Status>
+                <cbc:Description>The total amount payable does not match the agreed price. Please issue a new invoice.</cbc:Description>
                 <cbc:StatusReasonCode listID="OPStatusReason">MONTANTTOTAL_ERR</cbc:StatusReasonCode>
                 <cbc:StatusReason>One of the invoice total amounts is incorrect</cbc:StatusReason>
             </cac:Status>
@@ -271,6 +272,32 @@ _cac:Response with response code RE (EN: Rejected/Refused, FR: 210) and reason c
     </cac:DocumentResponse>
 </ApplicationResponse>
 ----
+
+==== Status Note
+
+The status note (`cac:Status/cbc:Description`) is a free-text comment about the status. It is optional in PUF, but in France it is required in the following cases:
+
+.Statuses requiring a status note in France
+[cols="2,5,2"]
+|===
+|Response code |Content of the status note |French rule
+
+|`RE` (Refusée, 210)
+|A comment explaining why the invoice is refused.
+|G7.25
+
+|`ON_HOLD` (Suspendue, 208)
+|A comment explaining why processing is suspended.
+|G7.25
+
+|`PAYMENT_RECEIVED` (Encaissée, 212) with a negative amount
+|The reason for cancelling a payment received that was reported earlier (see <<_payment_reporting>>).
+|P1.17
+|===
+
+Provide the status note in the same `cac:Status` as the reason code, in addition to `cbc:StatusReasonCode` and `cbc:StatusReason`. Following the UBL element order, `cbc:Description` comes before `cbc:StatusReasonCode`. A status sent without a required status note may be rejected by the receiving platform.
+
+NOTE: The rules G7.25 and P1.17 are French business rules (DGFiP Annexe 7 "Règles de gestion", also listed in AFNOR XP Z12-012 Annexe A) and apply to the status note (MDT-126) of the French lifecycle message.
 
 ==== Requested Action
 

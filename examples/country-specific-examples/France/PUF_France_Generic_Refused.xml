@@ -10,6 +10,7 @@
 
     Refusal reason: CALCUL_ERR — Calculation error on invoice amounts.
     Requested action: NIN — Issue a corrected invoice.
+    Status note: comment explaining the refusal, required for 210 (rule G7.25).
 
     Note: The reason code must be one of the French-specific reason codes
     defined in the PUF Invoice Response France country specifics specification.
@@ -78,8 +79,11 @@
                 listID="OPStatusReason" identifies this as a reason code status.
                 CALCUL_ERR = error in the calculation of amounts.
                 Applicable to response code RE (210) per French spec.
+                cbc:Description is the status note: a comment explaining the refusal,
+                required in France for response code RE (210), rule G7.25.
             -->
             <cac:Status>
+                <cbc:Description>Facture refusée : le montant total HT ne correspond pas au détail des lignes. Merci d'émettre une nouvelle facture avec les montants corrigés.</cbc:Description>
                 <cbc:StatusReasonCode listID="OPStatusReason">CALCUL_ERR</cbc:StatusReasonCode>
                 <cbc:StatusReason>Erreur de calcul : le montant total HT ne correspond pas à la somme des lignes de facturation.</cbc:StatusReason>
             </cac:Status>
