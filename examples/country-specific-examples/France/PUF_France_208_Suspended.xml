@@ -6,6 +6,7 @@
     Reference invoice: FR-INV-2026-001 (TechDistrib France SARL → Entreprise Client France SA)
     Sender   (Buyer):  Entreprise Client France SA — SIREN 123456789
     Receiver (Seller): TechDistrib France SARL — SIREN 987654321
+    Status note: comment explaining the suspension, required for 208 (rule G7.25).
 -->
 <ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
                      xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
@@ -68,8 +69,11 @@
                 listID="OPStatusReason" identifies this as a reason code status.
                 REF_CT_ABSENT = mandatory contractual reference is missing.
                 Reason code is mandatory for response code ON_HOLD (208) per French spec.
+                cbc:Description is the status note: a comment explaining the suspension,
+                required in France for response code ON_HOLD (208), rule G7.25.
             -->
             <cac:Status>
+                <cbc:Description>Traitement suspendu : merci de nous communiquer le numéro de contrat (BT-12) afin que la facture puisse être traitée.</cbc:Description>
                 <cbc:StatusReasonCode listID="OPStatusReason">REF_CT_ABSENT</cbc:StatusReasonCode>
                 <cbc:StatusReason>Référence contractuelle obligatoire absente : le numéro de contrat (BT-12) est requis pour le traitement. Traitement suspendu dans l'attente de cette référence.</cbc:StatusReason>
             </cac:Status>

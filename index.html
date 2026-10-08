@@ -629,8 +629,9 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <ul class="sectlevel3">
 <li><a href="#_payment_reporting">5.1.1. Payment reporting</a></li>
 <li><a href="#_status_reason">5.1.2. Status Reason</a></li>
-<li><a href="#_requested_action">5.1.3. Requested Action</a></li>
-<li><a href="#_compliance_and_clearance_handling_extensions">5.1.4. Compliance and clearance handling extensions</a></li>
+<li><a href="#_status_note">5.1.3. Status Note</a></li>
+<li><a href="#_requested_action">5.1.4. Requested Action</a></li>
+<li><a href="#_compliance_and_clearance_handling_extensions">5.1.5. Compliance and clearance handling extensions</a></li>
 </ul>
 </li>
 <li><a href="#_türkiye">5.2. Türkiye</a>
@@ -2609,7 +2610,7 @@ These reason codes, their labels and their applicability per status are defined 
 </div>
 <div class="paragraph">
 <p><strong>Example</strong><br>
-<em>cac:Response with response code RE (EN: Rejected/Refused, FR: 210) and reason code <code>MONTANTTOTAL_ERR</code> (Incorrect Total Amount).</em></p>
+<em>cac:Response with response code RE (EN: Rejected/Refused, FR: 210), reason code <code>MONTANTTOTAL_ERR</code> (Incorrect Total Amount) and the status note required for a refusal (see <a href="#_status_note">Status Note</a>).</em></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2619,6 +2620,7 @@ These reason codes, their labels and their applicability per status are defined 
         <span class="tag">&lt;cac:Response&gt;</span>
             <span class="tag">&lt;cbc:ResponseCode&gt;</span>RE<span class="tag">&lt;/cbc:ResponseCode&gt;</span>
             <span class="tag">&lt;cac:Status&gt;</span>
+                <span class="tag">&lt;cbc:Description&gt;</span>The total amount payable does not match the agreed price. Please issue a new invoice.<span class="tag">&lt;/cbc:Description&gt;</span>
                 <span class="tag">&lt;cbc:StatusReasonCode</span> <span class="attribute-name">listID</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">OPStatusReason</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>MONTANTTOTAL_ERR<span class="tag">&lt;/cbc:StatusReasonCode&gt;</span>
                 <span class="tag">&lt;cbc:StatusReason&gt;</span>One of the invoice total amounts is incorrect<span class="tag">&lt;/cbc:StatusReason&gt;</span>
             <span class="tag">&lt;/cac:Status&gt;</span>
@@ -2630,7 +2632,60 @@ These reason codes, their labels and their applicability per status are defined 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_requested_action"><a class="anchor" href="#_requested_action"></a><a class="link" href="#_requested_action">5.1.3. Requested Action</a></h4>
+<h4 id="_status_note"><a class="anchor" href="#_status_note"></a><a class="link" href="#_status_note">5.1.3. Status Note</a></h4>
+<div class="paragraph">
+<p>The status note (<code>cac:Status/cbc:Description</code>) is a free-text comment about the status. It is optional in PUF, but in France it is required in the following cases:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 14. Statuses requiring a status note in France</caption>
+<colgroup>
+<col style="width: 22.2222%;">
+<col style="width: 55.5555%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Response code</th>
+<th class="tableblock halign-left valign-top">Content of the status note</th>
+<th class="tableblock halign-left valign-top">French rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RE</code> (Refusée, 210)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A comment explaining why the invoice is refused.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">G7.25</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ON_HOLD</code> (Suspendue, 208)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A comment explaining why processing is suspended.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">G7.25</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAYMENT_RECEIVED</code> (Encaissée, 212) with a negative amount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The reason for cancelling a payment received that was reported earlier (see <a href="#_payment_reporting">Payment reporting</a>).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P1.17</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Provide the status note in the same <code>cac:Status</code> as the reason code, in addition to <code>cbc:StatusReasonCode</code> and <code>cbc:StatusReason</code>. Following the UBL element order, <code>cbc:Description</code> comes before <code>cbc:StatusReasonCode</code>. A status sent without a required status note may be rejected by the receiving platform.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The rules G7.25 and P1.17 are French business rules (DGFiP Annexe 7 "Règles de gestion", also listed in AFNOR XP Z12-012 Annexe A) and apply to the status note (MDT-126) of the French lifecycle message.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_requested_action"><a class="anchor" href="#_requested_action"></a><a class="link" href="#_requested_action">5.1.4. Requested Action</a></h4>
 <div class="paragraph">
 <p>It is possible to request the recipient of the PUF Invoice Response to perform a certain action (generally to resolve a dispute). A common example scenario could be one where the Buyer requests that the Seller issues a new invoice, as the current one has incorrect data.</p>
 </div>
@@ -2654,7 +2709,7 @@ These reason codes, their labels and their applicability per status are defined 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_compliance_and_clearance_handling_extensions"><a class="anchor" href="#_compliance_and_clearance_handling_extensions"></a><a class="link" href="#_compliance_and_clearance_handling_extensions">5.1.4. Compliance and clearance handling extensions</a></h4>
+<h4 id="_compliance_and_clearance_handling_extensions"><a class="anchor" href="#_compliance_and_clearance_handling_extensions"></a><a class="link" href="#_compliance_and_clearance_handling_extensions">5.1.5. Compliance and clearance handling extensions</a></h4>
 <div class="paragraph">
 <p>The document-level extensions <code>puf:ComplianceExtension</code> (<code>puf:ComplianceActivatedIndicator</code>, <code>puf:SkipClearanceIndicator</code>) and <code>puf:ExternalDeliveryType</code>, described in the Extensions chapter, are generic but are currently used in France as described below.</p>
 </div>
@@ -2734,7 +2789,7 @@ These reason codes, their labels and their applicability per status are defined 
 <p>UBL-TR defines three values for <code>cbc:ResponseCode</code>. Two of them have a PUF equivalent:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. UBL-TR response codes</caption>
+<caption class="title">Table 15. UBL-TR response codes</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2800,7 +2855,7 @@ A return invoice cannot be answered with KABUL or RED. Once an invoice has been 
 <div class="sect3">
 <h4 id="_identifiers"><a class="anchor" href="#_identifiers"></a><a class="link" href="#_identifiers">5.2.5. Identifiers</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. Identifiers in a Turkish invoice response</caption>
+<caption class="title">Table 16. Identifiers in a Turkish invoice response</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2857,7 +2912,7 @@ A return invoice cannot be answered with KABUL or RED. Once an invoice has been 
 <div class="sect2">
 <h3 id="_code_lists_for_coded_elements"><a class="anchor" href="#_code_lists_for_coded_elements"></a><a class="link" href="#_code_lists_for_coded_elements">6.1. Code lists for coded elements</a></h3>
 <table class="tableblock frame-all grid-all fit-content stretch">
-<caption class="title">Table 16. Table of the code lists used</caption>
+<caption class="title">Table 17. Table of the code lists used</caption>
 <colgroup>
 <col>
 <col>

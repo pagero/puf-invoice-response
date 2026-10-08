@@ -79,6 +79,7 @@ Demonstrates the `RE` (210) refusal with:
 - French reason code `CALCUL_ERR` (calculation error) — one of the French-specific reason codes
 - Action code `NIN` (OPStatusAction — issue a corrected invoice)
 - Two `cac:Status` blocks: one for reason (`listID=OPStatusReason`), one for action (`listID=OPStatusAction`)
+- Status note (`cbc:Description`) in the reason block explaining the refusal, required for 210 (rule G7.25)
 
 ---
 
@@ -306,6 +307,7 @@ Demonstrates a correction Encaissée using a NEGATIVE MEN to cancel a previously
 - MEN = **-1,200.00 EUR TTC @ 20%** — reversal of a full payment previously declared in error
 - `puf:ValueAmount` = -1,200.00 EUR (gross / TTC), `puf:ValueAmountCurrency` = EUR
 - `puf:ValueDate` = date the bank reversal was confirmed (2026-03-01)
+- Status note (`cbc:Description`) giving the reason for the cancellation, required for a negative Encaissée (rule P1.17)
 
 > The response code remains `PAYMENT_RECEIVED`. Only the `puf:ValueAmount`
 > becomes negative to signal the reversal. Net effect: the prior positive declaration is cancelled.
@@ -413,7 +415,7 @@ statuses reference invoice `UC10-IND-2026-0345` (IndustrialTech Lyon SA → Auto
 | `PUF_France_205_Approved.xml` | 205 | Approuvée | `AP` | Final approval; next step is payment. |
 | `PUF_France_206_PartiallyApproved.xml` | 206 | Approuvée partiellement | `PARTIALLY_ACCEPTED` | `MAPTTC` (approved) + `MNATTC` (not approved) amounts per VAT rate via `puf:Clarifications`; reason `QTE_ERR`. |
 | `PUF_France_Generic_UnderQuery.xml` | 207 | En litige | `UQ` | Reason `TX_TVA_ERR` + `puf:Clarifications` (DIV/DVA) + action `CNF`; detailed in §19 above. |
-| `PUF_France_208_Suspended.xml` | 208 | Suspendue | `ON_HOLD` | Reason `REF_CT_ABSENT` (missing contractual reference). |
+| `PUF_France_208_Suspended.xml` | 208 | Suspendue | `ON_HOLD` | Reason `REF_CT_ABSENT` (missing contractual reference) and a status note (`cbc:Description`) explaining the suspension (rule G7.25). |
 
 > A reason code is mandatory for **206, 207 and 208** (BR-FR-CDV-15). 207 additionally carries an
 > `OPStatusAction` block. The official AFNOR CDAR schematron confirms **207 = En litige (Litige)** and
